@@ -28,7 +28,7 @@ public class Game_Screen implements Screen{
     @Override
     public void show() {
         TmxMapLoader loader = new TmxMapLoader();
-        map = loader.load("mapTile.tmx");
+        map = loader.load("Map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         knight = new Knight(new Sprite(new Texture("basic/roles/knightLeft.png")), (TiledMapTileLayer) map.getLayers().get(1), this.settingKnight);

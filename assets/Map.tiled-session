@@ -1,0 +1,50 @@
+{
+    "activeFile": "Map.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Map.tmx": {
+            "scale": 0.8431249999999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 472.0533728687918,
+                "y": 459.59970348406233
+            }
+        },
+        "Set1-1.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "Set1-2.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "Set1-3.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "TileSet-1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/phant/Downloads/pixel_cyberpunk_interior_free_1.0.1/pixel_cyberpunk_interior_free_1.0.1",
+    "map.height": 30,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 30,
+    "openFiles": [
+        "Map.tmx",
+        "TileSet-1.tsx"
+    ],
+    "project": "Map.tiled-project",
+    "recentFiles": [
+        "TileSet-1.tsx",
+        "Map.tmx",
+        "Set1-3.tsx",
+        "Set1-2.tsx",
+        "Set1-1.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
