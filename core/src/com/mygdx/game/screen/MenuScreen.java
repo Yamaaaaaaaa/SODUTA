@@ -11,12 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.mygdx.game.SpaceGame;
 import com.mygdx.game.setting.Media_Menu;
-import com.mygdx.game.setting.Variable;
+import com.mygdx.game.setting.Setting_MenuScreen;
 
-import java.io.File;
-import java.io.IOException;
 public class MenuScreen implements Screen {
-    final SpaceGame game;
+    private SpaceGame game;
     public final Stage stage;
     TextButton buttonRecordFunction;
     TextButton buttonNetwork;
@@ -29,7 +27,7 @@ public class MenuScreen implements Screen {
     Media_Menu mediaMenu;
     public MenuScreen(final SpaceGame game){
         this.game = game;
-        this.stage = new Stage(new FillViewport(Variable.WINDOWS_SIZE, Variable.WINDOWS_SIZE));
+        this.stage = new Stage(new FillViewport(Setting_MenuScreen.WINDOWS_SIZE, Setting_MenuScreen.WINDOWS_SIZE));
 
         mediaMenu = new Media_Menu();
         mediaMenu.loadAssets();
@@ -63,9 +61,9 @@ public class MenuScreen implements Screen {
         mediaMenu.disposeAssets();
     }
     private void initButtons() {
-        buttonMenu = new TextButton("Back to Menu", Variable.skin, "default");
-        buttonMenu.setPosition((float) Variable.WINDOWS_SIZE / 2 - 140, (float) Variable.WINDOWS_SIZE / 2 + 20);
-        buttonMenu.setSize(Variable.BUTTON_WIDTH, Variable.BUTTON_HEIGHT);
+        buttonMenu = new TextButton("Back to Menu", Setting_MenuScreen.skin, "default");
+        buttonMenu.setPosition((float) Setting_MenuScreen.WINDOWS_SIZE / 2 - 140, (float) Setting_MenuScreen.WINDOWS_SIZE / 2 + 20);
+        buttonMenu.setSize(Setting_MenuScreen.BUTTON_WIDTH, Setting_MenuScreen.BUTTON_HEIGHT);
         buttonMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -80,40 +78,40 @@ public class MenuScreen implements Screen {
             }
         });
 
-        buttonLevel1 = new TextButton("Level 1", Variable.skin, "default");
-        buttonLevel1.setPosition((float) Variable.WINDOWS_SIZE / 2 - 300, (float) Variable.WINDOWS_SIZE / 2 + 120);
-        buttonLevel1.setSize(Variable.BUTTON_WIDTH, Variable.BUTTON_HEIGHT);
+        buttonLevel1 = new TextButton("Level 1", Setting_MenuScreen.skin, "default");
+        buttonLevel1.setPosition((float) Setting_MenuScreen.WINDOWS_SIZE / 2 - 300, (float) Setting_MenuScreen.WINDOWS_SIZE / 2 + 120);
+        buttonLevel1.setSize(Setting_MenuScreen.BUTTON_WIDTH, Setting_MenuScreen.BUTTON_HEIGHT);
         buttonLevel1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Chọn ải 1.");
                 dispose();
-                game.setScreen(new GamePlayingScreen(game, Variable.LEVEL_1));
+                game.setScreen(new Game_Screen(game));
             }
         });
 
-        buttonLevel2 = new TextButton("Level 2", Variable.skin, "default");
-        buttonLevel2.setPosition((float) Variable.WINDOWS_SIZE / 2 + 20, (float) Variable.WINDOWS_SIZE / 2 + 120);
-        buttonLevel2.setSize(Variable.BUTTON_WIDTH, Variable.BUTTON_HEIGHT);
-        buttonLevel2.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Chọn ải 2.");
-              //  dispose();
-                //game.setScreen(new GamePlayingScreen(game, Variable.LEVEL_2));
-            }
-        });
+//        buttonLevel2 = new TextButton("Level 2", Setting_MenuScreen.skin, "default");
+//        buttonLevel2.setPosition((float) Setting_MenuScreen.WINDOWS_SIZE / 2 + 20, (float) Setting_MenuScreen.WINDOWS_SIZE / 2 + 120);
+//        buttonLevel2.setSize(Setting_MenuScreen.BUTTON_WIDTH, Setting_MenuScreen.BUTTON_HEIGHT);
+//        buttonLevel2.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                System.out.println("Chọn ải 2.");
+//              //  dispose();
+//                //game.setScreen(new GamePlayingScreen(game, Variable.LEVEL_2));
+//            }
+//        });
 
-        buttonNewGame = new TextButton("New Game", Variable.skin, "default");
-        buttonNewGame.setPosition((float) Variable.WINDOWS_SIZE / 2 - 300, (float) Variable.WINDOWS_SIZE / 2 + 120);
-        buttonNewGame.setSize(Variable.BUTTON_WIDTH, Variable.BUTTON_HEIGHT);
+        buttonNewGame = new TextButton("New Game", Setting_MenuScreen.skin, "default");
+        buttonNewGame.setPosition((float) Setting_MenuScreen.WINDOWS_SIZE / 2 - 300, (float) Setting_MenuScreen.WINDOWS_SIZE / 2 + 120);
+        buttonNewGame.setSize(Setting_MenuScreen.BUTTON_WIDTH, Setting_MenuScreen.BUTTON_HEIGHT);
         buttonNewGame.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Xóa màn hình, thêm các nút chọn ải.
                 stage.clear();
                 stage.addActor(buttonLevel1);
-                stage.addActor(buttonLevel2);
+                //stage.addActor(buttonLevel2);
                 stage.addActor(buttonMenu);
                // mediaMenu.buttonSound.play();
             }
@@ -197,9 +195,9 @@ public class MenuScreen implements Screen {
 //            }
 //        });
 
-        buttonExit = new TextButton("Exit", Variable.skin, "default");
-        buttonExit.setPosition((float) Variable.WINDOWS_SIZE /2 - 140, (float) Variable.WINDOWS_SIZE / 2 + 20);
-        buttonExit.setSize(Variable.BUTTON_WIDTH, Variable.BUTTON_HEIGHT);
+        buttonExit = new TextButton("Exit", Setting_MenuScreen.skin, "default");
+        buttonExit.setPosition((float) Setting_MenuScreen.WINDOWS_SIZE /2 - 140, (float) Setting_MenuScreen.WINDOWS_SIZE / 2 + 20);
+        buttonExit.setSize(Setting_MenuScreen.BUTTON_WIDTH, Setting_MenuScreen.BUTTON_HEIGHT);
         buttonExit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
