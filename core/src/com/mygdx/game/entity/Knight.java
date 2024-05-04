@@ -39,13 +39,13 @@ public class Knight extends Sprite implements InputProcessor {
         this.settingKnight = settingKnight;
         this.speed = this.settingKnight.SPEED;
         this.collisionLayer = collisionLayer;
-        setSize(settingKnight.WIDTH, settingKnight.HEIGHT);
+        setSize(settingKnight.WIDTH/3, settingKnight.HEIGHT/3);
     }
 
 
     public void drawAnimation(Batch spriteBatch,float stateTime,float x,float y) {
         update(Gdx.graphics.getDeltaTime());
-        super.draw(spriteBatch);
+        //super.draw(spriteBatch);
 
         spriteBatch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime,true),x,y,64,64);
     }
