@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -22,6 +23,8 @@ public class Game_Screen implements Screen{
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private Knight knight;
+    public float stateTime;
+
     public Game_Screen(SpaceGame game){
         this.game = game;
     }
@@ -31,7 +34,7 @@ public class Game_Screen implements Screen{
         map = loader.load("Map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
-        knight = new Knight(new Sprite(new Texture("basic/roles/knightLeft.png")), (TiledMapTileLayer) map.getLayers().get(1), this.settingKnight);
+        knight = new Knight(new Sprite(new TextureRegion(new Texture("basic/character/Walk.png"))), (TiledMapTileLayer) map.getLayers().get(1), this.settingKnight);
         knight.setPosition(15 * knight.getCollisionLayer().getTileWidth(), 15 * knight.getCollisionLayer().getTileHeight());
         camera.zoom = .8f;
 
@@ -47,9 +50,9 @@ public class Game_Screen implements Screen{
         camera.update();
         renderer.setView(camera);
         renderer.render();
-
+        stateTime+=delta;
         renderer.getBatch().begin();
-        knight.draw(renderer.getBatch());
+        knight.drawAnimation(renderer.getBatch(),stateTime, knight.getX() ,knight.getY());
         renderer.getBatch().end();
     }
 

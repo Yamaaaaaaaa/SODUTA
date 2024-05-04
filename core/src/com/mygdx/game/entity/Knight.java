@@ -3,8 +3,11 @@ package com.mygdx.game.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.setting.Setting_Knight;
@@ -20,20 +23,31 @@ public class Knight extends Sprite implements InputProcessor {
     private String blockedKey = "blocked";
     private int targetX;
     private int targetY;
-
+    public Animation[] rolls;
+    public int roll;
     private Setting_Knight settingKnight;
     public Knight (Sprite sprite, TiledMapTileLayer collisionLayer, Setting_Knight settingKnight) {
         super(sprite);
+        TextureRegion[][] rollSpriteSheet = TextureRegion.split(new Texture("basic/character/Walk.png"),32,32);
+        rolls = new Animation[15];
+        roll = 0;
+        rolls[0] = new Animation(0.1f,rollSpriteSheet[0]);
+        rolls[1] = new Animation(0.1f,rollSpriteSheet[1]);
+        rolls[2] = new Animation(0.1f,rollSpriteSheet[2]);
+        rolls[3] = new Animation(0.1f,rollSpriteSheet[3]);
+
         this.settingKnight = settingKnight;
         this.speed = this.settingKnight.SPEED;
         this.collisionLayer = collisionLayer;
         setSize(settingKnight.WIDTH, settingKnight.HEIGHT);
     }
 
-    @Override
-    public void draw(Batch spriteBatch) {
+
+    public void drawAnimation(Batch spriteBatch,float stateTime,float x,float y) {
         update(Gdx.graphics.getDeltaTime());
         super.draw(spriteBatch);
+
+        spriteBatch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime,true),x,y,64,64);
     }
 
     public void update(float delta) {
@@ -147,18 +161,35 @@ public class Knight extends Sprite implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Input.Keys.W:
+            case Input.Keys.W:{
+                roll = 1;
                 velocity.y += speed;
+
                 break;
-            case Input.Keys.A:
+            }
+
+            case Input.Keys.A:{
+                roll = 3;
                 velocity.x -= speed;
                 break;
-            case Input.Keys.D:
+            }
+
+            case Input.Keys.D:{
+                roll = 2;
                 velocity.x += speed;
                 break;
-            case Input.Keys.S:
+            }
+
+            case Input.Keys.S:{
+                roll = 0;
                 velocity.y -= speed;
                 break;
+            }
+            case  Input.Keys.SPACE:{
+                roll = 8;
+                break;
+            }
+
         }
         return true;
     }
@@ -167,13 +198,19 @@ public class Knight extends Sprite implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Input.Keys.W:
-            case Input.Keys.S:
+            case Input.Keys.S:{
+                //roll = 0;
                 velocity.y = 0;
                 break;
+            }
+
             case Input.Keys.A:
-            case Input.Keys.D:
+            case Input.Keys.D:{
+                //roll = 0;
                 velocity.x = 0;
                 break;
+            }
+
 
         }
         return true;
