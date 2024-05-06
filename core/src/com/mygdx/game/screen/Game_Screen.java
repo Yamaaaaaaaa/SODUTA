@@ -46,13 +46,13 @@ public class Game_Screen implements Screen{
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        camera.position.set(knight.getX() + knight.getWidth() / 2, knight.getY() + knight.getHeight() / 2, 0);
+        camera.position.set(knight.getX() + knight.getWidth() / 2 + 100, knight.getY() + knight.getHeight() / 2 + 100, 0);
         camera.update();
         renderer.setView(camera);
         renderer.render();
         stateTime+=delta;
         renderer.getBatch().begin();
-        knight.drawAnimation(renderer.getBatch(),stateTime, knight.getX() ,knight.getY());
+        knight.drawAnimation(renderer.getBatch(),stateTime, knight.getX()+ knight.getWidth() / 2 + 100 ,knight.getY()+ knight.getHeight() / 2 + 100 );
         renderer.getBatch().end();
     }
 

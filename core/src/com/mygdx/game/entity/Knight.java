@@ -31,15 +31,15 @@ public class Knight extends Sprite implements InputProcessor {
         TextureRegion[][] rollSpriteSheet = TextureRegion.split(new Texture("basic/character/Walk.png"),32,32);
         rolls = new Animation[15];
         roll = 0;
-        rolls[0] = new Animation(0.1f,rollSpriteSheet[0]);
-        rolls[1] = new Animation(0.1f,rollSpriteSheet[1]);
-        rolls[2] = new Animation(0.1f,rollSpriteSheet[2]);
-        rolls[3] = new Animation(0.1f,rollSpriteSheet[3]);
+        rolls[0] = new Animation(0.2f,rollSpriteSheet[0]);
+        rolls[1] = new Animation(0.2f,rollSpriteSheet[1]);
+        rolls[2] = new Animation(0.2f,rollSpriteSheet[2]);
+        rolls[3] = new Animation(0.2f,rollSpriteSheet[3]);
 
         this.settingKnight = settingKnight;
         this.speed = this.settingKnight.SPEED;
         this.collisionLayer = collisionLayer;
-        setSize(settingKnight.WIDTH/3, settingKnight.HEIGHT/3);
+        setSize(settingKnight.WIDTH/2, settingKnight.HEIGHT/2);
     }
 
 
@@ -47,7 +47,7 @@ public class Knight extends Sprite implements InputProcessor {
         update(Gdx.graphics.getDeltaTime());
         //super.draw(spriteBatch);
 
-        spriteBatch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime,true),x,y,64,64);
+        spriteBatch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime,true),x,y,64,48);
     }
 
     public void update(float delta) {
@@ -185,8 +185,16 @@ public class Knight extends Sprite implements InputProcessor {
                 velocity.y -= speed;
                 break;
             }
-            case  Input.Keys.SPACE:{
-                roll = 8;
+            case  Input.Keys.J:{
+                // chém
+                break;
+            }
+            case Input.Keys.K:{
+                // bắn cung
+                break;
+            }
+            case Input.Keys.L:{
+                // bắn súng
                 break;
             }
 
