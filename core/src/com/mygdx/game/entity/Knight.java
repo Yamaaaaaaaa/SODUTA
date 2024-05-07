@@ -212,26 +212,26 @@ public class Knight implements InputProcessor {
             case  Input.Keys.J:{
                 // chém
 
-                if(roll == 1 || roll == 5) roll = 9;
-                if(roll == 2 || roll == 6) roll = 10;
-                if(roll == 3 || roll == 7) roll = 11;
-                if(roll == 0 || roll == 4) roll = 8;
+                if(roll == 1 || roll == 5 || roll ==13  || roll == 17) roll = 9;
+                if(roll == 2 || roll == 6 || roll == 14 || roll == 18) roll = 10;
+                if(roll == 3 || roll == 7 || roll == 15 || roll == 19) roll = 11;
+                if(roll == 0 || roll == 4 || roll == 12 || roll == 16) roll = 8;
                 break;
             }
             case Input.Keys.K:{
                 // bắn cung
-                if(roll == 1 || roll == 5) roll = 13;
-                if(roll == 2 || roll == 6) roll = 14;
-                if(roll == 3 || roll == 7) roll = 15;
-                if(roll == 0 || roll == 4) roll = 12;
+                if(roll == 1 || roll == 5 || roll ==9  || roll == 17) roll = 13;
+                if(roll == 2 || roll == 6 || roll ==10  || roll == 18) roll = 14;
+                if(roll == 3 || roll == 7 || roll ==11  || roll == 19) roll = 15;
+                if(roll == 0 || roll == 4 || roll ==8  || roll == 16) roll = 12;
                 break;
             }
             case Input.Keys.L:{
                 // bắn súng
-                if(roll == 1 || roll == 5) roll = 17;
-                if(roll == 2 || roll == 6) roll = 18;
-                if(roll == 3 || roll == 7) roll = 19;
-                if(roll == 0 || roll == 4) roll = 16;
+                if(roll == 1 || roll == 5 || roll ==13  || roll == 9) roll = 17;
+                if(roll == 2 || roll == 6 || roll ==14 || roll == 10) roll = 18;
+                if(roll == 3 || roll == 7 || roll ==15 || roll == 11) roll = 19;
+                if(roll == 0 || roll == 4 || roll ==12  || roll == 8) roll = 16;
                 break;
             }
 
