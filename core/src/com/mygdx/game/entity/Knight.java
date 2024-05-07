@@ -3,51 +3,89 @@ package com.mygdx.game.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.setting.Setting_Knight;
 
 import java.util.Set;
 
-public class Knight extends Sprite implements InputProcessor {
+public class Knight implements InputProcessor {
 
     //movement velocity
+    Sprite sprite;
     private Vector2 velocity = new Vector2();
     private float speed;
     private TiledMapTileLayer collisionLayer;
     private String blockedKey = "blocked";
-    private int targetX;
-    private int targetY;
 
+    public Animation[] rolls;
+    public int roll;
     private Setting_Knight settingKnight;
     public Knight (Sprite sprite, TiledMapTileLayer collisionLayer, Setting_Knight settingKnight) {
-        super(sprite);
+        this.sprite = sprite;
+        TextureRegion[][] rollSpriteSheetShoot = TextureRegion.split(new Texture("basic/character/Shoot.png"),32,32);
+        TextureRegion[][] rollSpriteSheetCrossbow = TextureRegion.split(new Texture("basic/character/Crossbow.png"),32,32);
+        TextureRegion[][] rollSpriteSheetStab = TextureRegion.split(new Texture("basic/character/Stab.png"),32,32);
+        TextureRegion[][] rollSpriteSheetStand = TextureRegion.split(new Texture("basic/character/Stand.png"),32,32);
+        TextureRegion[][] rollSpriteSheetWalk = TextureRegion.split(new Texture("basic/character/Walk.png"),32,32);
+        rolls = new Animation[100];
+        roll = 4;
+        //
+        rolls[0] = new Animation(0.2f,rollSpriteSheetWalk[0]);
+        rolls[1] = new Animation(0.2f,rollSpriteSheetWalk[1]);
+        rolls[2] = new Animation(0.2f,rollSpriteSheetWalk[2]);
+        rolls[3] = new Animation(0.2f,rollSpriteSheetWalk[3]);
+        //
+        rolls[4] = new Animation(0.2f,rollSpriteSheetStand[0]);
+        rolls[5] = new Animation(0.2f,rollSpriteSheetStand[1]);
+        rolls[6] = new Animation(0.2f,rollSpriteSheetStand[2]);
+        rolls[7] = new Animation(0.2f,rollSpriteSheetStand[3]);
+        //
+        rolls[8] = new Animation(0.1f,rollSpriteSheetStab[0]);
+        rolls[9] = new Animation(0.1f,rollSpriteSheetStab[1]);
+        rolls[10] = new Animation(0.1f,rollSpriteSheetStab[2]);
+        rolls[11] = new Animation(0.1f,rollSpriteSheetStab[3]);
+        //
+        rolls[12] = new Animation(0.1f,rollSpriteSheetCrossbow[0]);
+        rolls[13] = new Animation(0.1f,rollSpriteSheetCrossbow[1]);
+        rolls[14] = new Animation(0.1f,rollSpriteSheetCrossbow[2]);
+        rolls[15] = new Animation(0.1f,rollSpriteSheetCrossbow[3]);
+        //
+        rolls[16] = new Animation(0.1f,rollSpriteSheetShoot[0]);
+        rolls[17] = new Animation(0.1f,rollSpriteSheetShoot[1]);
+        rolls[18] = new Animation(0.1f,rollSpriteSheetShoot[2]);
+        rolls[19] = new Animation(0.1f,rollSpriteSheetShoot[3]);
         this.settingKnight = settingKnight;
         this.speed = this.settingKnight.SPEED;
         this.collisionLayer = collisionLayer;
-        setSize(settingKnight.WIDTH, settingKnight.HEIGHT);
+        sprite.setSize(settingKnight.WIDTH/2, settingKnight.HEIGHT/2);
     }
 
-    @Override
-    public void draw(Batch spriteBatch) {
+
+    public void drawAnimation(Batch spriteBatch,float stateTime,float x,float y) {
         update(Gdx.graphics.getDeltaTime());
-        super.draw(spriteBatch);
+
+
+        spriteBatch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime,true),x,y,64,48);
     }
 
     public void update(float delta) {
 
         //Collision.
         // This keeps track of the previous position.
-        float oldX = getX();
-        float oldY = getY();
+        float oldX = sprite.getX();
+        float oldY = sprite.getY();
         float tileWidth = collisionLayer.getTileWidth(), tileHeight = collisionLayer.getTileHeight();
 
         boolean collideX = false, collideY = false;
 
         // move on X
-        setX(getX() + velocity.x * delta);
+        sprite.setX(sprite.getX() + velocity.x * delta);
         if (velocity.x < 0) { // left hay vector của nó âm thì nó đi từ phải sang trái
             collideX = collidesLeft();
         } else if (velocity.x > 0) { //right
@@ -55,12 +93,12 @@ public class Knight extends Sprite implements InputProcessor {
         }
 
         if (collideX) {
-            setX(oldX);
+            sprite.setX(oldX);
             velocity.x = 0;
         }
 
         // move on Y
-        setY(getY() + velocity.y * delta);
+        sprite.setY(sprite.getY() + velocity.y * delta);
 
         if (velocity.y < 0) { // going down
             collideY = collidesBottom();
@@ -70,7 +108,7 @@ public class Knight extends Sprite implements InputProcessor {
         }
 
         if (collideY) {
-            setY(oldY);
+            sprite.setY(oldY);
             velocity.y = 0;
         }
 
@@ -92,29 +130,29 @@ public class Knight extends Sprite implements InputProcessor {
     }
 
     public boolean collidesRight() {
-        for(float step = 0; step < getHeight(); step += collisionLayer.getTileHeight() / 2)
-            if(isCellBlocked(getX() + getWidth(), getY() + step))
+        for(float step = 0; step < sprite.getHeight(); step += collisionLayer.getTileHeight() / 2)
+            if(isCellBlocked(sprite.getX() + sprite.getWidth(), sprite.getY() + step))
                 return true;
         return false;
     }
 
     public boolean collidesLeft() {
-        for(float step = 0; step < getHeight(); step += collisionLayer.getTileHeight() / 2)
-            if(isCellBlocked(getX(), getY() + step))
+        for(float step = 0; step < sprite.getHeight(); step += collisionLayer.getTileHeight() / 2)
+            if(isCellBlocked(sprite.getX(), sprite.getY() + step))
                 return true;
         return false;
     }
 
     public boolean collidesTop() {
-        for(float step = 0; step < getWidth(); step += collisionLayer.getTileWidth() / 2)
-            if(isCellBlocked(getX() + step, getY() + getHeight()))
+        for(float step = 0; step < sprite.getWidth(); step += collisionLayer.getTileWidth() / 2)
+            if(isCellBlocked(sprite.getX() + step, sprite.getY() + sprite.getHeight()))
                 return true;
         return false;
     }
 
     public boolean collidesBottom() {
-        for(float step = 0; step < getWidth(); step += collisionLayer.getTileWidth() / 2)
-            if(isCellBlocked(getX() + step, getY()))
+        for(float step = 0; step < sprite.getWidth(); step += collisionLayer.getTileWidth() / 2)
+            if(isCellBlocked(sprite.getX() + step, sprite.getY()))
                 return true;
         return false;
     }
@@ -147,18 +185,56 @@ public class Knight extends Sprite implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Input.Keys.W:
+            case Input.Keys.W:{
+                roll = 1;
                 velocity.y += speed;
+
                 break;
-            case Input.Keys.A:
+            }
+
+            case Input.Keys.A:{
+                roll = 3;
                 velocity.x -= speed;
                 break;
-            case Input.Keys.D:
+            }
+
+            case Input.Keys.D:{
+                roll = 2;
                 velocity.x += speed;
                 break;
-            case Input.Keys.S:
+            }
+
+            case Input.Keys.S:{
+                roll = 0;
                 velocity.y -= speed;
                 break;
+            }
+            case  Input.Keys.J:{
+                // chém
+
+                if(roll == 1 || roll == 5 || roll ==13  || roll == 17) roll = 9;
+                if(roll == 2 || roll == 6 || roll == 14 || roll == 18) roll = 10;
+                if(roll == 3 || roll == 7 || roll == 15 || roll == 19) roll = 11;
+                if(roll == 0 || roll == 4 || roll == 12 || roll == 16) roll = 8;
+                break;
+            }
+            case Input.Keys.K:{
+                // bắn cung
+                if(roll == 1 || roll == 5 || roll ==9  || roll == 17) roll = 13;
+                if(roll == 2 || roll == 6 || roll ==10  || roll == 18) roll = 14;
+                if(roll == 3 || roll == 7 || roll ==11  || roll == 19) roll = 15;
+                if(roll == 0 || roll == 4 || roll ==8  || roll == 16) roll = 12;
+                break;
+            }
+            case Input.Keys.L:{
+                // bắn súng
+                if(roll == 1 || roll == 5 || roll ==13  || roll == 9) roll = 17;
+                if(roll == 2 || roll == 6 || roll ==14 || roll == 10) roll = 18;
+                if(roll == 3 || roll == 7 || roll ==15 || roll == 11) roll = 19;
+                if(roll == 0 || roll == 4 || roll ==12  || roll == 8) roll = 16;
+                break;
+            }
+
         }
         return true;
     }
@@ -166,14 +242,38 @@ public class Knight extends Sprite implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case Input.Keys.W:
-            case Input.Keys.S:
-                velocity.y = 0;
-                break;
-            case Input.Keys.A:
-            case Input.Keys.D:
-                velocity.x = 0;
-                break;
+            case Input.Keys.W:{
+
+                    roll = 5;
+                    velocity.y = 0;
+                    break;
+
+            }
+            case Input.Keys.S:{
+
+                    roll = 4;
+                    velocity.y = 0;
+                    break;
+
+            }
+
+            case Input.Keys.A:{
+
+                    roll = 7;
+                    velocity.x = 0;
+                    break;
+
+
+            }
+            case Input.Keys.D:{
+
+                    roll = 6;
+                    velocity.x = 0;
+                    break;
+
+
+            }
+
 
         }
         return true;

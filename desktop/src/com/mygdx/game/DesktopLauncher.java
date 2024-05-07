@@ -9,8 +9,9 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setWindowedMode(800,800);
-		config.setTitle("MyGame");
+		config.setWindowedMode(960,720);
+		config.setTitle("SoDuTa: Ngày tận thế");
+		config.setResizable(false);
 		new Lwjgl3Application(new SpaceGame(), config);
 	}
 }
