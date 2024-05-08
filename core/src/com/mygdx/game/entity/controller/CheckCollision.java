@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.entity.Knight;
 
 public class CheckCollision {
+    // check collision version ngây thơ
     private Knight knight;
     private String blockedKey = "blocked";
     public CheckCollision(Knight knight) {
