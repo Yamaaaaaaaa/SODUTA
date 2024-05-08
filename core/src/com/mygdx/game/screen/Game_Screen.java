@@ -35,7 +35,6 @@ public class Game_Screen implements Screen{
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         knight = new Knight(sprite, (TiledMapTileLayer) map.getLayers().get(1), this.settingKnight);
-        sprite.setPosition(43*knight.getCollisionLayer().getTileWidth(),102* knight.getCollisionLayer().getTileHeight());
         camera.zoom = .8f;
 
         Gdx.input.setInputProcessor(knight);
@@ -52,7 +51,7 @@ public class Game_Screen implements Screen{
         renderer.render();
         stateTime+=delta;
         renderer.getBatch().begin();
-        knight.drawAnimation(renderer.getBatch(),stateTime, sprite.getX()+ sprite.getWidth() / 2 ,sprite.getY()+ sprite.getHeight() / 2 );
+        knight.drawAnimation(renderer.getBatch(),stateTime, sprite.getX() ,sprite.getY() );
         renderer.getBatch().end();
     }
 

@@ -28,6 +28,7 @@ public class Knight implements InputProcessor {
     private Setting_Knight settingKnight;
     public Knight (Sprite sprite, TiledMapTileLayer collisionLayer, Setting_Knight settingKnight) {
         this.sprite = sprite;
+
         TextureRegion[][] rollSpriteSheetShoot = TextureRegion.split(new Texture("basic/character/Shoot.png"),32,32);
         TextureRegion[][] rollSpriteSheetCrossbow = TextureRegion.split(new Texture("basic/character/Crossbow.png"),32,32);
         TextureRegion[][] rollSpriteSheetStab = TextureRegion.split(new Texture("basic/character/Stab.png"),32,32);
@@ -63,14 +64,14 @@ public class Knight implements InputProcessor {
         this.settingKnight = settingKnight;
         this.speed = this.settingKnight.SPEED;
         this.collisionLayer = collisionLayer;
-        sprite.setSize(settingKnight.WIDTH/2, settingKnight.HEIGHT/2);
+        sprite.setPosition(43*this.getCollisionLayer().getTileWidth(),102* this.getCollisionLayer().getTileHeight());
+        sprite.setSize(settingKnight.WIDTH, settingKnight.HEIGHT);
     }
 
 
     public void drawAnimation(Batch spriteBatch,float stateTime,float x,float y) {
         update(Gdx.graphics.getDeltaTime());
-
-
+        sprite.draw(spriteBatch);
         spriteBatch.draw((TextureRegion) rolls[roll].getKeyFrame(stateTime,true),x,y,64,48);
     }
 

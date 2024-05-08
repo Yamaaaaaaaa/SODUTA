@@ -1,14 +1,15 @@
 {
-    "activeFile": "Map.tmx",
+    "activeFile": "TileSet-1.tsx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         "Map.tmx": {
-            "scale": 0.8431249999999999,
-            "selectedLayer": 0,
+            "scale": 0.25,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 472.0533728687918,
-                "y": 459.59970348406233
+                "x": 3026,
+                "y": 946
             }
         },
         "Set1-1.tsx": {
@@ -26,9 +27,13 @@
         "TileSet-1.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "Walk.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/phant/Downloads/pixel_cyberpunk_interior_free_1.0.1/pixel_cyberpunk_interior_free_1.0.1",
+    "last.imagePath": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/character",
     "map.height": 30,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,
@@ -40,8 +45,9 @@
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
-        "TileSet-1.tsx",
+        "Walk.tsx",
         "Map.tmx",
+        "TileSet-1.tsx",
         "Set1-3.tsx",
         "Set1-2.tsx",
         "Set1-1.tsx"
