@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.entity.controller.Attack_Status;
 import com.mygdx.game.entity.controller.Direction;
 import com.mygdx.game.entity.controller.Entity_Status;
 import com.mygdx.game.entity.controller.Moving;
@@ -16,9 +17,12 @@ import java.security.Key;
 public class Knight extends Entity{
     public Direction direction;
     public Entity_Status status;
+
+
+
     public float screenX = 400, screenY = 400;
 
-    // setting
+    // SETTING BAN ĐẦU:
     private float speed_Stright;
     private float speed_Cross;
     private int width;
@@ -40,19 +44,26 @@ public class Knight extends Entity{
         this.speed_Cross = speed_Cross;
     }
 
-    //Di chuyen:
+    //DI CHUYỂN
     private Moving moving;
     // ROLLS:
     private Animation[] walking;
     private TextureRegion[] idle; // Ta chỉ set 1 số ảnh để làm IDLE thôi, Ko cần 1 cái Standing riêng, vì nó sẽ bị giật giật khi chuyển qua lại các status.
 
-    // Collision
+    // TẤN COONG:
+    public Attack_Status attackStatus;
+    private Animation[] shootting;
+    private Animation[] stabbing;
+
+
+    // VA CHẠM
     public TiledMapTileLayer collisionLayer;
 
-    public Knight(Texture texture, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
+    public Knight(float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         //image
-        this.setTexture(texture);
-
+        this.setTexture_walking(new Texture("basic/character/Walk.png"));
+        this.setTexture_shooting(new Texture("basic/character/Shoot.png"));
+        this.setTexture_stabbing(new Texture("basic/character/Stab.png"));
         // position
         this.setPosision(x,y);
 
@@ -70,6 +81,9 @@ public class Knight extends Entity{
 
         //collsion:
         this.collisionLayer = collsionLayer;
+
+        // attack:
+        this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
 
     public void setPosision(float x, float y){
@@ -78,12 +92,18 @@ public class Knight extends Entity{
     }
     private void setAnimation(){
         walking = new Animation[10];
+        stabbing = new Animation[10];
+        shootting = new Animation[10];
         idle = new TextureRegion[10];
-        TextureRegion[][] region = TextureRegion.split(this.getTexture(), this.width, this.height);
-
+        TextureRegion[][] region1 = TextureRegion.split(this.getTexture_walking(), this.width, this.height);
+        TextureRegion[][] region2 = TextureRegion.split(this.getTexture_stabbing(), this.width, this.height);
+        TextureRegion[][] region3 = TextureRegion.split(this.getTexture_shooting(), this.width, this.height);
         for(int i = 0; i < 4; ++i){
-            walking[i] = new Animation(0.2f, region[i]);
-            idle[i] = region[i][1];
+            walking[i] = new Animation(0.2f, region1[i]);
+            stabbing[i] = new Animation(0.2f, region2[i]);
+            shootting[i] = new Animation(0.2f, region3[i]);
+
+            idle[i] = region1[i][1];
         }
     }
     public void update(){
@@ -102,6 +122,13 @@ public class Knight extends Entity{
         }
         else if(status == Entity_Status.WALKING){
             batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY, width * 2, height * 2);
+        }
+        else if(status == Entity_Status.ATTACK){
+            if(attackStatus == Attack_Status.STAB){
+                batch.draw((TextureRegion) stabbing[index].getKeyFrame(stateTime, true), screenX, screenY, width * 2, height * 2);
+            }else if(attackStatus == Attack_Status.SHOOT){
+                batch.draw((TextureRegion) shootting[index].getKeyFrame(stateTime, true), screenX, screenY, width * 2, height * 2);
+            }
         }
     }
 }
