@@ -23,7 +23,6 @@ public class GameScreen implements Screen {
     // DI CHUYEN NHAN VAT
     public float speed;
     private Knight knight;
-    private Texture walking;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     public int roll;
@@ -35,7 +34,6 @@ public class GameScreen implements Screen {
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
-        walking = new Texture("basic/character/Walk.png");
     }
 
     @Override
@@ -49,7 +47,7 @@ public class GameScreen implements Screen {
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
         System.out.println(collsionLayer.getName());
         this.speed = 250;
-        this.knight = new Knight(walking, tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
+        this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
     }
 
     @Override

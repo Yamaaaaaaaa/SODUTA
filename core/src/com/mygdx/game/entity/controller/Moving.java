@@ -7,17 +7,19 @@ import com.mygdx.game.entity.Knight;
 public class Moving {
     Knight knight;
     public boolean upKey, downKey, leftKey, rightKey;
-
+    public boolean attack;
+    public boolean changeWeapon;
     private void move_update_Direction(){
         upKey = Gdx.input.isKeyPressed(Input.Keys.W);
         rightKey = Gdx.input.isKeyPressed(Input.Keys.D);
         leftKey = Gdx.input.isKeyPressed(Input.Keys.A);
         downKey = Gdx.input.isKeyPressed(Input.Keys.S);
 
-        if(!leftKey && !rightKey && !upKey && !downKey) {
-            knight.status = Entity_Status.IDLE;
-        }
-        else {
+        changeWeapon = Gdx.input.isKeyPressed(Input.Keys.J);
+
+        attack = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+
+        if(leftKey || rightKey || upKey || downKey) {
             knight.status = Entity_Status.WALKING;
             if(leftKey && !rightKey && upKey && !downKey) {
                 knight.direction = Direction.UPLEFT;
@@ -44,6 +46,17 @@ public class Moving {
                 knight.direction = Direction.DOWN;
             }
         }
+        else if(attack){
+            knight.status = Entity_Status.ATTACK;
+        }
+        else {
+            knight.status = Entity_Status.IDLE;
+        }
+
+        if(changeWeapon){
+            if(knight.attackStatus == Attack_Status.SHOOT) knight.attackStatus = Attack_Status.STAB;
+            else if(knight.attackStatus == Attack_Status.STAB) knight.attackStatus = Attack_Status.SHOOT;
+        }
     }
     private CheckCollision checkCollision;
     public Moving(Knight knight) {
@@ -53,7 +66,7 @@ public class Moving {
     public void move_Update_Location(){
         move_update_Direction();
 
-        if(knight.status != Entity_Status.IDLE){
+        if(knight.status == Entity_Status.WALKING){
             float oldX, oldY, x, y;
             oldX = x = knight.getX();
             oldY = y = knight.getY();
