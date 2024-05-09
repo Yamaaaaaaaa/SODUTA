@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.SpaceGame;
-import com.mygdx.game.entity.Knight;
+import com.mygdx.game.entity.model.Knight;
+import com.mygdx.game.entity.model.Monster;
 
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;
@@ -30,7 +30,8 @@ public class GameScreen implements Screen {
     private TiledMapTileLayer collsionLayer;
     private TmxMapLoader loader;
     private TiledMap map;
-
+// QUÁI VẬT:
+    private Monster monster;
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
@@ -48,6 +49,7 @@ public class GameScreen implements Screen {
         System.out.println(collsionLayer.getName());
         this.speed = 250;
         this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
+        this.monster = new Monster(tile_Size * 27, tile_Size * 27, this.speed, collsionLayer);
     }
 
     @Override
@@ -63,9 +65,14 @@ public class GameScreen implements Screen {
         renderer.render();
 
         knight.update();
+        monster.update();
+
 
         batch.begin();
+        monster.draw(batch, stateTime);
         knight.draw(batch, stateTime);
+
+
         batch.end();
     }
 
@@ -73,7 +80,6 @@ public class GameScreen implements Screen {
     public void resize(int width, int height) {
         camera.viewportWidth = width;
         camera.viewportHeight = height;
-
     }
 
     @Override
