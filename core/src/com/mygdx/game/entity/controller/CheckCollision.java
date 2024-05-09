@@ -1,63 +1,64 @@
 package com.mygdx.game.entity.controller;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.mygdx.game.entity.Knight;
+import com.mygdx.game.entity.model.Entity;
+import com.mygdx.game.entity.model.Knight;
 
 public class CheckCollision {
     // check collision version ngây thơ
-    private Knight knight;
+    private Entity entity;
     private String blockedKey = "blocked";
-    public CheckCollision(Knight knight) {
-        this.knight = knight;
+    public CheckCollision(Entity entity) {
+        this.entity = entity;
     }
 
     public void check(float delta, float oldX, float oldY) {
-        if (knight.direction == Direction.LEFT) {
+        if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
-                knight.setX(oldX);
+                entity.setX(oldX);
             }
-        } else if (knight.direction == Direction.RIGHT) {
+        } else if (entity.direction == Direction.RIGHT) {
             if(collidesRight()){
-                knight.setX(oldX);
+                entity.setX(oldX);
             }
-        }else if (knight.direction == Direction.UP) {
+        }else if (entity.direction == Direction.UP) {
             if(collidesTop()){
-                knight.setY(oldY);
+                entity.setY(oldY);
             }
-        }else if (knight.direction == Direction.DOWN) {
+        }else if (entity.direction == Direction.DOWN) {
             if(collidesBottom()){
-                knight.setY(oldY);
+                entity.setY(oldY);
             }
         }
 
-        else if (knight.direction == Direction.UPLEFT) {
+        else if (entity.direction == Direction.UPLEFT) {
             if(collidesTop()){
-                knight.setY(oldY);
+                entity.setY(oldY);
             }
             if(collidesLeft()){
-                knight.setX(oldX);
+                entity.setX(oldX);
             }
-        }else if (knight.direction == Direction.UPRIGHT) {
+        }else if (entity.direction == Direction.UPRIGHT) {
             if(collidesTop()){
-                knight.setY(oldY);
+                entity.setY(oldY);
             }
             if(collidesRight()){
-                knight.setX(oldX);
+                entity.setX(oldX);
             }
-        }else if (knight.direction == Direction.DOWNLEFT) {
+        }else if (entity.direction == Direction.DOWNLEFT) {
             if(collidesBottom()){
-                knight.setY(oldY);
+                entity.setY(oldY);
             }
             if(collidesLeft()){
-                knight.setX(oldX);
+                entity.setX(oldX);
             }
         }
-        else if (knight.direction == Direction.DOWNRIGHT) {
+        else if (entity.direction == Direction.DOWNRIGHT) {
             if(collidesBottom()){
-                knight.setY(oldY);
+                entity.setY(oldY);
             }
             if(collidesRight()){
-                knight.setX(oldX);
+                entity.setX(oldX);
             }
         }
     }
@@ -71,34 +72,34 @@ public class CheckCollision {
     // Explain: Cái hàm dưới, nó check cái Value của Property, nó có Key = "blocked" => Ta chỉ cần tạo cho nó 1 cái đấy là đc(vì chỉ check là null thôi mà)
     //id là cái ID của tile trong bản đồ(lúc mk tạo map bằng Tiled nó đã có, xem thêm ở file .tmx.
     private boolean isCellBlocked(float x, float y) {
-        TiledMapTileLayer.Cell cell = knight.collisionLayer.getCell((int) (x / knight.collisionLayer.getTileWidth()), (int) (y / knight.collisionLayer.getTileHeight()));
+        TiledMapTileLayer.Cell cell = entity.collisionLayer.getCell((int) (x / entity.collisionLayer.getTileWidth()), (int) (y / entity.collisionLayer.getTileHeight()));
         return cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(blockedKey);
     }
 
     public boolean collidesRight() {
-        for(float step = 0; step <= knight.getHeight(); step += (float) knight.collisionLayer.getTileHeight() / 2)
-            if(isCellBlocked(knight.getX() + knight.getWidth(), knight.getY() + step))
+        for(float step = 0; step <= entity.getHeight(); step += (float) entity.collisionLayer.getTileHeight() / 2)
+            if(isCellBlocked(entity.getX() + entity.getWidth(), entity.getY() + step))
                 return true;
         return false;
     }
 
     public boolean collidesLeft() {
-        for(float step = 0; step <= knight.getHeight(); step += knight.collisionLayer.getTileHeight() / 2)
-            if(isCellBlocked(knight.getX(), knight.getY() + step))
+        for(float step = 0; step <= entity.getHeight(); step += (float) entity.collisionLayer.getTileHeight() / 2)
+            if(isCellBlocked(entity.getX(), entity.getY() + step))
                 return true;
         return false;
     }
 
     public boolean collidesTop() {
-        for(float step = 0; step <= knight.getWidth(); step += knight.collisionLayer.getTileWidth() / 2)
-            if(isCellBlocked(knight.getX() + step, knight.getY() + knight.getHeight()))
+        for(float step = 0; step <= entity.getWidth(); step += (float) entity.collisionLayer.getTileWidth() / 2)
+            if(isCellBlocked(entity.getX() + step, entity.getY() + entity.getHeight()))
                 return true;
         return false;
     }
 
     public boolean collidesBottom() {
-        for(float step = 0; step <= knight.getWidth(); step += knight.collisionLayer.getTileWidth() / 2)
-            if(isCellBlocked(knight.getX() + step, knight.getY()))
+        for(float step = 0; step <= entity.getWidth(); step += (float) entity.collisionLayer.getTileWidth() / 2)
+            if(isCellBlocked(entity.getX() + step, entity.getY()))
                 return true;
         return false;
     }
