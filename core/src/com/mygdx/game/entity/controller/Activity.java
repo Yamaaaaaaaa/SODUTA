@@ -3,6 +3,7 @@ package com.mygdx.game.entity.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.entity.model.Entity;
+import com.mygdx.game.entity.model.Monster;
 
 public class Activity {
     private Entity entity;
@@ -67,8 +68,8 @@ public class Activity {
     public void move_Update_Location(int typeEntity){
         if(typeEntity == 0){ // Player
             move_update_Direction();
-
             if(entity.status == Entity_Status.WALKING){
+
                 float oldX, oldY, x, y;
                 oldX = x = entity.getX();
                 oldY = y = entity.getY();
@@ -109,7 +110,56 @@ public class Activity {
         }
         else if(typeEntity == 1) // Monster
         {
+            if(entity.direction_Static.equals("vertical")){
 
+                float oldX, oldY, x, y;
+
+                oldX = x = entity.getX();
+                oldY = y = entity.getY();
+                System.out.print(x + "---" + y + ": ");
+                if(entity.direction == Direction.UP){
+                    if(y >= entity.yMax){
+                        entity.direction = Direction.DOWN;
+                    }
+                    else{
+                        y += entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+                    }
+                }
+                else if(entity.direction == Direction.DOWN){
+                    ;
+                    if(y <= entity.yMin){
+                        entity.direction = Direction.DOWN;
+                    }
+                    else{
+                        System.out.println("oke");
+                        y -= entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+                    }
+                }
+                System.out.println(x + "-" + y);
+                entity.setPosision(x, y);
+            }
+            else if(entity.direction_Static.equals("horizontal")){
+                float oldX, oldY, x, y;
+                oldX = x = entity.getX();
+                oldY = y = entity.getY();
+                if(entity.direction == Direction.RIGHT){
+                    if(x >= entity.xMax){
+                        entity.direction = Direction.LEFT;
+                    }
+                    else{
+                        x += entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+                    }
+                }
+                else if(entity.direction == Direction.LEFT){
+                    if(x <= entity.xMin){
+                        entity.direction = Direction.RIGHT;
+                    }
+                    else{
+                        x -= entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+                    }
+                }
+                entity.setPosision(x, y);
+            }
         }
     }
 }
