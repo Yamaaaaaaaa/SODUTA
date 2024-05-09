@@ -35,6 +35,11 @@ public class Entity {
     public Entity_Status status;
     public Attack_Status attackStatus;
 
+    // Dành riêng cho quái
+
+        // SETTING DI CHUYỂN MẶC ĐỊNH TRONG MAP:
+        public String direction_Static;
+        public float xMin, yMin, xMax, yMax;
 
 
     // VA CHẠM

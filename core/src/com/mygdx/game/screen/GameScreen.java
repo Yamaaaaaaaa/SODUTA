@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
 //NHÂN VẬT:
     // DI CHUYEN NHAN VAT
     public float speed;
-    private Knight knight;
+    public Knight knight;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     public int roll;
@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
         System.out.println(collsionLayer.getName());
         this.speed = 250;
         this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
-        this.monster = new Monster(tile_Size * 27, tile_Size * 27, this.speed, collsionLayer);
+        this.monster = new Monster(32 * 15, 32 * 15, this.speed, collsionLayer, this,"vertical");
     }
 
     @Override
