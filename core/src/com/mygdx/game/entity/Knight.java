@@ -123,7 +123,8 @@ public class Knight extends Entity{
         else if(status == Entity_Status.WALKING){
             batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY, width * 2, height * 2);
         }
-        else if(status == Entity_Status.ATTACK){
+
+        if(status == Entity_Status.ATTACKING){
             if(attackStatus == Attack_Status.STAB){
                 batch.draw((TextureRegion) stabbing[index].getKeyFrame(stateTime, true), screenX, screenY, width * 2, height * 2);
             }else if(attackStatus == Attack_Status.SHOOT){

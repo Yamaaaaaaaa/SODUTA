@@ -45,17 +45,17 @@ public class Moving {
             else if(downKey){
                 knight.direction = Direction.DOWN;
             }
-        }
-        else if(attack){
-            knight.status = Entity_Status.ATTACK;
-        }
-        else {
+        } else if (attack) {
+            knight.status = Entity_Status.ATTACKING;
+        } else {
             knight.status = Entity_Status.IDLE;
         }
 
         if(changeWeapon){
-            if(knight.attackStatus == Attack_Status.SHOOT) knight.attackStatus = Attack_Status.STAB;
-            else if(knight.attackStatus == Attack_Status.STAB) knight.attackStatus = Attack_Status.SHOOT;
+           // if(knight.attackStatus == Attack_Status.NONE) knight.attackStatus = Attack_Status.STAB;
+           // else
+            if(knight.attackStatus == Attack_Status.STAB) knight.attackStatus = Attack_Status.SHOOT;
+            else if(knight.attackStatus == Attack_Status.SHOOT) knight.attackStatus = Attack_Status.STAB;
         }
     }
     private CheckCollision checkCollision;
