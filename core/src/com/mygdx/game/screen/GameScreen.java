@@ -16,7 +16,7 @@ import com.mygdx.game.entity.model.Monster;
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;
     private SpriteBatch batch;
-    private float stateTime;
+    private float stateTime = 0;
     private float tile_Size = 32;
 
 //NHÂN VẬT:
@@ -32,6 +32,9 @@ public class GameScreen implements Screen {
     private TiledMap map;
 // QUÁI VẬT:
     private Monster monster;
+    private int sprites_Counting = 0;
+    private int sprites_Num = 1;
+
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
@@ -46,17 +49,17 @@ public class GameScreen implements Screen {
    //     camera.zoom = .8f;
 
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
-        System.out.println(collsionLayer.getName());
+       // System.out.println(collsionLayer.getName());
         this.speed = 250;
         this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
-        this.monster = new Monster(32 * 15, 32 * 15, this.speed, collsionLayer, this,"vertical");
+        this.monster = new Monster(32 * 15, 32 * 15, 120, collsionLayer, this,"vertical");
     }
 
+    float cnt = 0;
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stateTime += delta;
         camera.position.x = knight.getX();
         camera.position.y = knight.getY();
         camera.update();
@@ -65,13 +68,16 @@ public class GameScreen implements Screen {
         renderer.render();
 
         knight.update();
-        monster.update();
 
+       // if(stateTime == cnt * 2){
+            monster.update();
+        //    cnt ++;
+       // }
+        stateTime += delta;
 
         batch.begin();
         monster.draw(batch, stateTime);
         knight.draw(batch, stateTime);
-
 
         batch.end();
     }

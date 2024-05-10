@@ -34,7 +34,6 @@ public class Monster extends Entity{
 
         this.gameScreen = gameScreen;
 
-
         //image
         this.texture_walking = new Texture("basic/Slimes/Slime_Medium_Blue.png");
      //   this.texture_shooting = new Texture("basic/character/Shoot.png");
@@ -77,12 +76,7 @@ public class Monster extends Entity{
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
 
-    public void setPosision(float x, float y){
-        this.setX(x);
-        this.setY(y);
-    }
     private void setAnimation(){
-
         walking = new Animation[10];
      //   stabbing = new Animation[10];
        // shootting = new Animation[10];
@@ -99,6 +93,7 @@ public class Monster extends Entity{
         }
     }
     public void update(){
+
         this.activity.move_Update_Location(1);
     }
     public void draw(SpriteBatch batch, float stateTime){
