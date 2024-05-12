@@ -1,4 +1,4 @@
-package com.mygdx.game.screen;
+package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -10,8 +10,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.SpaceGame;
-import com.mygdx.game.entity.model.Knight;
-import com.mygdx.game.entity.model.Monster;
+import com.mygdx.game.model.Knight;
+import com.mygdx.game.model.Monster;
 
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;

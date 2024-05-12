@@ -1,8 +1,7 @@
-package com.mygdx.game.entity.controller;
+package com.mygdx.game.controller;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.mygdx.game.entity.model.Entity;
-import com.mygdx.game.entity.model.Knight;
+import com.mygdx.game.model.Entity;
 
 public class CheckCollision {
     // check collision version ngây thơ

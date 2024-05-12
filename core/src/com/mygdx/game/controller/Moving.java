@@ -1,13 +1,13 @@
-package com.mygdx.game.entity.controller;
+package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.entity.model.Entity;
-import com.mygdx.game.entity.model.Monster;
+import com.mygdx.game.model.Attack_Status;
+import com.mygdx.game.model.Entity;
+import com.mygdx.game.model.Entity_Status;
 
-public class Activity {
+public class Moving {
     private Entity entity;
-
     public boolean upKey, downKey, leftKey, rightKey;
     public boolean attack;
     public boolean changeWeapon;
@@ -61,7 +61,7 @@ public class Activity {
         }
     }
     private CheckCollision checkCollision;
-    public Activity(Entity entity) {
+    public Moving(Entity entity) {
         this.entity = entity;
         this.checkCollision = new CheckCollision(this.entity);
     }

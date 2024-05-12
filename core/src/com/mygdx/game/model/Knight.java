@@ -1,14 +1,12 @@
-package com.mygdx.game.entity.model;
+package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.mygdx.game.entity.controller.Attack_Status;
-import com.mygdx.game.entity.controller.Direction;
-import com.mygdx.game.entity.controller.Entity_Status;
-import com.mygdx.game.entity.controller.Activity;
+import com.mygdx.game.controller.Direction;
+import com.mygdx.game.controller.Moving;
 
 public class Knight extends Entity {
     public float screenX = 400, screenY = 400; // Cái này chỉ riêng tk NV Chính có.
@@ -40,7 +38,7 @@ public class Knight extends Entity {
         this.setWidth(32);
         this.setHeight(32);
         this.setAnimation();
-        this.setActivity(new Activity(this));
+        this.setActivity(new Moving(this));
 
         //collsion:
         this.collisionLayer = collsionLayer;
@@ -67,7 +65,7 @@ public class Knight extends Entity {
         }
     }
     public void update(){
-        this.activity.move_Update_Location(0);
+        this.moving.move_Update_Location(0);
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;
