@@ -1,5 +1,6 @@
 package com.mygdx.game.entity.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -72,6 +73,9 @@ public class Monster extends Entity{
         //collsion:
         this.collisionLayer = collsionLayer;
 
+
+        // Path finding:
+        OnPath = true;
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
@@ -93,8 +97,94 @@ public class Monster extends Entity{
         }
     }
     public void update(){
+        if(OnPath == true){
+            int goalCol = 15;
+            int goalRow = 5;
+            searchPath(goalCol, goalRow);
+        }
+        else direction = Direction.DOWN;
 
-        this.activity.move_Update_Location(1);
+        float oldX, oldY, x, y;
+        oldX = x = this.getX();
+        oldY = y = this.getY();
+        // Vector2 oldPosition = new Vector2(x, y);
+        if(this.direction == Direction.UP){
+            y += this.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+        }
+        if(this.direction == Direction.DOWN){
+            y -= this.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+        }
+        if(this.direction == Direction.LEFT){
+            x -= this.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+        }
+        if(this.direction == Direction.RIGHT){
+            x += this.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
+        }
+        if(this.direction == Direction.UPLEFT){
+            y += this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+            x -= this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+        }
+        if(this.direction == Direction.UPRIGHT){
+            y += this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+            x += this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+        }
+        if(this.direction == Direction.DOWNLEFT){
+            y -= this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+            x -= this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+        }
+        if(this.direction == Direction.DOWNRIGHT){
+            y -= this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+            x += this.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
+        }
+
+        //  Vector2 newPosition = new Vector2(x, y);
+        this.setPosision(x, y);
+    }
+    public void searchPath(int goalCol, int goalRow){
+        int startCol = (int) ((this.getX()) / 32);
+        int startRow = (int) ((this.getY()) / 32);;
+
+        gameScreen.pathFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+        if(gameScreen.pathFinder.search()){
+            // next x, y;
+            int nextX = gameScreen.pathFinder.pathList.get(0).col + 32;
+            int nextY = gameScreen.pathFinder.pathList.get(0).row + 32;
+
+            if(this.getX() > nextX){
+                if(this.getY() > nextY){
+                    direction = Direction.DOWNLEFT;
+                }else if(this.getY() == nextY){
+                    direction = Direction.LEFT;
+                }else if(this.getY() < nextY){
+                    direction = Direction.UPLEFT;
+                }
+            }
+            else if(this.getX() == nextX){
+                if(this.getY() > nextY){
+                    direction = Direction.DOWN;
+                }else if(this.getY() == nextY){
+                    direction = Direction.DOWN;
+                }else if(this.getY() < nextY){
+                    direction = Direction.UP;
+                }
+            }
+            else{
+                if(this.getY() > nextY){
+                    direction = Direction.DOWNRIGHT;
+                }else if(this.getY() == nextY){
+                    direction = Direction.RIGHT;
+                }else if(this.getY() < nextY){
+                    direction = Direction.UPRIGHT;
+                }
+            }
+
+            // timf thay dich
+            int nextCol = gameScreen.pathFinder.pathList.get(0).col;
+            int nextRow = gameScreen.pathFinder.pathList.get(0).row;
+            if(nextCol == goalCol && nextRow == goalRow){
+                OnPath = false;
+            }
+        }
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;

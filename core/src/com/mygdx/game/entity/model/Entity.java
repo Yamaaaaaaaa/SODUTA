@@ -10,7 +10,6 @@ import com.mygdx.game.entity.controller.Entity_Status;
 import com.mygdx.game.entity.controller.Activity;
 
 public class Entity {
-
     private boolean collision = false;
 
     // SETTING BAN ĐẦU:
@@ -40,6 +39,8 @@ public class Entity {
         // SETTING DI CHUYỂN MẶC ĐỊNH TRONG MAP:
         public String direction_Static;
         public float xMin, yMin, xMax, yMax;
+        // Setting tìm đường đi.
+        public boolean OnPath;
 
 
     // VA CHẠM

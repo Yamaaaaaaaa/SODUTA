@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.SpaceGame;
+import com.mygdx.game.entity.ai.PathFinder;
 import com.mygdx.game.entity.model.Knight;
 import com.mygdx.game.entity.model.Monster;
 
@@ -27,13 +28,14 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     public int roll;
     // VA CHAM
-    private TiledMapTileLayer collsionLayer;
+    public TiledMapTileLayer collsionLayer;
     private TmxMapLoader loader;
     private TiledMap map;
 // QUÁI VẬT:
     private Monster monster;
     private int sprites_Counting = 0;
     private int sprites_Num = 1;
+    public PathFinder pathFinder;
 
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
@@ -53,9 +55,9 @@ public class GameScreen implements Screen {
         this.speed = 250;
         this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
         this.monster = new Monster(32 * 15, 32 * 15, 120, collsionLayer, this,"vertical");
+        pathFinder = new PathFinder(this);
     }
 
-    float cnt = 0;
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
