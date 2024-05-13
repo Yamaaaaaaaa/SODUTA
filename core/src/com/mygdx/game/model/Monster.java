@@ -1,10 +1,13 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Moving;
 import com.mygdx.game.view.GameScreen;
@@ -26,8 +29,7 @@ public class Monster extends Entity{
     // VA CHẠM
     public TiledMapTileLayer collisionLayer;
 
-    public Monster(float x, float y, float speed, TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
-
+    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
 
         //image
@@ -35,12 +37,10 @@ public class Monster extends Entity{
      //   this.texture_shooting = new Texture("basic/character/Shoot.png");
         //this.texture_stabbing = new Texture("basic/character/Stab.png");
         // position
-        this.setPosision(x,y);
-
-
+        this.setPlaceGen();
         //speed
-        this.setSpeed_Stright(speed);
-        this.setSpeed_Cross((float) Math.sqrt(speed * speed / 2));
+        this.setSpeed_Stright(120);
+        this.setSpeed_Cross((float) Math.sqrt(120*120 / 2));
 
         // first setting:
         this.direction_Static = direction_Static;
@@ -88,8 +88,13 @@ public class Monster extends Entity{
             idle[i] = region1[i][1];
         }
     }
-    public void update(){
-        this.moving.move_Update_Location(1);
+    public void update(float targetX, float targetY){
+        Vector2 res = new Vector2();
+        Vector2 targetVector = new Vector2(targetX - getX(), targetY - getY());
+
+            // Chỉ định hướng di chuyển dựa trên vector tới mục tiêu
+        res.set(targetVector).nor().scl(getSpeed_Stright());
+        setPosision(getX() + res.x*Gdx.graphics.getDeltaTime(), getY() + res.y* Gdx.graphics.getDeltaTime());
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;
@@ -104,7 +109,7 @@ public class Monster extends Entity{
 
        // System.out.println("Knight: (" + this.gameScreen.knight.getX() + "," + this.gameScreen.knight.getY() + ")  " + screenX + " - " + screenY);
         if(status == Entity_Status.IDLE){
-            batch.draw(idle[index], screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
+            batch.draw(idle[index], screenX, screenY,  this.getWidth()*2, this.getHeight()*2);
         }
         else if(status == Entity_Status.WALKING){
 
@@ -112,6 +117,19 @@ public class Monster extends Entity{
             // Còn cái tk này là nó phải set dựa vào vị trí của tk knight so với bản đồ nữa. => Lại phải toán à :vvvv
             batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
+    }
 
+    public void setPlaceGen(){
+        int rong = 600, cao = 600, kc = 100; // screen
+        int x = MathUtils.random(1, 4); // trái - phải
+        if(x == 1){
+            setPosision(kc, cao-kc);
+        }else if(x == 2){
+            setPosision(rong-kc, cao-kc);
+        } else if(x == 3){
+            setPosision(rong-kc, kc);
+        }else if(x == 4){
+            setPosision(kc, kc);
+        }
     }
 }
