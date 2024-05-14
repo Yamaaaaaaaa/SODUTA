@@ -9,9 +9,14 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
 import com.mygdx.game.model.Knight;
 import com.mygdx.game.model.Monster;
+
+import com.badlogic.gdx.utils.Array;
+import java.util.Iterator;
+
 
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;
@@ -31,9 +36,10 @@ public class GameScreen implements Screen {
     private TmxMapLoader loader;
     private TiledMap map;
 // QUÁI VẬT:
-    private Monster monster;
+    private Array<Monster> monsters ;
     private int sprites_Counting = 0;
     private int sprites_Num = 1;
+    private long timeGenBabyMonster;
 
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
@@ -52,7 +58,10 @@ public class GameScreen implements Screen {
        // System.out.println(collsionLayer.getName());
         this.speed = 250;
         this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
-        this.monster = new Monster(32 * 15, 32 * 15, 120, collsionLayer, this,"vertical");
+        monsters = new Array<Monster>();
+        Monster monster = new Monster(  collsionLayer, this,"vertical");
+        monsters.add(monster);
+        timeGenBabyMonster = (Long)TimeUtils.nanoTime();
     }
 
     float cnt = 0;
@@ -68,17 +77,22 @@ public class GameScreen implements Screen {
         renderer.render();
 
         knight.update();
+        if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000){
+            Monster monster = new Monster(  collsionLayer, this,"vertical");
+            monsters.add(monster);
+            timeGenBabyMonster = (Long)TimeUtils.nanoTime();
+        }
+ //       Monster monster = new Monster(  collsionLayer, this,"vertical");
 
-       // if(stateTime == cnt * 2){
-            monster.update();
-        //    cnt ++;
-       // }
+        for(Monster monster : monsters){
+            monster.update(knight.getX(), knight.getY());
+        }
         stateTime += delta;
-
         batch.begin();
-        monster.draw(batch, stateTime);
+        for(Monster monster : monsters){
+            monster.draw(batch, stateTime);
+        }
         knight.draw(batch, stateTime);
-
         batch.end();
     }
 
@@ -107,4 +121,6 @@ public class GameScreen implements Screen {
     public void dispose() {
 
     }
+
+
 }

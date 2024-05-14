@@ -22,8 +22,6 @@ public class Entity {
     // Kích thước
     private int width;
     private int height;
-
-
 // QUẢN LÝ HÀNH ĐỘNG
     public Moving moving;
     public Direction direction;
@@ -39,15 +37,6 @@ public class Entity {
 
 // VA CHẠM
     public TiledMapTileLayer collisionLayer;
-
-
-
-
-
-
-
-
-
 
 
     public Direction getDirection() {
