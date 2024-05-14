@@ -79,6 +79,7 @@ public class Player_Movement implements Movement {
     @Override
     public void move(Entity entity) {
         updateDirection(entity);
+        checkCollision = new CheckCollision(entity);
 
         if(entity.status == Entity_Status.WALKING){
 
