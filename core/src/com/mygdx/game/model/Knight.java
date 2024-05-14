@@ -1,9 +1,11 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
@@ -69,13 +71,15 @@ public class Knight extends Entity {
     public void update(){
         this.moving.move(this);
     }
-    public void draw(SpriteBatch batch, float stateTime){
+    public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
 
         if(direction == Direction.DOWN) index = 0;
         else if(direction == Direction.LEFT || direction == Direction.DOWNLEFT || direction == Direction.UPLEFT) index = 3;
         else if(direction == Direction.RIGHT || direction == Direction.DOWNRIGHT || direction == Direction.UPRIGHT) index = 2;
         else index = 1;
+
+        drawHealthBar(shapeRenderer, stateTime, screenX, screenY, index);
 
         if(status == Entity_Status.IDLE){
             batch.draw(idle[index], screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
@@ -91,5 +95,9 @@ public class Knight extends Entity {
                 batch.draw((TextureRegion) shootting[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
             }
         }
+    }
+    private void drawHealthBar(ShapeRenderer shapeRenderer, float stateTime, float screenX, float screenY, int index){
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.rect(screenX - 2, screenY + this.getHeight() * 2, this.getWidth() * 2 , 10);
     }
 }

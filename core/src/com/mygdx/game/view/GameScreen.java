@@ -95,7 +95,7 @@ public class GameScreen implements Screen {
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         batch.begin();
-        knight.draw(batch, stateTime);
+        knight.draw(batch, stateTime, shapeRenderer);
         for(Monster monster : monsters){
             monster.draw(batch, stateTime, shapeRenderer);
         }
