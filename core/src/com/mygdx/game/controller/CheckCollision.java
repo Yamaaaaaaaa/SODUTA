@@ -11,7 +11,8 @@ public class CheckCollision {
         this.entity = entity;
     }
 
-    public void check(float delta, float oldX, float oldY) {
+    public void check( float oldX, float oldY) {
+
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
                 entity.setX(oldX);
@@ -62,6 +63,20 @@ public class CheckCollision {
         }
     }
 
+    public void checkMonster( float oldX, float oldY) {
+        if(collidesLeft()){
+            entity.setX(oldX);
+        }
+        else if(collidesRight()){
+                entity.setX(oldX);
+            }
+            if(collidesTop()){
+                entity.setY(oldY);
+            }
+            else if(collidesBottom()){
+                entity.setY(oldY);
+            }
+    }
     // Cách làm: Tìm tới tệp chưa cái tile cần block, Thêm Phần code sau:
     //    <tile id="0">
     //        <properties>
@@ -77,29 +92,31 @@ public class CheckCollision {
 
     public boolean collidesRight() {
         for(float step = 0; step <= entity.getHeight(); step += (float) entity.collisionLayer.getTileHeight() / 2)
-            if(isCellBlocked(entity.getX() + entity.getWidth(), entity.getY() + step))
+            if(isCellBlocked(entity.getX() + entity.getWidth(), entity.getY() +step)) //+step
                 return true;
         return false;
     }
 
     public boolean collidesLeft() {
-        for(float step = 0; step <= entity.getHeight(); step += (float) entity.collisionLayer.getTileHeight() / 2)
-            if(isCellBlocked(entity.getX(), entity.getY() + step))
+        for(float step = 0; step <= entity.getHeight(); step += (float) entity.collisionLayer.getTileHeight() / 2) //
+            if(isCellBlocked(entity.getX(), entity.getY() +step ))
                 return true;
         return false;
     }
 
     public boolean collidesTop() {
         for(float step = 0; step <= entity.getWidth(); step += (float) entity.collisionLayer.getTileWidth() / 2)
-            if(isCellBlocked(entity.getX() + step, entity.getY() + entity.getHeight()))
-                return true;
+            if(isCellBlocked(entity.getX() + step , entity.getY() + entity.getHeight()))
+                return true;//+step
         return false;
     }
 
     public boolean collidesBottom() {
         for(float step = 0; step <= entity.getWidth(); step += (float) entity.collisionLayer.getTileWidth() / 2)
-            if(isCellBlocked(entity.getX() + step, entity.getY()))
+            if(isCellBlocked(entity.getX()+step , entity.getY()))
                 return true;
         return false;
     }
+
+
 }

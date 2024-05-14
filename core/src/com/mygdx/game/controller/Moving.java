@@ -2,6 +2,7 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.model.Attack_Status;
 import com.mygdx.game.model.Entity;
 import com.mygdx.game.model.Entity_Status;
@@ -66,6 +67,7 @@ public class Moving {
         this.checkCollision = new CheckCollision(this.entity);
     }
     public void move_Update_Location(int typeEntity){
+
         if(typeEntity == 0){ // Player
             move_update_Direction();
             if(entity.status == Entity_Status.WALKING){
@@ -105,7 +107,7 @@ public class Moving {
 
                 //  Vector2 newPosition = new Vector2(x, y);
                 entity.setPosision(x, y);
-                checkCollision.check(Gdx.graphics.getDeltaTime(), oldX, oldY);
+                checkCollision.check(oldX, oldY);
             }
         }
         else if(typeEntity == 1) // Monster
@@ -158,5 +160,13 @@ public class Moving {
                 entity.setPosision(x, y);
             }
         }
+    }
+    public void movingMonster(float targetX, float targetY){
+        float oldX = entity.getX(), oldY = entity.getY();
+        Vector2 res = new Vector2();
+        Vector2 targetVector = new Vector2(targetX - entity.getX(), targetY - entity.getY());
+        res.set(targetVector).nor().scl(entity.getSpeed_Stright());
+        entity.setPosision(entity.getX() + res.x*Gdx.graphics.getDeltaTime(), entity.getY() + res.y* Gdx.graphics.getDeltaTime());
+        checkCollision.check(oldX, oldY);
     }
 }

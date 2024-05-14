@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Moving;
 import com.mygdx.game.view.GameScreen;
@@ -32,7 +33,6 @@ public class Monster extends Entity{
     public Rectangle monsterSize;
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
-
         //image
         this.texture_walking = new Texture("basic/Slimes/Slime_Medium_Blue.png");
      //   this.texture_shooting = new Texture("basic/character/Shoot.png");
@@ -70,7 +70,6 @@ public class Monster extends Entity{
 
         //collsion:
         this.collisionLayer = collsionLayer;
-
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
@@ -92,12 +91,14 @@ public class Monster extends Entity{
         }
     }
     public void update(float targetX, float targetY){
+        float oldX = getX(), oldY = getY();
         Vector2 res = new Vector2();
         Vector2 targetVector = new Vector2(targetX - getX(), targetY - getY());
-
-            // Chỉ định hướng di chuyển dựa trên vector tới mục tiêu
         res.set(targetVector).nor().scl(getSpeed_Stright());
         setPosision(getX() + res.x*Gdx.graphics.getDeltaTime(), getY() + res.y* Gdx.graphics.getDeltaTime());
+        CheckCollision checkCollision = new CheckCollision(this);
+        checkCollision.checkMonster(oldX, oldY);
+        //this.moving.movingMonster(targetX, targetY);
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;
