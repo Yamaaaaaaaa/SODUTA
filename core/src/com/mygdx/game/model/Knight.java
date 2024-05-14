@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.controller.Direction;
-import com.mygdx.game.controller.Moving;
+import com.mygdx.game.controller.movement.Player_Movement;
 
 public class Knight extends Entity {
     public float screenX = 400, screenY = 400; // Cái này chỉ riêng tk NV Chính có.
@@ -21,24 +21,26 @@ public class Knight extends Entity {
     private TextureRegion[] idle; // Ta chỉ set 1 số ảnh để làm IDLE thôi, Ko cần 1 cái Standing riêng, vì nó sẽ bị giật giật khi chuyển qua lại các status.
 
     public Knight(float x, float y, float speed, TiledMapTileLayer collsionLayer) {
-        //image
+        // hinh anh
         this.texture_walking = new Texture("basic/character/Walk.png");
         this.texture_shooting = new Texture("basic/character/Shoot.png");
         this.texture_stabbing = new Texture("basic/character/Stab.png");
-        // position
+        // vij tri
         this.setPosision(x,y);
 
         //speed
         this.setSpeed_Stright(speed);
         this.setSpeed_Cross((float) Math.sqrt(speed * speed / 2));
 
-        // first setting:
+        // chieu cao, phuong huong, trang thai:
         direction = Direction.DOWN;
         status = Entity_Status.IDLE;
         this.setWidth(32);
         this.setHeight(32);
         this.setAnimation();
-        this.setActivity(new Moving(this));
+
+        // Gọi cái class qua lý di chuyển ra
+        this.moving = Player_Movement.getInstance();
 
         //collsion:
         this.collisionLayer = collsionLayer;
@@ -65,7 +67,7 @@ public class Knight extends Entity {
         }
     }
     public void update(){
-        this.moving.move_Update_Location(0);
+        this.moving.move(this);
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;

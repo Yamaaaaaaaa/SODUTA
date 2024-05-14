@@ -2,15 +2,14 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.controller.Direction;
+import com.mygdx.game.controller.Movement;
 import com.mygdx.game.controller.Moving;
 
 public class Entity {
-
     private boolean collision = false;
 
 // SETTING BAN ĐẦU:
-
-    // Setting Nhân Vật:
+    // Vị trí:
     private float x, y; // Vị trí trong bản đồ.
     public void setPosision(float x, float y){
         this.setX(x);
@@ -23,7 +22,7 @@ public class Entity {
     private int width;
     private int height;
 // QUẢN LÝ HÀNH ĐỘNG
-    public Moving moving;
+    public Movement moving;
     public Direction direction;
     public Entity_Status status;
     public Attack_Status attackStatus;
@@ -71,13 +70,6 @@ public class Entity {
         this.speed_Cross = speed_Cross;
     }
 
-    public Moving getActivity() {
-        return moving;
-    }
-
-    public void setActivity(Moving moving) {
-        this.moving = moving;
-    }
 
     public TiledMapTileLayer getCollisionLayer() {
         return collisionLayer;

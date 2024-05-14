@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.Direction;
-import com.mygdx.game.controller.Moving;
+import com.mygdx.game.controller.movement.Monster_Movement;
 import com.mygdx.game.view.GameScreen;
 
 public class Monster extends Entity{
@@ -63,11 +63,12 @@ public class Monster extends Entity{
         this.setWidth(32);
         this.setHeight(32);
         this.setAnimation();
-        this.setActivity(new Moving(this));
 
         //collsion:
         this.collisionLayer = collsionLayer;
 
+        // quanr ly di chuyen
+        this.moving = Monster_Movement.getInstance();
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
@@ -94,7 +95,7 @@ public class Monster extends Entity{
 
             // Chỉ định hướng di chuyển dựa trên vector tới mục tiêu
         res.set(targetVector).nor().scl(getSpeed_Stright());
-        setPosision(getX() + res.x*Gdx.graphics.getDeltaTime(), getY() + res.y* Gdx.graphics.getDeltaTime());
+        setPosision(this.getX() + res.x*Gdx.graphics.getDeltaTime(), this.getY() + res.y* Gdx.graphics.getDeltaTime());
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;
