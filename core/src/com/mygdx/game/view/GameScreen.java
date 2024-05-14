@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -40,10 +41,12 @@ public class GameScreen implements Screen {
     private int sprites_Counting = 0;
     private int sprites_Num = 1;
     private long timeGenBabyMonster;
+    public ShapeRenderer shapeRenderer;
 
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
+        this.shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -88,12 +91,17 @@ public class GameScreen implements Screen {
             monster.update(knight.getX(), knight.getY());
         }
         stateTime += delta;
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
+
         for(Monster monster : monsters){
             monster.draw(batch, stateTime);
+            shapeRenderer.rect(monster.monsterSize.x, monster.monsterSize.y, monster.monsterSize.width, monster.monsterSize.height);
         }
         knight.draw(batch, stateTime);
         batch.end();
+        shapeRenderer.end();
     }
 
     @Override

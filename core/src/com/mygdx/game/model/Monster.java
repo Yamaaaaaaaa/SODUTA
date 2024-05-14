@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Moving;
@@ -28,7 +29,7 @@ public class Monster extends Entity{
 
     // VA CHẠM
     public TiledMapTileLayer collisionLayer;
-
+    public Rectangle monsterSize;
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
 
@@ -36,7 +37,9 @@ public class Monster extends Entity{
         this.texture_walking = new Texture("basic/Slimes/Slime_Medium_Blue.png");
      //   this.texture_shooting = new Texture("basic/character/Shoot.png");
         //this.texture_stabbing = new Texture("basic/character/Stab.png");
-        // position
+
+        this.monsterSize = new Rectangle(0, 0, 32, 32);
+        // position, gen monster
         this.setPlaceGen();
         //speed
         this.setSpeed_Stright(120);
@@ -117,13 +120,16 @@ public class Monster extends Entity{
             // Còn cái tk này là nó phải set dựa vào vị trí của tk knight so với bản đồ nữa. => Lại phải toán à :vvvv
             batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
+        this.monsterSize.setX(screenX);
+        this.monsterSize.setY(screenY);
     }
 
     public void setPlaceGen(){
-        int rong = 600, cao = 600, kc = 100; // screen
+        float rong = 600, cao = 600, kc = 100; // screen
         int x = MathUtils.random(1, 4); // trái - phải
         if(x == 1){
             setPosision(kc, cao-kc);
+
         }else if(x == 2){
             setPosision(rong-kc, cao-kc);
         } else if(x == 3){
