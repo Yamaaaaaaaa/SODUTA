@@ -82,7 +82,6 @@ public class Player_Movement implements Movement {
         checkCollision = new CheckCollision(entity);
 
         if(entity.status == Entity_Status.WALKING){
-
             float oldX, oldY, x, y;
             oldX = x = entity.getX();
             oldY = y = entity.getY();

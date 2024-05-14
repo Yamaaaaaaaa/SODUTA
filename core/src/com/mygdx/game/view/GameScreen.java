@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -21,6 +22,7 @@ import java.util.Iterator;
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private float stateTime = 0;
     private float tile_Size = 32;
 
@@ -44,6 +46,7 @@ public class GameScreen implements Screen {
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
+        shapeRenderer = spaceGame.shapeRenderer;
     }
 
     @Override
@@ -76,6 +79,7 @@ public class GameScreen implements Screen {
         renderer.setView(camera);
         renderer.render();
 
+        //update
         knight.update();
         if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000){
             Monster monster = new Monster(  collsionLayer, this,"vertical");
@@ -83,17 +87,21 @@ public class GameScreen implements Screen {
             timeGenBabyMonster = (Long)TimeUtils.nanoTime();
         }
  //       Monster monster = new Monster(  collsionLayer, this,"vertical");
-
         for(Monster monster : monsters){
             monster.update(knight.getX(), knight.getY());
         }
         stateTime += delta;
+
+        //draw , shape trc, batch sau.
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         batch.begin();
-        for(Monster monster : monsters){
-            monster.draw(batch, stateTime);
-        }
         knight.draw(batch, stateTime);
+        for(Monster monster : monsters){
+            monster.draw(batch, stateTime, shapeRenderer);
+        }
         batch.end();
+        shapeRenderer.end();
+
     }
 
     @Override
