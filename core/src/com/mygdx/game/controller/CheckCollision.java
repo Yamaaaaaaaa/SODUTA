@@ -12,7 +12,6 @@ public class CheckCollision {
     }
 
     public void check( float oldX, float oldY) {
-
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
                 entity.setX(oldX);

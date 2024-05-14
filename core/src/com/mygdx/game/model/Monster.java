@@ -29,8 +29,8 @@ public class Monster extends Entity{
   //  private Animation[] stabbing;
 
     // VA CHẠM
-    public TiledMapTileLayer collisionLayer;
     public Rectangle monsterSize;
+    public CheckCollision checkCollision;
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
         //image
@@ -70,6 +70,7 @@ public class Monster extends Entity{
 
         //collsion:
         this.collisionLayer = collsionLayer;
+        checkCollision = new CheckCollision(this);
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
@@ -96,7 +97,6 @@ public class Monster extends Entity{
         Vector2 targetVector = new Vector2(targetX - getX(), targetY - getY());
         res.set(targetVector).nor().scl(getSpeed_Stright());
         setPosision(getX() + res.x*Gdx.graphics.getDeltaTime(), getY() + res.y* Gdx.graphics.getDeltaTime());
-        CheckCollision checkCollision = new CheckCollision(this);
         checkCollision.checkMonster(oldX, oldY);
         //this.moving.movingMonster(targetX, targetY);
     }

@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
        // System.out.println(collsionLayer.getName());
         this.speed = 250;
-        this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
+        this.knight = new Knight(tile_Size * 6,tile_Size * 6, this.speed, collsionLayer);
         monsters = new Array<Monster>();
         Monster monster = new Monster(  collsionLayer, this,"vertical");
         monsters.add(monster);
