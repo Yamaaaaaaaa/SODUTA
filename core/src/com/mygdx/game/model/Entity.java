@@ -3,7 +3,6 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Movement;
-import com.mygdx.game.controller.Moving;
 
 public class Entity {
     private boolean collision = false;
