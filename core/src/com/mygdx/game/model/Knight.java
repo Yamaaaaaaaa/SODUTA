@@ -22,6 +22,12 @@ public class Knight extends Entity {
     private Animation[] stabbing;
     private TextureRegion[] idle; // Ta chỉ set 1 số ảnh để làm IDLE thôi, Ko cần 1 cái Standing riêng, vì nó sẽ bị giật giật khi chuyển qua lại các status.
 
+    //Bullet:
+    public int bulletCounter = 20; // demo
+    public int bulletMax = 50;
+    // HP:
+    public int currentHp = 50;
+    public int maxHP = 100;
     public Knight(float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         // hinh anh
         this.texture_walking = new Texture("basic/character/Walk.png");
@@ -79,8 +85,6 @@ public class Knight extends Entity {
         else if(direction == Direction.RIGHT || direction == Direction.DOWNRIGHT || direction == Direction.UPRIGHT) index = 2;
         else index = 1;
 
-        drawHealthBar(shapeRenderer, stateTime, screenX, screenY, index);
-
         if(status == Entity_Status.IDLE){
             batch.draw(idle[index], screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
@@ -96,8 +100,5 @@ public class Knight extends Entity {
             }
         }
     }
-    private void drawHealthBar(ShapeRenderer shapeRenderer, float stateTime, float screenX, float screenY, int index){
-        shapeRenderer.setColor(Color.GREEN);
-        shapeRenderer.rect(screenX - 2, screenY + this.getHeight() * 2, this.getWidth() * 2 , 10);
-    }
+
 }
