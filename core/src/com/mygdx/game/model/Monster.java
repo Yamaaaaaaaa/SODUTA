@@ -33,7 +33,7 @@ public class Monster extends Entity{
         this.gameScreen = gameScreen;
 
         //image
-            this.texture_walking = new Texture("basic/Slimes/Slime_Medium_Blue.png");
+            this.texture_walking = new Texture("Apocalypse Character Pack/Zombie/Walk.png");
             //this.texture_shooting = new Texture("basic/character/Shoot.png");
             //this.texture_stabbing = new Texture("basic/character/Stab.png");
         // position
@@ -79,10 +79,10 @@ public class Monster extends Entity{
     }
 
     private void setAnimation(){
-        walking = new Animation[10];
+        walking = new Animation[15];
      //   stabbing = new Animation[10];
        // shootting = new Animation[10];
-        idle = new TextureRegion[10];
+        idle = new TextureRegion[15];
         TextureRegion[][] region1 = TextureRegion.split(this.texture_walking, this.getWidth(), this.getHeight());
      //   TextureRegion[][] region2 = TextureRegion.split(this.texture_stabbing, this.getWidth(), this.getHeight());
      //   TextureRegion[][] region3 = TextureRegion.split(this.texture_shooting, this.getWidth(), this.getHeight());
@@ -103,8 +103,8 @@ public class Monster extends Entity{
         int index;
         if(direction == Direction.DOWN) index = 0;
         else if(direction == Direction.LEFT || direction == Direction.DOWNLEFT || direction == Direction.UPLEFT) index = 3;
-        else if(direction == Direction.RIGHT || direction == Direction.DOWNRIGHT || direction == Direction.UPRIGHT) index = 1;
-        else index = 2;
+        else if(direction == Direction.RIGHT || direction == Direction.DOWNRIGHT || direction == Direction.UPRIGHT) index = 2;
+        else index = 1;
 
         //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
         float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
@@ -114,7 +114,7 @@ public class Monster extends Entity{
     }
     private void drawHealthBar(ShapeRenderer shapeRenderer, float stateTime, float screenX, float screenY, int index){
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(screenX, screenY + this.getHeight() * 2 - 10, this.getWidth() * 2 , 8);
+        shapeRenderer.rect(screenX, screenY + this.getHeight() * 2, this.getWidth() * 2 , 8);
     }
     private void drawMonster(SpriteBatch batch, float stateTime, float screenX, float screenY, int index){
         // System.out.println("Knight: (" + this.gameScreen.knight.getX() + "," + this.gameScreen.knight.getY() + ")  " + screenX + " - " + screenY);
