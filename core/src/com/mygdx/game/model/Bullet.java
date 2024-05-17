@@ -19,10 +19,10 @@ public class Bullet {
         this.y = y;
         this.speed = speed;
         this.direction = direction;
-        if(this.texture == null) this.texture = new Texture("basic/Bullet/Bullet_of.png");
+        //if(this.texture == null) this.texture = new Texture("basic/Bullet/Bullet_of.png");
     }
     public void render(SpriteBatch batch){
-        batch.draw(this.texture,x,y);
+        batch.draw(new Texture("basic/Bullet/Bullet_of.png"),x,y);
     }
     public void update(float deltaTime){
         if(this.direction == Direction.DOWN){
