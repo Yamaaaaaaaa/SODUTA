@@ -1,7 +1,10 @@
 package com.mygdx.game.controller;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.model.Entity;
+
+
 
 public class CheckCollision {
     // check collision version ngây thơ
@@ -11,7 +14,7 @@ public class CheckCollision {
         this.entity = entity;
     }
 
-    public void check(float delta, float oldX, float oldY) {
+    public void check( float oldX, float oldY) {
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
                 entity.setX(oldX);
@@ -61,6 +64,36 @@ public class CheckCollision {
             }
         }
     }
+    public void checkCollisionMonsterWithMap( float oldX, float oldY) {
+            if(collidesLeft()){
+                entity.setX(oldX);
+            }
+            if(collidesRight()){
+                entity.setX(oldX);
+            }
+            if(collidesTop()){
+                entity.setY(oldY);
+            }
+            if(collidesBottom()){
+                entity.setY(oldY);
+            }
+    }
+    public boolean checkCollisionBulletWithMap() {
+            if(collidesLeft()){
+                return true;
+            }
+            if(collidesRight()){
+                return true;
+            }
+            if(collidesTop()){
+                return true;
+            }
+            if(collidesBottom()){
+                return true;
+            }
+            return false;
+    }
+
 
     // Cách làm: Tìm tới tệp chưa cái tile cần block, Thêm Phần code sau:
     //    <tile id="0">
@@ -102,4 +135,5 @@ public class CheckCollision {
                 return true;
         return false;
     }
+
 }

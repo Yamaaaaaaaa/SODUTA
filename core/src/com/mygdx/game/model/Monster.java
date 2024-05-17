@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Monster_Movement;
 import com.mygdx.game.view.GameScreen;
@@ -28,9 +29,6 @@ public class Monster extends Entity{
    // private Animation[] shootting;
   //  private Animation[] stabbing;
 
-    // VA CHẠM
-    public TiledMapTileLayer collisionLayer;
-
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
 
@@ -41,8 +39,8 @@ public class Monster extends Entity{
         // position
             this.setPlaceGen();
         //speed
-            this.setSpeed_Stright(120);
-            this.setSpeed_Cross((float) Math.sqrt(120*120 / 2));
+            this.setSpeed_Stright(80);
+            this.setSpeed_Cross((float) Math.sqrt(80*80 / 2));
 
         // first setting:
         this.direction_Static = direction_Static;
@@ -96,12 +94,14 @@ public class Monster extends Entity{
         }
     }
     public void update(float targetX, float targetY){
+        float oldx = getX(), oldy = getY();
         Vector2 res = new Vector2();
         Vector2 targetVector = new Vector2(targetX - getX(), targetY - getY());
-
             // Chỉ định hướng di chuyển dựa trên vector tới mục tiêu
         res.set(targetVector).nor().scl(getSpeed_Stright());
         setPosision(this.getX() + res.x*Gdx.graphics.getDeltaTime(), this.getY() + res.y* Gdx.graphics.getDeltaTime());
+        CheckCollision checkCollision = new CheckCollision(this);
+        checkCollision.checkCollisionMonsterWithMap(oldx, oldy);
     }
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
@@ -115,6 +115,8 @@ public class Monster extends Entity{
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
         drawHealthBar(shapeRenderer, stateTime, screenX, screenY, index);
         drawMonster(batch, stateTime, screenX, screenY, index);
+        rectangle.y = screenY;
+        rectangle.x = screenX;
     }
     private void drawHealthBar(ShapeRenderer shapeRenderer, float stateTime, float screenX, float screenY, int index){
         shapeRenderer.setColor(Color.RED);

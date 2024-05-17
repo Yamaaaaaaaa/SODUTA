@@ -117,7 +117,7 @@ public class Player_Movement implements Movement {
 
             //  Vector2 newPosition = new Vector2(x, y);
             entity.setPosision(x, y);
-            checkCollision.check(Gdx.graphics.getDeltaTime(), oldX, oldY);
+            checkCollision.check(oldX, oldY);
         }
     }
 }

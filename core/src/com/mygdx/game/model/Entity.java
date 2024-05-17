@@ -1,8 +1,10 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Movement;
+
 
 public class Entity {
     private boolean collision = false;
@@ -20,6 +22,7 @@ public class Entity {
     // Kích thước
     private int width;
     private int height;
+    public Rectangle rectangle = new Rectangle();
 // QUẢN LÝ HÀNH ĐỘNG
     public Movement moving;
     public Direction direction;
@@ -89,6 +92,7 @@ public class Entity {
 
     public void setX(float x) {
         this.x = x;
+        //this.rectangle.x = (int)x;
     }
 
     public float getY() {
@@ -97,6 +101,7 @@ public class Entity {
 
     public void setY(float y) {
         this.y = y;
+        //this.rectangle.y = (int)y;
     }
 
     public int getWidth() {
@@ -105,6 +110,7 @@ public class Entity {
 
     public void setWidth(int width) {
         this.width = width;
+        this.rectangle.width = width;
     }
 
     public int getHeight() {
@@ -113,9 +119,8 @@ public class Entity {
 
     public void setHeight(int height) {
         this.height = height;
+        this.rectangle.height = height;
     }
-
-
 
     public boolean isCollision() {
         return collision;
@@ -125,5 +130,11 @@ public class Entity {
         this.collision = collision;
     }
 
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 }

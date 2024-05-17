@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.model.Attack_Status;
 import com.mygdx.game.model.Bullet;
@@ -44,7 +45,7 @@ public class GameScreen implements Screen {
     private TmxMapLoader loader;
     private TiledMap map;
 // QUÁI VẬT:
-    private Array<Monster> monsters ;
+    private ArrayList<Monster> monsters ;
     private int sprites_Counting = 0;
     private int sprites_Num = 1;
     private long timeGenBabyMonster;
@@ -68,7 +69,7 @@ public class GameScreen implements Screen {
        // System.out.println(collsionLayer.getName());
         this.speed = 250;
         this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
-        monsters = new Array<Monster>();
+        monsters = new ArrayList<>();
         Monster monster = new Monster( collsionLayer, this,"vertical");
         monsters.add(monster);
         timeGenBabyMonster = (Long)TimeUtils.nanoTime();
@@ -83,10 +84,10 @@ public class GameScreen implements Screen {
         //
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && knight.attackStatus == Attack_Status.SHOOT){
-            if(knight.direction == Direction.DOWN) knight.bullets.add(new Bullet(knight.screenX + 20,knight.screenY - 20,500,knight.direction));
-            else if(knight.direction == Direction.UP) knight.bullets.add(new Bullet(knight.screenX + 20,knight.screenY + 50,500,knight.direction));
-            else if(knight.direction == Direction.RIGHT || knight.direction == Direction.DOWNRIGHT || knight.direction == Direction.UPRIGHT) knight.bullets.add(new Bullet(knight.screenX + 50,knight.screenY + 10,500,knight.direction));
-            else if(knight.direction == Direction.LEFT || knight.direction == Direction.DOWNLEFT || knight.direction == Direction.UPLEFT) knight.bullets.add(new Bullet(knight.screenX - 20,knight.screenY + 10,500,knight.direction));
+            if(knight.direction == Direction.DOWN) knight.bullets.add(new Bullet(knight.screenX + 20,knight.screenY - 20,500,knight.direction, collsionLayer));
+            else if(knight.direction == Direction.UP) knight.bullets.add(new Bullet(knight.screenX + 20,knight.screenY + 50,500,knight.direction, collsionLayer));
+            else if(knight.direction == Direction.RIGHT || knight.direction == Direction.DOWNRIGHT || knight.direction == Direction.UPRIGHT) knight.bullets.add(new Bullet(knight.screenX + 50,knight.screenY + 10,500,knight.direction, collsionLayer));
+            else if(knight.direction == Direction.LEFT || knight.direction == Direction.DOWNLEFT || knight.direction == Direction.UPLEFT) knight.bullets.add(new Bullet(knight.screenX - 20,knight.screenY + 10,500,knight.direction, collsionLayer));
         }
 
         // update Bullet cho sung
@@ -107,18 +108,40 @@ public class GameScreen implements Screen {
 
         //update
         knight.update();
-        if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000){
+        //TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000
+        if (monsters.size() < 3){
             Monster monster = new Monster(  collsionLayer, this,"vertical");
             monsters.add(monster);
             timeGenBabyMonster = (Long)TimeUtils.nanoTime();
         }
         statusUI.update();
- //       Monster monster = new Monster(  collsionLayer, this,"vertical");
+
         for(Monster monster : monsters){
             monster.update(knight.getX(), knight.getY());
         }
         stateTime += delta;
-
+        // check va cham đạn và monster
+        ArrayList<Monster> rejMons = new ArrayList<Monster>();
+        ArrayList<Bullet> rejBullet = new ArrayList<Bullet>();
+        for(Monster monster : monsters){
+            for(Bullet bullet : knight.bullets){
+                if(monster.getRectangle().overlaps( bullet.rectangle)){
+                    rejMons.add(monster);
+                    rejBullet.add(bullet);
+                }
+            }
+        }
+        //System.out.println(rejMons.size() + "  " + rejBullet.size());
+        monsters.removeAll(rejMons);
+        knight.bullets.removeAll(rejBullet);
+        /*ArrayList<Bullet> reBullet = new ArrayList<Bullet>();
+        for(Bullet bullet : knight.bullets){
+            CheckCollision checkBullet = new CheckCollision(bullet);
+            if(checkBullet.checkCollisionBulletWithMap()){
+                reBullet.add(bullet);
+            }
+        }
+        knight.bullets.removeAll(reBullet);*/
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         batch.begin();
