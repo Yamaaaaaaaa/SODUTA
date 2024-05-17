@@ -12,7 +12,6 @@ public class CheckCollision {
     }
 
     public void checkCollisionKnightWithMap( float oldX, float oldY) {
-
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
                 entity.setX(oldX);
@@ -30,7 +29,6 @@ public class CheckCollision {
                 entity.setY(oldY);
             }
         }
-
         else if (entity.direction == Direction.UPLEFT) {
             if(collidesTop()){
                 entity.setY(oldY);
@@ -77,6 +75,7 @@ public class CheckCollision {
         } else if(collidesBottom()){
              entity.setY(oldY);
         }
+
     }
     // Cách làm: Tìm tới tệp chưa cái tile cần block, Thêm Phần code sau:
     //    <tile id="0">

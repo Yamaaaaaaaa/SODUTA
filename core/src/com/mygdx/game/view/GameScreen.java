@@ -93,10 +93,10 @@ public class GameScreen implements Screen {
 
         for(Monster monster : monsters){
             monster.draw(batch, stateTime);
-            shapeRenderer.rect(monster.monsterSize.x, monster.monsterSize.y, monster.monsterSize.width, monster.monsterSize.height);
+            shapeRenderer.rect(monster.getRectangle().getX(), monster.getRectangle().getY(), monster.getWidth(), monster.getHeight());
         }
         knight.draw(batch, stateTime);
-
+        shapeRenderer.rect(knight.getRectangle().getX(), knight.getRectangle().getY(),knight.getWidth(), knight.getHeight());
         batch.end();
         shapeRenderer.end();
     }
@@ -111,6 +111,8 @@ public class GameScreen implements Screen {
     public void pause() {
 
     }
+
+
 
     @Override
     public void resume() {

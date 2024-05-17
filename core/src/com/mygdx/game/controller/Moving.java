@@ -12,6 +12,8 @@ public class Moving {
     public boolean upKey, downKey, leftKey, rightKey;
     public boolean attack;
     public boolean changeWeapon;
+    private CheckCollision checkCollision;
+
     private void move_update_Direction(){
         upKey = Gdx.input.isKeyPressed(Input.Keys.W);
         rightKey = Gdx.input.isKeyPressed(Input.Keys.D);
@@ -61,17 +63,15 @@ public class Moving {
             else if(entity.attackStatus == Attack_Status.SHOOT) entity.attackStatus = Attack_Status.STAB;
         }
     }
-    private CheckCollision checkCollision;
+
     public Moving(Entity entity) {
         this.entity = entity;
         this.checkCollision = new CheckCollision(this.entity);
     }
     public void move_Update_Location(int typeEntity){
-
         if(typeEntity == 0){ // Player
             move_update_Direction();
             if(entity.status == Entity_Status.WALKING){
-
                 float oldX, oldY, x, y;
                 oldX = x = entity.getX();
                 oldY = y = entity.getY();
@@ -104,63 +104,13 @@ public class Moving {
                     y -= entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
                     x += entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime();
                 }
-
-                //  Vector2 newPosition = new Vector2(x, y);
                 entity.setPosision(x, y);
                 checkCollision.checkCollisionKnightWithMap(oldX, oldY);
             }
         }
-        else if(typeEntity == 1) // Monster
-        {
-            if(entity.direction_Static.equals("vertical")){
-                float oldX, oldY, x, y;
-                oldX = x = entity.getX();
-                oldY = y = entity.getY();
 
-                if(entity.direction == Direction.UP){
-                    if(y >= entity.yMax){
-                        entity.direction = Direction.DOWN;
-                    }
-                    else{
-                        y += entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
-                    }
-                }
-                else if(entity.direction == Direction.DOWN){
-                    ;
-                    if(y <= entity.yMin){
-                        entity.direction = Direction.UP;
-                    }
-                    else{
-                        y -= entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
-                    }
-                }
-
-                entity.setPosision(x, y);
-            }
-            else if(entity.direction_Static.equals("horizontal")){
-                float oldX, oldY, x, y;
-                oldX = x = entity.getX();
-                oldY = y = entity.getY();
-                if(entity.direction == Direction.RIGHT){
-                    if(x >= entity.xMax){
-                        entity.direction = Direction.LEFT;
-                    }
-                    else{
-                        x += entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
-                    }
-                }
-                else if(entity.direction == Direction.LEFT){
-                    if(x <= entity.xMin){
-                        entity.direction = Direction.RIGHT;
-                    }
-                    else{
-                        x -= entity.getSpeed_Stright() * Gdx.graphics.getDeltaTime();
-                    }
-                }
-                entity.setPosision(x, y);
-            }
-        }
     }
+
 
     public void movingMonster(float targetX, float targetY){
         float oldX = entity.getX(), oldY = entity.getY();

@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Moving;
 
@@ -23,6 +24,7 @@ public class Entity {
     private int width;
     private int height;
     private int blood;
+    public Rectangle rectangle = new Rectangle() ;
 // QUẢN LÝ HÀNH ĐỘNG
     public Moving moving;
     public Direction direction;
@@ -107,6 +109,7 @@ public class Entity {
 
     public void setX(float x) {
         this.x = x;
+        //this.rectangle.y = y;
     }
 
     public float getY() {
@@ -115,6 +118,7 @@ public class Entity {
 
     public void setY(float y) {
         this.y = y;
+        //this.rectangle.y = y;
     }
 
     public int getWidth() {
@@ -144,4 +148,13 @@ public class Entity {
     }
 
 
+
+    public void setRectangle(int width, int height) {
+        this.rectangle.height = height;
+        this.rectangle.width = width;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 }

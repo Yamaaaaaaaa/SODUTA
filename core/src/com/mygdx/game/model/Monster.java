@@ -16,7 +16,6 @@ public class Monster extends Entity{
     public GameScreen gameScreen;
     // ROLLS:
     private Texture texture_walking;
-    private Texture rectangle;
   //  private Texture texture_shooting;
    // private Texture texture_stabbing;
     private Animation[] walking;
@@ -27,7 +26,7 @@ public class Monster extends Entity{
    // private Animation[] shootting;
   //  private Animation[] stabbing;
     // VA CHẠM
-    public Rectangle monsterSize;
+
     public Monster(TiledMapTileLayer collisionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
         this.setWidth(32);
@@ -37,9 +36,8 @@ public class Monster extends Entity{
         this.setSpeed_Cross((float) Math.sqrt(80*80 / 2));
         this.collisionLayer = collisionLayer;
         this.setPlaceGen();
-        this.monsterSize = new Rectangle(getX(), getY(), 32, 32); // đặt sau setPlaceGen();
+        this.setRectangle(getWidth(), getHeight());
         //image
-        rectangle = new Texture("basic/Slimes/test.png");
         this.texture_walking = new Texture("basic/Slimes/Slime_Medium_Red.png");
      //   this.texture_shooting = new Texture("basic/character/Shoot.png");
         //this.texture_stabbing = new Texture("basic/character/Stab.png");
@@ -105,13 +103,12 @@ public class Monster extends Entity{
             // Khác 1 chút so với Knight, Khi knight nó luôn ở giữa màn hinhf.
             // Còn cái tk này là nó phải set dựa vào vị trí của tk knight so với bản đồ nữa. => Lại phải toán à :vvvv
             batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth()*2, this.getHeight()*2);
-            //batch.draw(rectangle, screenX, screenY,  this.getWidth(), this.getHeight());
-
         }
        // batch.draw(rectangle, screenX, screenY, 32, 32);
-        this.monsterSize.setX(screenX);
-        this.monsterSize.setY(screenY);
+        this.getRectangle().setX(screenX);
+        this.getRectangle().setY(screenY);
     }
+
 
     public void setPlaceGen(){ // sinh random 4 góc
         float rong = 600, cao = 600, kc = 100; // screen

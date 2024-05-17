@@ -27,7 +27,7 @@ public class Knight extends Entity {
         this.texture_stabbing = new Texture("basic/character/Stab.png");
         // position
         this.setPosision(x,y);
-
+        this.setRectangle(getWidth(), getHeight());
         //speed
         this.setSpeed_Stright(speed);
         this.setSpeed_Cross((float) Math.sqrt(speed * speed / 2));
@@ -68,6 +68,8 @@ public class Knight extends Entity {
         this.moving.move_Update_Location(0);
     }
     public void draw(SpriteBatch batch, float stateTime){
+        this.getRectangle().setX(screenX);
+        this.getRectangle().setY(screenY);
         int index;
         if(direction == Direction.DOWN) index = 0;
         else if(direction == Direction.LEFT || direction == Direction.DOWNLEFT || direction == Direction.UPLEFT) index = 3;
@@ -80,6 +82,8 @@ public class Knight extends Entity {
         else if(status == Entity_Status.WALKING){
             batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
+
+
 
         if(status == Entity_Status.ATTACKING){
             if(attackStatus == Attack_Status.STAB){
