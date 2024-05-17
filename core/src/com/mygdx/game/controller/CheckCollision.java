@@ -11,7 +11,11 @@ public class CheckCollision {
         this.entity = entity;
     }
 
+<<<<<<< HEAD
     public void checkCollisionKnightWithMap( float oldX, float oldY) {
+=======
+    public void check( float oldX, float oldY) {
+>>>>>>> 3e066b797d8e85c66dbe914fdbf6c8f85c7d9fd8
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
                 entity.setX(oldX);

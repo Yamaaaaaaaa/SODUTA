@@ -41,7 +41,6 @@ public class Entity {
 // VA CHẠM
     public TiledMapTileLayer collisionLayer;
 
-
     public Direction getDirection() {
         return direction;
     }
