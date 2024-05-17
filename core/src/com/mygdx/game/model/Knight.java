@@ -10,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
 
+import java.util.ArrayList;
+
 public class Knight extends Entity {
     public float screenX = 400, screenY = 400; // Cái này chỉ riêng tk NV Chính có.
 
@@ -25,10 +27,12 @@ public class Knight extends Entity {
     //Bullet:
     public int bulletCounter = 20; // demo
     public int bulletMax = 50;
+    public ArrayList<Bullet> bullets;
     // HP:
     public int currentHp = 50;
     public int maxHP = 100;
     public Knight(float x, float y, float speed, TiledMapTileLayer collsionLayer) {
+        bullets = new ArrayList<Bullet>();
         // hinh anh
         this.texture_walking = new Texture("basic/character/Walk.png");
         this.texture_shooting = new Texture("basic/character/Shoot.png");
