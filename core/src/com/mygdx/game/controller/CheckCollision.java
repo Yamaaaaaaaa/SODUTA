@@ -68,14 +68,15 @@ public class CheckCollision {
             entity.setX(oldX);
         }
         else if(collidesRight()){
-                entity.setX(oldX);
-            }
-            if(collidesTop()){
-                entity.setY(oldY);
-            }
-            else if(collidesBottom()){
-                entity.setY(oldY);
-            }
+            entity.setX(oldX);
+        }
+
+        if(collidesTop()){
+            entity.setY(oldY);
+
+        } else if(collidesBottom()){
+             entity.setY(oldY);
+        }
     }
     // Cách làm: Tìm tới tệp chưa cái tile cần block, Thêm Phần code sau:
     //    <tile id="0">

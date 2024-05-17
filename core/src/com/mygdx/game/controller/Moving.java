@@ -161,6 +161,7 @@ public class Moving {
             }
         }
     }
+
     public void movingMonster(float targetX, float targetY){
         float oldX = entity.getX(), oldY = entity.getY();
         Vector2 res = new Vector2();
