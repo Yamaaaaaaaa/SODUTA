@@ -32,7 +32,7 @@ public class Player_Movement implements Movement {
 
         changeWeapon = Gdx.input.isKeyJustPressed(Input.Keys.J);
 
-        attack = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        attack = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
 
         if(leftKey || rightKey || upKey || downKey) {
             entity.status = Entity_Status.WALKING;

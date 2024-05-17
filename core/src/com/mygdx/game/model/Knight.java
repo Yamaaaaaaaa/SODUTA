@@ -61,7 +61,7 @@ public class Knight extends Entity {
         this.attackStatus = Attack_Status.SHOOT; // Mặc định là ban đầu sẽ chém
     }
 
-
+    TextureRegion[][] region3;
     private void setAnimation(){
         walking = new Animation[10];
         stabbing = new Animation[10];
@@ -70,7 +70,7 @@ public class Knight extends Entity {
         idle = new TextureRegion[10];
         TextureRegion[][] region1 = TextureRegion.split(this.texture_walking, this.getWidth(), this.getHeight());
         TextureRegion[][] region2 = TextureRegion.split(this.texture_stabbing, this.getWidth(), this.getHeight());
-        TextureRegion[][] region3 = TextureRegion.split(this.texture_shooting, this.getWidth(), this.getHeight());
+        region3 = TextureRegion.split(this.texture_shooting, this.getWidth(), this.getHeight());
 
         for(int i = 0; i < 4; ++i){
             walking[i] = new Animation(0.2f, region1[i]);
@@ -80,15 +80,9 @@ public class Knight extends Entity {
             idle[i] = region1[i][1];
         }
     }
-    public void update(float delta){
+    public void update(){
         this.moving.move(this);
-        // update Bullet
-        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
-        for(Bullet bullet : bullets){
-            bullet.update(delta);
-            if(bullet.remove) bulletToRemove.add(bullet);
-        }
-        bullets.removeAll(bulletToRemove);
+
     }
     public void draw(SpriteBatch batch, float stateTime){
 
@@ -110,11 +104,8 @@ public class Knight extends Entity {
             if(attackStatus == Attack_Status.STAB){
                 batch.draw((TextureRegion) stabbing[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
             }else if(attackStatus == Attack_Status.SHOOT){
-                if(index == 0) bullets.add(new Bullet(screenX + 20,screenY - 20,1000,direction));
-                if(index == 1) bullets.add(new Bullet(screenX + 20,screenY + 50,1000,direction));
-                if(index == 2) bullets.add(new Bullet(screenX + 50,screenY + 10,1000,direction));
-                if(index == 3) bullets.add(new Bullet(screenX - 20,screenY + 10,1000,direction));
-                batch.draw((TextureRegion) shootting[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
+
+                batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
 
             }
         }
