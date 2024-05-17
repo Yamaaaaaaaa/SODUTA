@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Moving;
 import com.mygdx.game.view.GameScreen;
@@ -18,6 +16,7 @@ public class Monster extends Entity{
     public GameScreen gameScreen;
     // ROLLS:
     private Texture texture_walking;
+    private Texture rectangle;
   //  private Texture texture_shooting;
    // private Texture texture_stabbing;
     private Animation[] walking;
@@ -27,23 +26,23 @@ public class Monster extends Entity{
     public Attack_Status attackStatus;
    // private Animation[] shootting;
   //  private Animation[] stabbing;
-
     // VA CHẠM
-    public TiledMapTileLayer collisionLayer;
     public Rectangle monsterSize;
-    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
+    public Monster(TiledMapTileLayer collisionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
+        this.setWidth(32);
+        this.setHeight(32);
+        this.setBlood(100);
+        this.setSpeed_Stright(80);
+        this.setSpeed_Cross((float) Math.sqrt(80*80 / 2));
+        this.collisionLayer = collisionLayer;
+        this.setPlaceGen();
+        this.monsterSize = new Rectangle(getX(), getY(), 32, 32); // đặt sau setPlaceGen();
         //image
-        this.texture_walking = new Texture("basic/Slimes/Slime_Medium_Blue.png");
+        rectangle = new Texture("basic/Slimes/test.png");
+        this.texture_walking = new Texture("basic/Slimes/Slime_Medium_Red.png");
      //   this.texture_shooting = new Texture("basic/character/Shoot.png");
         //this.texture_stabbing = new Texture("basic/character/Stab.png");
-
-        this.monsterSize = new Rectangle(0, 0, 32, 32);
-        // position, gen monster
-        this.setPlaceGen();
-        //speed
-        this.setSpeed_Stright(120);
-        this.setSpeed_Cross((float) Math.sqrt(120*120 / 2));
 
         // first setting:
         this.direction_Static = direction_Static;
@@ -61,15 +60,9 @@ public class Monster extends Entity{
             this.xMax = this.getX() + 32;
             this.yMax = this.getY();
         }
-
         status = Entity_Status.WALKING;
-        this.setWidth(32);
-        this.setHeight(32);
         this.setAnimation();
         this.setActivity(new Moving(this));
-
-        //collsion:
-        this.collisionLayer = collsionLayer;
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
@@ -91,14 +84,7 @@ public class Monster extends Entity{
         }
     }
     public void update(float targetX, float targetY){
-        float oldX = getX(), oldY = getY();
-        Vector2 res = new Vector2();
-        Vector2 targetVector = new Vector2(targetX - getX(), targetY - getY());
-        res.set(targetVector).nor().scl(getSpeed_Stright());
-        setPosision(getX() + res.x*Gdx.graphics.getDeltaTime(), getY() + res.y* Gdx.graphics.getDeltaTime());
-        CheckCollision checkCollision = new CheckCollision(this);
-        checkCollision.checkMonster(oldX, oldY);
-        //this.moving.movingMonster(targetX, targetY);
+        this.moving.movingMonster(targetX, targetY);
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;
@@ -113,19 +99,21 @@ public class Monster extends Entity{
 
        // System.out.println("Knight: (" + this.gameScreen.knight.getX() + "," + this.gameScreen.knight.getY() + ")  " + screenX + " - " + screenY);
         if(status == Entity_Status.IDLE){
-            batch.draw(idle[index], screenX, screenY,  this.getWidth()*2, this.getHeight()*2);
+            batch.draw(idle[index], screenX, screenY,  this.getWidth()*2, this.getHeight()*32);
         }
         else if(status == Entity_Status.WALKING){
-
             // Khác 1 chút so với Knight, Khi knight nó luôn ở giữa màn hinhf.
             // Còn cái tk này là nó phải set dựa vào vị trí của tk knight so với bản đồ nữa. => Lại phải toán à :vvvv
-            batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
+            batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth()*2, this.getHeight()*2);
+            //batch.draw(rectangle, screenX, screenY,  this.getWidth(), this.getHeight());
+
         }
+       // batch.draw(rectangle, screenX, screenY, 32, 32);
         this.monsterSize.setX(screenX);
         this.monsterSize.setY(screenY);
     }
 
-    public void setPlaceGen(){
+    public void setPlaceGen(){ // sinh random 4 góc
         float rong = 600, cao = 600, kc = 100; // screen
         int x = MathUtils.random(1, 4); // trái - phải
         if(x == 1){

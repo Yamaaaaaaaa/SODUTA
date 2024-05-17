@@ -107,7 +107,7 @@ public class Moving {
 
                 //  Vector2 newPosition = new Vector2(x, y);
                 entity.setPosision(x, y);
-                checkCollision.check(oldX, oldY);
+                checkCollision.checkCollisionKnightWithMap(oldX, oldY);
             }
         }
         else if(typeEntity == 1) // Monster
@@ -167,6 +167,6 @@ public class Moving {
         Vector2 targetVector = new Vector2(targetX - entity.getX(), targetY - entity.getY());
         res.set(targetVector).nor().scl(entity.getSpeed_Stright());
         entity.setPosision(entity.getX() + res.x*Gdx.graphics.getDeltaTime(), entity.getY() + res.y* Gdx.graphics.getDeltaTime());
-        checkCollision.check(oldX, oldY);
+        checkCollision.checkCollisionMonsterWithMap(oldX, oldY);
     }
 }

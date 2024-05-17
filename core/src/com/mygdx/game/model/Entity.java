@@ -22,6 +22,7 @@ public class Entity {
     // Kích thước
     private int width;
     private int height;
+    private int blood;
 // QUẢN LÝ HÀNH ĐỘNG
     public Moving moving;
     public Direction direction;
@@ -53,6 +54,14 @@ public class Entity {
 
     public void setStatus(Entity_Status status) {
         this.status = status;
+    }
+
+    public int getBlood() {
+        return blood;
+    }
+
+    public void setBlood(int blood) {
+        this.blood = blood;
     }
 
     public float getSpeed_Stright() {

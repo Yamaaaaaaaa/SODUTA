@@ -69,7 +69,6 @@ public class Knight extends Entity {
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;
-
         if(direction == Direction.DOWN) index = 0;
         else if(direction == Direction.LEFT || direction == Direction.DOWNLEFT || direction == Direction.UPLEFT) index = 3;
         else if(direction == Direction.RIGHT || direction == Direction.DOWNRIGHT || direction == Direction.UPRIGHT) index = 2;

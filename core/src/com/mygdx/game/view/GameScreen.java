@@ -58,9 +58,8 @@ public class GameScreen implements Screen {
    //     camera.zoom = .8f;
 
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
-       // System.out.println(collsionLayer.getName());
         this.speed = 250;
-        this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
+        this.knight = new Knight(tile_Size * 10,tile_Size * 12, this.speed, collsionLayer);
         monsters = new Array<Monster>();
         Monster monster = new Monster(  collsionLayer, this,"vertical");
         monsters.add(monster);
@@ -85,13 +84,10 @@ public class GameScreen implements Screen {
             monsters.add(monster);
             timeGenBabyMonster = (Long)TimeUtils.nanoTime();
         }
- //       Monster monster = new Monster(  collsionLayer, this,"vertical");
-
         for(Monster monster : monsters){
             monster.update(knight.getX(), knight.getY());
         }
         stateTime += delta;
-
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         batch.begin();
 
@@ -100,6 +96,7 @@ public class GameScreen implements Screen {
             shapeRenderer.rect(monster.monsterSize.x, monster.monsterSize.y, monster.monsterSize.width, monster.monsterSize.height);
         }
         knight.draw(batch, stateTime);
+
         batch.end();
         shapeRenderer.end();
     }

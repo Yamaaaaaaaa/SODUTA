@@ -11,7 +11,7 @@ public class CheckCollision {
         this.entity = entity;
     }
 
-    public void check( float oldX, float oldY) {
+    public void checkCollisionKnightWithMap( float oldX, float oldY) {
 
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
@@ -63,7 +63,7 @@ public class CheckCollision {
         }
     }
 
-    public void checkMonster( float oldX, float oldY) {
+    public void checkCollisionMonsterWithMap( float oldX, float oldY) {
         if(collidesLeft()){
             entity.setX(oldX);
         }
