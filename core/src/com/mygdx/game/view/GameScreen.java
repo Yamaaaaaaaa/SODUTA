@@ -61,7 +61,7 @@ public class GameScreen implements Screen {
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
        // System.out.println(collsionLayer.getName());
         this.speed = 250;
-        this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
+        this.knight = new Knight(this,tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
         monsters = new Array<Monster>();
         Monster monster = new Monster( collsionLayer, this,"vertical");
         monsters.add(monster);
@@ -91,7 +91,7 @@ public class GameScreen implements Screen {
         statusUI.update();
  //       Monster monster = new Monster(  collsionLayer, this,"vertical");
         for(Monster monster : monsters){
-            monster.update(knight.getX(), knight.getY());
+            monster.update();
         }
         stateTime += delta;
 

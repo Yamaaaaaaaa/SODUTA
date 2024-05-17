@@ -1,5 +1,6 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,10 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
+import com.mygdx.game.view.GameScreen;
 
 public class Knight extends Entity {
     public float screenX = 400, screenY = 400; // Cái này chỉ riêng tk NV Chính có.
-
+    public GameScreen gameScreen;
     // ROLLS:
     private Texture texture_walking;
     private Texture texture_shooting;
@@ -28,7 +30,8 @@ public class Knight extends Entity {
     // HP:
     public int currentHp = 50;
     public int maxHP = 100;
-    public Knight(float x, float y, float speed, TiledMapTileLayer collsionLayer) {
+    public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
+        this.gameScreen = gameScreen;
         // hinh anh
         this.texture_walking = new Texture("basic/character/Walk.png");
         this.texture_shooting = new Texture("basic/character/Shoot.png");
@@ -75,7 +78,7 @@ public class Knight extends Entity {
         }
     }
     public void update(){
-        this.moving.move(this);
+        this.moving.move(this, this.gameScreen);
     }
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;

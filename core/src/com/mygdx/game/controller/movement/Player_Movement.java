@@ -8,6 +8,7 @@ import com.mygdx.game.controller.Movement;
 import com.mygdx.game.model.Attack_Status;
 import com.mygdx.game.model.Entity;
 import com.mygdx.game.model.Entity_Status;
+import com.mygdx.game.view.GameScreen;
 
 public class Player_Movement implements Movement {
     //Singleton
@@ -77,7 +78,7 @@ public class Player_Movement implements Movement {
     private CheckCollision checkCollision;
 
     @Override
-    public void move(Entity entity) {
+    public void move(Entity entity, GameScreen gameScreen) {
         updateDirection(entity);
         checkCollision = new CheckCollision(entity);
 
@@ -117,7 +118,7 @@ public class Player_Movement implements Movement {
 
             //  Vector2 newPosition = new Vector2(x, y);
             entity.setPosision(x, y);
-            checkCollision.check(Gdx.graphics.getDeltaTime(), oldX, oldY);
+            checkCollision.check_KnightWithMaP(Gdx.graphics.getDeltaTime(), oldX, oldY);
         }
     }
 }

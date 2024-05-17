@@ -11,7 +11,7 @@ public class CheckCollision {
         this.entity = entity;
     }
 
-    public void check(float delta, float oldX, float oldY) {
+    public void check_KnightWithMaP(float delta, float oldX, float oldY) {
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
                 entity.setX(oldX);
@@ -61,7 +61,22 @@ public class CheckCollision {
             }
         }
     }
+    public void check_MonsterWithMap(float oldX, float oldY) {
+        if(collidesLeft()){
+            entity.setX(oldX);
+        }
+        else if(collidesRight()){
+            entity.setX(oldX);
+        }
 
+        if(collidesTop()){
+            entity.setY(oldY);
+
+        } else if(collidesBottom()){
+            entity.setY(oldY);
+        }
+
+    }
     // Cách làm: Tìm tới tệp chưa cái tile cần block, Thêm Phần code sau:
     //    <tile id="0">
     //        <properties>
