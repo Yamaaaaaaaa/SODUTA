@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -26,7 +28,7 @@ public class Knight extends Entity {
 
     private TextureRegion[] idle; // Ta chỉ set 1 số ảnh để làm IDLE thôi, Ko cần 1 cái Standing riêng, vì nó sẽ bị giật giật khi chuyển qua lại các status.
     // Shooting
-    ArrayList<Bullet> bullets;
+    public ArrayList<Bullet> bullets;
     public Knight(float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         // Đạn
         bullets = new ArrayList<Bullet>();
@@ -56,7 +58,7 @@ public class Knight extends Entity {
         this.collisionLayer = collsionLayer;
 
         // attack:
-        this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
+        this.attackStatus = Attack_Status.SHOOT; // Mặc định là ban đầu sẽ chém
     }
 
 
@@ -72,16 +74,24 @@ public class Knight extends Entity {
 
         for(int i = 0; i < 4; ++i){
             walking[i] = new Animation(0.2f, region1[i]);
-            stabbing[i] = new Animation(0.2f, region2[i]);
-            shootting[i] = new Animation(0.2f, region3[i]);
+            stabbing[i] = new Animation(0.1f, region2[i]);
+            shootting[i] = new Animation(0.1f, region3[i]);
 
             idle[i] = region1[i][1];
         }
     }
-    public void update(){
+    public void update(float delta){
         this.moving.move(this);
+        // update Bullet
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for(Bullet bullet : bullets){
+            bullet.update(delta);
+            if(bullet.remove) bulletToRemove.add(bullet);
+        }
+        bullets.removeAll(bulletToRemove);
     }
     public void draw(SpriteBatch batch, float stateTime){
+
         int index;
 
         if(direction == Direction.DOWN) index = 0;
@@ -100,23 +110,13 @@ public class Knight extends Entity {
             if(attackStatus == Attack_Status.STAB){
                 batch.draw((TextureRegion) stabbing[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
             }else if(attackStatus == Attack_Status.SHOOT){
-                // tạo đạn
-                bullets.add(new Bullet(this.screenX,this.screenY));
-                // vẽ hoạt ảnh bắn súng
+                if(index == 0) bullets.add(new Bullet(screenX + 20,screenY - 20,1000,direction));
+                if(index == 1) bullets.add(new Bullet(screenX + 20,screenY + 50,1000,direction));
+                if(index == 2) bullets.add(new Bullet(screenX + 50,screenY + 10,1000,direction));
+                if(index == 3) bullets.add(new Bullet(screenX - 20,screenY + 10,1000,direction));
                 batch.draw((TextureRegion) shootting[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
-                //System.out.println("1");
-                // update đạn
-                ArrayList<Bullet> bulletRemove = new ArrayList<Bullet>();
                 for(Bullet bullet : bullets){
-                    if(bullet.removeBullet){
-                        bulletRemove.add(bullet);
-                    }
-                }
-                bullets.removeAll(bulletRemove);
-
-                // vẽ đạn
-                for(Bullet bullet : bullets){
-                    bullet.render(batch,stateTime,this.screenX,this.screenY);
+                    bullet.render(batch);
                 }
             }
         }

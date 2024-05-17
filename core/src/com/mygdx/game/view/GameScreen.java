@@ -11,10 +11,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
+import com.mygdx.game.model.Bullet;
 import com.mygdx.game.model.Knight;
 import com.mygdx.game.model.Monster;
 
 import com.badlogic.gdx.utils.Array;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -25,6 +28,7 @@ public class GameScreen implements Screen {
     private float tile_Size = 32;
 
 //NHÂN VẬT:
+
     // DI CHUYEN NHAN VAT
     public float speed;
     public Knight knight;
@@ -48,6 +52,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+
         loader = new TmxMapLoader();
         map = loader.load("basic/map/Mini_Map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
@@ -62,6 +67,8 @@ public class GameScreen implements Screen {
         Monster monster = new Monster(  collsionLayer, this,"vertical");
         monsters.add(monster);
         timeGenBabyMonster = (Long)TimeUtils.nanoTime();
+        // dan
+
     }
 
     float cnt = 0;
@@ -76,7 +83,7 @@ public class GameScreen implements Screen {
         renderer.setView(camera);
         renderer.render();
 
-        knight.update();
+        knight.update(delta);
         if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000){
             Monster monster = new Monster(  collsionLayer, this,"vertical");
             monsters.add(monster);
@@ -88,11 +95,15 @@ public class GameScreen implements Screen {
             monster.update(knight.getX(), knight.getY());
         }
         stateTime += delta;
+
+
         batch.begin();
         for(Monster monster : monsters){
             monster.draw(batch, stateTime);
         }
         knight.draw(batch, stateTime);
+
+
         batch.end();
     }
 
