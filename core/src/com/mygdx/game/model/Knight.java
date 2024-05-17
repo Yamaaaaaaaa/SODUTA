@@ -89,11 +89,17 @@ public class Knight extends Entity {
             if(bullet.remove) bulletToRemove.add(bullet);
         }
         bullets.removeAll(bulletToRemove);
+        boolean spaceKey = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+
+        if(spaceKey){
+            if(direction == Direction.DOWN) bullets.add(new Bullet(screenX + 20,screenY - 20,1000,direction));
+            else if(direction == Direction.UP) bullets.add(new Bullet(screenX + 20,screenY + 50,1000,direction));
+            else if(direction == Direction.RIGHT || direction == Direction.DOWNRIGHT || direction == Direction.UPRIGHT) bullets.add(new Bullet(screenX + 50,screenY + 10,1000,direction));
+            else if(direction == Direction.LEFT || direction == Direction.DOWNLEFT || direction == Direction.UPLEFT) bullets.add(new Bullet(screenX - 20,screenY + 10,1000,direction));
+        }
     }
     public void draw(SpriteBatch batch, float stateTime){
-
         int index;
-
         if(direction == Direction.DOWN) index = 0;
         else if(direction == Direction.LEFT || direction == Direction.DOWNLEFT || direction == Direction.UPLEFT) index = 3;
         else if(direction == Direction.RIGHT || direction == Direction.DOWNRIGHT || direction == Direction.UPRIGHT) index = 2;
@@ -110,12 +116,7 @@ public class Knight extends Entity {
             if(attackStatus == Attack_Status.STAB){
                 batch.draw((TextureRegion) stabbing[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
             }else if(attackStatus == Attack_Status.SHOOT){
-                if(index == 0) bullets.add(new Bullet(screenX + 20,screenY - 20,1000,direction));
-                if(index == 1) bullets.add(new Bullet(screenX + 20,screenY + 50,1000,direction));
-                if(index == 2) bullets.add(new Bullet(screenX + 50,screenY + 10,1000,direction));
-                if(index == 3) bullets.add(new Bullet(screenX - 20,screenY + 10,1000,direction));
                 batch.draw((TextureRegion) shootting[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
-
             }
         }
     }
