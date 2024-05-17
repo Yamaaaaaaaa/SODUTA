@@ -1,6 +1,7 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Movement;
 
@@ -20,7 +21,9 @@ public class Entity {
     // Kích thước
     private int width;
     private int height;
-// QUẢN LÝ HÀNH ĐỘNG
+    public Rectangle rectangle = new Rectangle() ;
+
+    // QUẢN LÝ HÀNH ĐỘNG
     public Movement moving;
     public Direction direction;
     public Entity_Status status;
@@ -36,6 +39,13 @@ public class Entity {
 // VA CHẠM
     public TiledMapTileLayer collisionLayer;
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
 
     public Direction getDirection() {
         return direction;
