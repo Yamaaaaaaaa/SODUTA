@@ -115,9 +115,7 @@ public class Knight extends Entity {
                 if(index == 2) bullets.add(new Bullet(screenX + 50,screenY + 10,1000,direction));
                 if(index == 3) bullets.add(new Bullet(screenX - 20,screenY + 10,1000,direction));
                 batch.draw((TextureRegion) shootting[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
-                for(Bullet bullet : bullets){
-                    bullet.render(batch);
-                }
+
             }
         }
     }

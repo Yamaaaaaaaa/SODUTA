@@ -102,7 +102,9 @@ public class GameScreen implements Screen {
             monster.draw(batch, stateTime);
         }
         knight.draw(batch, stateTime);
-
+        for(Bullet bullet : knight.bullets){
+            bullet.render(batch);
+        }
 
         batch.end();
     }
