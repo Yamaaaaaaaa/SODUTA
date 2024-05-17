@@ -43,6 +43,7 @@ public class GameScreen implements Screen {
     private int sprites_Num = 1;
     private long timeGenBabyMonster;
 
+    private Status_UI statusUI;
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
@@ -60,11 +61,12 @@ public class GameScreen implements Screen {
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
        // System.out.println(collsionLayer.getName());
         this.speed = 250;
-        this.knight = new Knight(tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
+        this.knight = new Knight(this,tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
         monsters = new Array<Monster>();
-        Monster monster = new Monster(  collsionLayer, this,"vertical");
+        Monster monster = new Monster( collsionLayer, this,"vertical");
         monsters.add(monster);
         timeGenBabyMonster = (Long)TimeUtils.nanoTime();
+        this.statusUI = new Status_UI(this);
     }
 
     float cnt = 0;
@@ -86,22 +88,23 @@ public class GameScreen implements Screen {
             monsters.add(monster);
             timeGenBabyMonster = (Long)TimeUtils.nanoTime();
         }
+        statusUI.update();
  //       Monster monster = new Monster(  collsionLayer, this,"vertical");
         for(Monster monster : monsters){
-            monster.update(knight.getX(), knight.getY());
+            monster.update();
         }
         stateTime += delta;
 
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         batch.begin();
-        knight.draw(batch, stateTime);
+        knight.draw(batch, stateTime, shapeRenderer);
         for(Monster monster : monsters){
             monster.draw(batch, stateTime, shapeRenderer);
         }
+        statusUI.draw(batch,shapeRenderer);
         batch.end();
         shapeRenderer.end();
-
     }
 
     @Override
@@ -127,7 +130,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
     }
 
 

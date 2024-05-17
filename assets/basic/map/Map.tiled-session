@@ -3,29 +3,51 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map/TileSet-1.tsx": {
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/forest_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/house_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": -170,
+                "y": 1606
+            }
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/object_tiles.tsx": {
             "scaleInDock": 1
         },
         "Map.tmx": {
             "scale": 0.25,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 5114,
-                "y": 2138
+                "x": 3338,
+                "y": 2134
+            }
+        },
+        "MediumMap.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1592.4242424242425,
+                "y": 3625.757575757576
             }
         },
         "Mini_Map.tmx": {
-            "scale": 1.2646875,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 670.9167284408204,
-                "y": 359.3773165307635
+                "x": 594,
+                "y": 321.99999999999994
             }
         },
         "Set1-1.tsx": {
@@ -50,19 +72,27 @@
         }
     },
     "last.imagePath": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/character",
-    "map.height": 20,
+    "map.height": 100,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,
     "map.tileWidth": 32,
-    "map.width": 20,
+    "map.width": 100,
     "openFiles": [
+        "Map.tmx",
+        "Mini_Map.tmx",
+        "TileSet-1.tsx",
+        "Walk.tsx",
+        "MediumMap.tmx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx"
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
         "Map.tmx",
         "Mini_Map.tmx",
-        "Walk.tsx",
         "TileSet-1.tsx",
+        "Walk.tsx",
+        "MediumMap.tmx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
         "Set1-3.tsx",
         "Set1-2.tsx",
         "Set1-1.tsx"
