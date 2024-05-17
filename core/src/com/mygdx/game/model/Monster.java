@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Moving;
 import com.mygdx.game.view.GameScreen;
@@ -26,14 +27,8 @@ public class Monster extends Entity{
    // private Animation[] shootting;
   //  private Animation[] stabbing;
     // VA CHẠM
-<<<<<<< HEAD
-
-    public Monster(TiledMapTileLayer collisionLayer, GameScreen gameScreen, String direction_Static) {
-=======
-    public Rectangle monsterSize;
     public CheckCollision checkCollision;
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
->>>>>>> 3e066b797d8e85c66dbe914fdbf6c8f85c7d9fd8
         this.gameScreen = gameScreen;
         this.setWidth(32);
         this.setHeight(32);
@@ -67,13 +62,10 @@ public class Monster extends Entity{
         status = Entity_Status.WALKING;
         this.setAnimation();
         this.setActivity(new Moving(this));
-<<<<<<< HEAD
-=======
 
         //collsion:
         this.collisionLayer = collsionLayer;
         checkCollision = new CheckCollision(this);
->>>>>>> 3e066b797d8e85c66dbe914fdbf6c8f85c7d9fd8
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
     }
@@ -95,17 +87,7 @@ public class Monster extends Entity{
         }
     }
     public void update(float targetX, float targetY){
-<<<<<<< HEAD
         this.moving.movingMonster(targetX, targetY);
-=======
-        float oldX = getX(), oldY = getY();
-        Vector2 res = new Vector2();
-        Vector2 targetVector = new Vector2(targetX - getX(), targetY - getY());
-        res.set(targetVector).nor().scl(getSpeed_Stright());
-        setPosision(getX() + res.x*Gdx.graphics.getDeltaTime(), getY() + res.y* Gdx.graphics.getDeltaTime());
-        checkCollision.checkMonster(oldX, oldY);
-        //this.moving.movingMonster(targetX, targetY);
->>>>>>> 3e066b797d8e85c66dbe914fdbf6c8f85c7d9fd8
     }
     public void draw(SpriteBatch batch, float stateTime){
         int index;
