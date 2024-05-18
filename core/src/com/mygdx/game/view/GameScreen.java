@@ -1,6 +1,7 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,10 +13,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
-import com.mygdx.game.model.Knight;
-import com.mygdx.game.model.Monster;
+import com.mygdx.game.controller.Direction;
+import com.mygdx.game.model.*;
 
 import com.badlogic.gdx.utils.Array;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -38,11 +41,11 @@ public class GameScreen implements Screen {
     private TmxMapLoader loader;
     private TiledMap map;
 // QUÁI VẬT:
-    private Array<Monster> monsters ;
+    public ArrayList<Monster> monsters ;
     private int sprites_Counting = 0;
     private int sprites_Num = 1;
     private long timeGenBabyMonster;
-
+// UI
     private Status_UI statusUI;
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
@@ -61,8 +64,8 @@ public class GameScreen implements Screen {
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
        // System.out.println(collsionLayer.getName());
         this.speed = 250;
-        this.knight = new Knight(this,tile_Size * 3,tile_Size * 3, this.speed, collsionLayer);
-        monsters = new Array<Monster>();
+        this.knight = new Knight(this,tile_Size * 13,tile_Size * 13, this.speed, collsionLayer);
+        monsters = new ArrayList<Monster>();
         Monster monster = new Monster( collsionLayer, this,"vertical");
         monsters.add(monster);
         timeGenBabyMonster = (Long)TimeUtils.nanoTime();
@@ -74,6 +77,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         camera.position.x = knight.getX();
         camera.position.y = knight.getY();
         camera.update();
@@ -83,25 +87,58 @@ public class GameScreen implements Screen {
 
         //update
         knight.update();
-        if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000){
+        //TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000
+        if (monsters.size() < 3){
             Monster monster = new Monster(  collsionLayer, this,"vertical");
             monsters.add(monster);
             timeGenBabyMonster = (Long)TimeUtils.nanoTime();
         }
         statusUI.update();
- //       Monster monster = new Monster(  collsionLayer, this,"vertical");
+
         for(Monster monster : monsters){
             monster.update();
         }
         stateTime += delta;
-
+        // check va cham đạn và monster
+        ArrayList<Monster> rejMons = new ArrayList<Monster>();
+        ArrayList<Bullet> rejBullet = new ArrayList<Bullet>();
+        for(Monster monster : monsters){
+            if(monster.status == Entity_Status.DEATH && monster.deathCountingTime >= 60){
+                rejMons.add(monster);
+            }
+            else if(monster.status == Entity_Status.WALKING){
+                for(Bullet bullet : knight.bullets){
+                    if(monster.status == Entity_Status.WALKING && monster.getRectangle().overlaps( bullet.rectangle)){
+                        monster.status = Entity_Status.DEATH;
+                        rejBullet.add(bullet);
+                    }
+                }
+            }
+        }
+        //System.out.println(rejMons.size() + "  " + rejBullet.size());
+        monsters.removeAll(rejMons);
+        knight.bullets.removeAll(rejBullet);
+        /*ArrayList<Bullet> reBullet = new ArrayList<Bullet>();
+        for(Bullet bullet : knight.bullets){
+            CheckCollision checkBullet = new CheckCollision(bullet);
+            if(checkBullet.checkCollisionBulletWithMap()){
+                reBullet.add(bullet);
+            }
+        }
+        knight.bullets.removeAll(reBullet);*/
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         batch.begin();
+        if(knight.attackStatus == Attack_Status.SHOOT){
+            for(Bullet bullet: knight.bullets){
+                bullet.render(batch);
+            }
+        }
         knight.draw(batch, stateTime, shapeRenderer);
         for(Monster monster : monsters){
             monster.draw(batch, stateTime, shapeRenderer);
         }
+
         statusUI.draw(batch,shapeRenderer);
         batch.end();
         shapeRenderer.end();

@@ -12,6 +12,5 @@ public class DesktopLauncher {
 		config.setWindowedMode(800,800);
 		config.setTitle("ProGameCup");
 		new Lwjgl3Application(new SpaceGame(), config);
-
 	}
 }
