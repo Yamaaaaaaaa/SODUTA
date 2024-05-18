@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.model.*;
 
@@ -66,7 +67,7 @@ public class GameScreen implements Screen {
         this.speed = 250;
         this.knight = new Knight(this,tile_Size * 13,tile_Size * 13, this.speed, collsionLayer);
         monsters = new ArrayList<Monster>();
-        Monster monster = new Monster( collsionLayer, this,"vertical");
+        Monster monster = new Monster(collsionLayer, this,"vertical");
         monsters.add(monster);
         timeGenBabyMonster = (Long)TimeUtils.nanoTime();
         this.statusUI = new Status_UI(this);
@@ -99,33 +100,7 @@ public class GameScreen implements Screen {
             monster.update();
         }
         stateTime += delta;
-        // check va cham đạn và monster
-        ArrayList<Monster> rejMons = new ArrayList<Monster>();
-        ArrayList<Bullet> rejBullet = new ArrayList<Bullet>();
-        for(Monster monster : monsters){
-            if(monster.status == Entity_Status.DEATH && monster.deathCountingTime >= 60){
-                rejMons.add(monster);
-            }
-            else if(monster.status == Entity_Status.WALKING){
-                for(Bullet bullet : knight.bullets){
-                    if(monster.status == Entity_Status.WALKING && monster.getRectangle().overlaps( bullet.rectangle)){
-                        monster.status = Entity_Status.DEATH;
-                        rejBullet.add(bullet);
-                    }
-                }
-            }
-        }
-        //System.out.println(rejMons.size() + "  " + rejBullet.size());
-        monsters.removeAll(rejMons);
-        knight.bullets.removeAll(rejBullet);
-        /*ArrayList<Bullet> reBullet = new ArrayList<Bullet>();
-        for(Bullet bullet : knight.bullets){
-            CheckCollision checkBullet = new CheckCollision(bullet);
-            if(checkBullet.checkCollisionBulletWithMap()){
-                reBullet.add(bullet);
-            }
-        }
-        knight.bullets.removeAll(reBullet);*/
+
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         batch.begin();
@@ -143,6 +118,7 @@ public class GameScreen implements Screen {
         batch.end();
         shapeRenderer.end();
     }
+
 
     @Override
     public void resize(int width, int height) {

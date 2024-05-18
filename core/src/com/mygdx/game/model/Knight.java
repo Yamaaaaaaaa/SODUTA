@@ -57,10 +57,10 @@ public class Knight extends Entity {
         this.maxHP = 100;
         this.damage = 50;
 
-        this.rectangle.x = 400;
+        this.rectangle.x = 400 + 8;
         this.rectangle.y = 400;
-        this.rectangle.width = 64;
-        this.rectangle.height = 64;
+        this.rectangle.width = 48;
+        this.rectangle.height = 55;
 
         // Gọi cái class qua lý di chuyển ra
         this.moving = Player_Movement.getInstance();
@@ -93,25 +93,51 @@ public class Knight extends Entity {
     public void update(){
         updateHP();
         updateAttack();
+        updateKill();
         this.moving.move(this, this.gameScreen);
+    }
+    public void updateKill(){
+        // check va cham đạn và monster
+        ArrayList<Monster> rejMons = new ArrayList<Monster>();
+        ArrayList<Bullet> rejBullet = new ArrayList<Bullet>();
+        for(Monster monster : this.gameScreen.monsters){
+            if(monster.status == Entity_Status.DEATH && monster.deathCountingTime >= 60){
+                rejMons.add(monster);
+            }
+            else if(monster.status == Entity_Status.WALKING){
+                for(Bullet bullet : this.bullets){
+                    if(!bullet.remove && monster.status == Entity_Status.WALKING && monster.getRectangle().overlaps( bullet.rectangle)){
+                        monster.currentHp -= this.damage;
+                        rejBullet.add(bullet);
+                        if(monster.currentHp <= 0) {
+                            monster.status = Entity_Status.DEATH;
+                        }
+                    }
+                }
+            }
+        }
+        for(Bullet bullet : this.bullets){
+            if(bullet.remove) rejBullet.add(bullet);
+        }
+        //System.out.println(rejMons.size() + "  " + rejBullet.size());
+        this.gameScreen.monsters.removeAll(rejMons);
+        this.bullets.removeAll(rejBullet);
     }
     public void updateAttack(){
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && this.attackStatus == Attack_Status.SHOOT){
-            if(this.direction == Direction.DOWN) this.bullets.add(new Bullet(this.screenX + 20,this.screenY,400,this.direction, this.collisionLayer));
-            else if(this.direction == Direction.UP) this.bullets.add(new Bullet(this.screenX + 20,this.screenY + 32,400,this.direction, this.collisionLayer));
-            else if(this.direction == Direction.RIGHT || this.direction == Direction.DOWNRIGHT || this.direction == Direction.UPRIGHT) this.bullets.add(new Bullet(this.screenX + 30,this.screenY + 10,400,this.direction, this.collisionLayer));
-            else if(this.direction == Direction.LEFT || this.direction == Direction.DOWNLEFT || this.direction == Direction.UPLEFT) this.bullets.add(new Bullet(this.screenX,this.screenY + 10,400,this.direction, this.collisionLayer));
+            if(this.direction == Direction.DOWN) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY(),400,this.direction, this.collisionLayer));
+            else if(this.direction == Direction.UP) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY() + 32,400,this.direction, this.collisionLayer));
+            else if(this.direction == Direction.RIGHT || this.direction == Direction.DOWNRIGHT || this.direction == Direction.UPRIGHT) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 30,this.getY() + 10,400,this.direction, this.collisionLayer));
+            else if(this.direction == Direction.LEFT || this.direction == Direction.DOWNLEFT || this.direction == Direction.UPLEFT) this.bullets.add(new Bullet(this.gameScreen,this.getX(),this.getY() + 10,400,this.direction, this.collisionLayer));
         }
 
-        // update Bullet cho sung
-        if(this.attackStatus == Attack_Status.SHOOT){
-            ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
-            for(Bullet bullet : this.bullets){
-                bullet.update(Gdx.graphics.getDeltaTime());
-                if(bullet.remove) bulletToRemove.add(bullet);
-            }
-            this.bullets.removeAll(bulletToRemove);
+        // update Bullet:
+     //   if(this.attackStatus == Attack_Status.SHOOT){
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for(Bullet bullet : this.bullets){
+            bullet.update();
         }
+     //   }
     }
     public void updateHP(){
         if(this.currentHp < 10){
@@ -141,5 +167,4 @@ public class Knight extends Entity {
             }
         }
     }
-
 }

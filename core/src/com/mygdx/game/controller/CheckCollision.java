@@ -11,7 +11,7 @@ public class CheckCollision {
         this.entity = entity;
     }
 
-    public void check_KnightWithMaP(float delta, float oldX, float oldY) {
+    public void check_KnightWithMap(float delta, float oldX, float oldY) {
         if (entity.direction == Direction.LEFT) {
             if(collidesLeft()){
                 entity.setX(oldX);
@@ -62,34 +62,81 @@ public class CheckCollision {
         }
     }
     public void check_MonsterWithMap(float oldX, float oldY) {
-        if(collidesLeft()){
+        if(collidesLeft() || collidesRight()){
             entity.setX(oldX);
         }
-        else if(collidesRight()){
-            entity.setX(oldX);
-        }
-
-        if(collidesTop()){
-            entity.setY(oldY);
-
-        } else if(collidesBottom()){
+        if(collidesTop() || collidesBottom()){
             entity.setY(oldY);
         }
-
     }
 
-    public boolean check_BulletWithMap() {
-        if(collidesLeft()){
-            return true;
+    public boolean check_BulletWithMap(float oldX, float oldY) {
+        if (entity.direction == Direction.LEFT) {
+            if(collidesLeft()){
+                entity.setX(oldX);
+                return true;
+            }
+        } else if (entity.direction == Direction.RIGHT) {
+            if(collidesRight()){
+                entity.setX(oldX);
+                return true;
+            }
+        }else if (entity.direction == Direction.UP) {
+            if(collidesTop()){
+                entity.setY(oldY);
+                return true;
+            }
+        }else if (entity.direction == Direction.DOWN) {
+            if(collidesBottom()){
+                entity.setY(oldY);
+                return true;
+            }
         }
-        if(collidesRight()){
-            return true;
+        else if (entity.direction == Direction.UPLEFT) {
+            boolean ok = false;
+            if(collidesTop()){
+                entity.setY(oldY);
+                ok = true;
+            }
+            if(collidesLeft()){
+                entity.setX(oldX);
+                ok = true;
+            }
+            return ok;
+        }else if (entity.direction == Direction.UPRIGHT) {
+            boolean ok = false;
+            if(collidesTop()){
+                entity.setY(oldY);
+                ok = true;
+            }
+            if(collidesRight()){
+                entity.setX(oldX);
+                ok = true;
+            }
+            return ok;
+        }else if (entity.direction == Direction.DOWNLEFT) {
+            boolean ok = false;
+            if(collidesBottom()){
+                entity.setY(oldY);
+                ok = true;
+            }
+            if(collidesLeft()){
+                entity.setX(oldX);
+                ok = true;
+            }
+            return ok;
         }
-        if(collidesTop()){
-            return true;
-        }
-        if(collidesBottom()){
-            return true;
+        else if (entity.direction == Direction.DOWNRIGHT) {
+            boolean ok = false;
+            if(collidesBottom()){
+                entity.setY(oldY);
+                ok = true;
+            }
+            if(collidesRight()){
+                entity.setX(oldX);
+                ok = true;
+            }
+            return ok;
         }
         return false;
     }

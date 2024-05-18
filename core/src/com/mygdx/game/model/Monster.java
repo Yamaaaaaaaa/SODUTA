@@ -77,11 +77,11 @@ public class Monster extends Entity{
 
         // quanr ly di chuyen
         this.moving = Monster_Movement.getInstance();
-        rectangle.width = 64;
-        rectangle.height = 64;
+
+        rectangle.width = 48;
+        rectangle.height = 55;
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
-
 
         //health:
 
@@ -120,7 +120,7 @@ public class Monster extends Entity{
         //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
         float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
-        rectangle.x = screenX;
+        rectangle.x = screenX + 8;
         rectangle.y = screenY;
         check_MonsterAttackKnight();
         if(this.status == Entity_Status.WALKING){
@@ -134,15 +134,15 @@ public class Monster extends Entity{
     int attackCounter = 0;
     public void check_MonsterAttackKnight(){
         if(this.status == Entity_Status.WALKING && this.getRectangle().overlaps( this.gameScreen.knight.rectangle)){
-            System.out.println("OKE");
             if(attackCounter % 60 == 0) this.gameScreen.knight.currentHp -= this.damage;
             attackCounter ++;
             if(attackCounter > 6000000) attackCounter = 0;
         }
     }
     private void drawHealthBar(ShapeRenderer shapeRenderer, float stateTime, float screenX, float screenY, int index){
+        int hpBarWidth = (this.getWidth() * 2) * this.currentHp / this.maxHP;
         shapeRenderer.setColor(Color.RED);
-        shapeRenderer.rect(screenX, screenY + this.getHeight() * 2, this.getWidth() * 2 , 8);
+        shapeRenderer.rect(screenX, screenY + this.getHeight() * 2, hpBarWidth, 8);
     }
     private void drawMonster(SpriteBatch batch, float stateTime, float screenX, float screenY, int index){
         // System.out.println("Knight: (" + this.gameScreen.knight.getX() + "," + this.gameScreen.knight.getY() + ")  " + screenX + " - " + screenY);
