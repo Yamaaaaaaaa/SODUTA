@@ -18,6 +18,11 @@ public class Entity {
     // Tốc độ:
     private float speed_Stright;
     private float speed_Cross;
+    // Sats thuwong:
+    public int damage;
+    // HP:
+    public int currentHp;
+    public int maxHP;
     // Kích thước
     private int width;
     private int height;

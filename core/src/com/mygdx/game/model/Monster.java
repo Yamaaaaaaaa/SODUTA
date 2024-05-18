@@ -21,7 +21,9 @@ public class Monster extends Entity{
     private Texture texture_walking;
   //  private Texture texture_shooting;
    // private Texture texture_stabbing;
+    private Texture texture_death;
     private Animation[] walking;
+    private Animation[] death;
     private TextureRegion[] idle; // Ta chỉ set 1 số ảnh để làm IDLE thôi, Ko cần 1 cái Standing riêng, vì nó sẽ bị giật giật khi chuyển qua lại các status.
 
     // TẤN COONG:
@@ -29,6 +31,8 @@ public class Monster extends Entity{
    // private Animation[] shootting;
   //  private Animation[] stabbing;
 
+    // CHẾT:
+    public int deathCountingTime = 0;
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
         this.gameScreen = gameScreen;
 
@@ -36,12 +40,16 @@ public class Monster extends Entity{
             this.texture_walking = new Texture("Apocalypse Character Pack/Zombie/Walk.png");
             //this.texture_shooting = new Texture("basic/character/Shoot.png");
             //this.texture_stabbing = new Texture("basic/character/Stab.png");
+            this.texture_death = new Texture("Apocalypse Character Pack/Zombie/Death.png");
         // position
             this.setPlaceGen();
         //speed
             this.setSpeed_Stright(120);
             this.setSpeed_Cross((float) Math.sqrt(120*120 / 2));
-
+        // atk, hp
+            this.currentHp = 100;
+            this.maxHP = 100;
+            this.damage = 5;
         // first setting:
         this.direction_Static = direction_Static;
         if(direction_Static.equals("vertical")) {
@@ -69,7 +77,8 @@ public class Monster extends Entity{
 
         // quanr ly di chuyen
         this.moving = Monster_Movement.getInstance();
-
+        rectangle.width = 64;
+        rectangle.height = 64;
         // attack:
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
 
@@ -82,22 +91,24 @@ public class Monster extends Entity{
         walking = new Animation[15];
      //   stabbing = new Animation[10];
        // shootting = new Animation[10];
+        death = new Animation[15];
+
         idle = new TextureRegion[15];
         TextureRegion[][] region1 = TextureRegion.split(this.texture_walking, this.getWidth(), this.getHeight());
      //   TextureRegion[][] region2 = TextureRegion.split(this.texture_stabbing, this.getWidth(), this.getHeight());
      //   TextureRegion[][] region3 = TextureRegion.split(this.texture_shooting, this.getWidth(), this.getHeight());
+        TextureRegion[][] region4 = TextureRegion.split(this.texture_death, this.getWidth(), this.getHeight());
         for(int i = 0; i < 4; ++i){
             walking[i] = new Animation(0.2f, region1[i]);
+            death[i] = new Animation(0.2f, region4[i]);
         //    stabbing[i] = new Animation(0.2f, region2[i]);
         //    shootting[i] = new Animation(0.2f, region3[i]);
-
             idle[i] = region1[i][1];
         }
     }
     public void update(){
-        this.moving.move(this,this.gameScreen);
+        if(this.status == Entity_Status.WALKING) this.moving.move(this,this.gameScreen);
     }
-
 
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
@@ -109,8 +120,25 @@ public class Monster extends Entity{
         //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
         float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
-        drawHealthBar(shapeRenderer, stateTime, screenX, screenY, index);
-        drawMonster(batch, stateTime, screenX, screenY, index);
+        rectangle.x = screenX;
+        rectangle.y = screenY;
+        check_MonsterAttackKnight();
+        if(this.status == Entity_Status.WALKING){
+            drawHealthBar(shapeRenderer, stateTime, screenX, screenY, index);
+            drawMonster(batch, stateTime, screenX, screenY, index);
+        }
+        else if(this.status == Entity_Status.DEATH){
+            drawMonster(batch, stateTime, screenX, screenY, index);
+        }
+    }
+    int attackCounter = 0;
+    public void check_MonsterAttackKnight(){
+        if(this.status == Entity_Status.WALKING && this.getRectangle().overlaps( this.gameScreen.knight.rectangle)){
+            System.out.println("OKE");
+            if(attackCounter % 60 == 0) this.gameScreen.knight.currentHp -= this.damage;
+            attackCounter ++;
+            if(attackCounter > 6000000) attackCounter = 0;
+        }
     }
     private void drawHealthBar(ShapeRenderer shapeRenderer, float stateTime, float screenX, float screenY, int index){
         shapeRenderer.setColor(Color.RED);
@@ -125,6 +153,11 @@ public class Monster extends Entity{
             // Khác 1 chút so với Knight, Khi knight nó luôn ở giữa màn hinhf.
             // Còn cái tk này là nó phải set dựa vào vị trí của tk knight so với bản đồ nữa. => Lại phải toán à :vvvv
             batch.draw((TextureRegion) walking[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
+        }
+        else if(status == Entity_Status.DEATH){
+            deathCountingTime += 1;
+            System.out.println(deathCountingTime);
+            batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
     }
     public void setPlaceGen(){

@@ -77,6 +77,24 @@ public class CheckCollision {
         }
 
     }
+
+    public boolean check_BulletWithMap() {
+        if(collidesLeft()){
+            return true;
+        }
+        if(collidesRight()){
+            return true;
+        }
+        if(collidesTop()){
+            return true;
+        }
+        if(collidesBottom()){
+            return true;
+        }
+        return false;
+    }
+
+
     // Cách làm: Tìm tới tệp chưa cái tile cần block, Thêm Phần code sau:
     //    <tile id="0">
     //        <properties>
