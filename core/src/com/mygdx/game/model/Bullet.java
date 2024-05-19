@@ -10,42 +10,38 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
+import com.mygdx.game.controller.movement.Bullet_Movement;
+import com.mygdx.game.view.GameScreen;
 
 public class Bullet extends Entity {
+    public GameScreen gameScreen;
     private int width = 30, height = 30;
-    private Direction direction;
     private Texture texture;
     public boolean remove = false;
 
-    public Bullet(float x, float y, float speed, Direction direction, TiledMapTileLayer collisionLayer) {
+
+    public Bullet(GameScreen gameScreen, float x, float y, float speed, Direction direction, TiledMapTileLayer collisionLayer) {
+        this.texture = new Texture("basic/Bullet/Bullet_of.png");
+        this.gameScreen = gameScreen;
         this.setPosision(x, y);
-        rectangle = new Rectangle((int)x, (int)y, width, height);
+        rectangle.width = width;
+        rectangle.height = height;
         this.setSpeed_Cross(speed);
         this.direction = direction;
         this.collisionLayer = collisionLayer;
+
+        this.moving = Bullet_Movement.getInstance();
         //if(this.texture == null) this.texture = new Texture("basic/Bullet/Bullet_of.png");
     }
     public void render(SpriteBatch batch){
-        batch.draw(new Texture("basic/Bullet/Bullet_of.png"),getX(),getY());
+        //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
+        float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
+        float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
+        rectangle.x = screenX;
+        rectangle.y = screenY;
+        if(!this.remove) batch.draw(texture,screenX,screenY);
     }
-    public void update(float deltaTime){
-        if(this.direction == Direction.DOWN){
-            setY(getY() - getSpeed_Cross()*deltaTime);
-            if(getY()<0) remove = true;
-        }
-        else if(this.direction == Direction.UP){
-            setY(getY() +getSpeed_Cross()*deltaTime);
-            if(getY()>Gdx.graphics.getHeight()) remove = true;
-        }
-        else if(this.direction == Direction.LEFT || this.direction == Direction.UPLEFT || this.direction == Direction.DOWNLEFT){
-            setX(getX() - getSpeed_Cross()*deltaTime);
-            if(getX()<0) remove = true;
-        }
-        else {
-            setX(getX() + getSpeed_Cross()*deltaTime);
-            if(getX()>Gdx.graphics.getWidth()) remove = true;
-        }
-        rectangle.x = getX();
-        rectangle.y = getY();
+    public void update(){
+        moving.move(this, this.gameScreen);
     }
 }
