@@ -15,10 +15,15 @@ public class Entity {
         this.setX(x);
         this.setY(y);
     }
-    // Tốc độ:
+    // status: Tốc độ, HP, Dam, kích cỡ nhân vật.
     private float speed_Stright;
     private float speed_Cross;
-    // Kích thước
+
+    public int damage;
+
+    public int currentHp;
+    public int maxHP;
+
     private int width;
     private int height;
     public Rectangle rectangle = new Rectangle() ;
@@ -34,7 +39,8 @@ public class Entity {
         // SETTING DI CHUYỂN MẶC ĐỊNH TRONG MAP:
         public String direction_Static;
         public float xMin, yMin, xMax, yMax;
-
+    // Dành riêng cho Bullet.
+        public boolean remove;
 
 // VA CHẠM
     public TiledMapTileLayer collisionLayer;

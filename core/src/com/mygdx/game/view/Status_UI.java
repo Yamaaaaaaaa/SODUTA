@@ -77,7 +77,6 @@ public class Status_UI {
     }
     public void draw(SpriteBatch batch, ShapeRenderer shapeRenderer){
         for(int i = 0 ;i < 4; i++){
-            System.out.println(background_Equipment[i].getTextureData());
             batch.draw(background_Equipment[i], screen_Equipment_X[i], screen_Equipment_Y[i]);
             if(index_Equipment == i){
                 batch.draw(selector, screen_Equipment_X[i], screen_Equipment_Y[i] - 10);

@@ -1,6 +1,8 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -11,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
 import com.mygdx.game.view.GameScreen;
+
+import java.util.ArrayList;
 
 public class Knight extends Entity {
     public float screenX = 400, screenY = 400; // Cái này chỉ riêng tk NV Chính có.
@@ -25,11 +29,10 @@ public class Knight extends Entity {
     private TextureRegion[] idle; // Ta chỉ set 1 số ảnh để làm IDLE thôi, Ko cần 1 cái Standing riêng, vì nó sẽ bị giật giật khi chuyển qua lại các status.
 
     //Bullet:
-    public int bulletCounter = 20; // demo
+    public int bulletCounter = 50; // demo
     public int bulletMax = 50;
-    // HP:
-    public int currentHp = 50;
-    public int maxHP = 100;
+    public ArrayList<Bullet> bullets;
+
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         // hinh anh
@@ -49,6 +52,15 @@ public class Knight extends Entity {
         this.setWidth(32);
         this.setHeight(32);
         this.setAnimation();
+        // atk, hp
+        this.currentHp = 100;
+        this.maxHP = 100;
+        this.damage = 50;
+
+        this.rectangle.x = 400 + 8;
+        this.rectangle.y = 400;
+        this.rectangle.width = 48;
+        this.rectangle.height = 55;
 
         // Gọi cái class qua lý di chuyển ra
         this.moving = Player_Movement.getInstance();
@@ -57,7 +69,8 @@ public class Knight extends Entity {
         this.collisionLayer = collsionLayer;
 
         // attack:
-        this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
+        this.attackStatus = Attack_Status.SHOOT; // Mặc định là ban đầu sẽ chém
+        bullets = new ArrayList<Bullet>();
     }
 
 
@@ -78,7 +91,58 @@ public class Knight extends Entity {
         }
     }
     public void update(){
+        updateHP();
+        updateAttack();
+        updateKill();
         this.moving.move(this, this.gameScreen);
+    }
+    public void updateKill(){
+        // check va cham đạn và monster
+        ArrayList<Monster> rejMons = new ArrayList<Monster>();
+        ArrayList<Bullet> rejBullet = new ArrayList<Bullet>();
+        for(Monster monster : this.gameScreen.monsters){
+            if(monster.status == Entity_Status.DEATH && monster.deathCountingTime >= 60){
+                rejMons.add(monster);
+            }
+            else if(monster.status == Entity_Status.WALKING){
+                for(Bullet bullet : this.bullets){
+                    if(!bullet.remove && monster.status == Entity_Status.WALKING && monster.getRectangle().overlaps( bullet.rectangle)){
+                        monster.currentHp -= this.damage;
+                        rejBullet.add(bullet);
+                        if(monster.currentHp <= 0) {
+                            monster.status = Entity_Status.DEATH;
+                        }
+                    }
+                }
+            }
+        }
+        for(Bullet bullet : this.bullets){
+            if(bullet.remove) rejBullet.add(bullet);
+        }
+        //System.out.println(rejMons.size() + "  " + rejBullet.size());
+        this.gameScreen.monsters.removeAll(rejMons);
+        this.bullets.removeAll(rejBullet);
+    }
+    public void updateAttack(){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && this.attackStatus == Attack_Status.SHOOT){
+            if(this.direction == Direction.DOWN) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY(),400,this.direction, this.collisionLayer));
+            else if(this.direction == Direction.UP) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY() + 32,400,this.direction, this.collisionLayer));
+            else if(this.direction == Direction.RIGHT || this.direction == Direction.DOWNRIGHT || this.direction == Direction.UPRIGHT) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 30,this.getY() + 10,400,this.direction, this.collisionLayer));
+            else if(this.direction == Direction.LEFT || this.direction == Direction.DOWNLEFT || this.direction == Direction.UPLEFT) this.bullets.add(new Bullet(this.gameScreen,this.getX(),this.getY() + 10,400,this.direction, this.collisionLayer));
+        }
+
+        // update Bullet:
+     //   if(this.attackStatus == Attack_Status.SHOOT){
+        ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
+        for(Bullet bullet : this.bullets){
+            bullet.update();
+        }
+     //   }
+    }
+    public void updateHP(){
+        if(this.currentHp < 10){
+            this.currentHp = 10;
+        }
     }
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
@@ -103,5 +167,4 @@ public class Knight extends Entity {
             }
         }
     }
-
 }
