@@ -38,8 +38,8 @@ public class Bullet_Movement implements Movement {
             if(entity.getX()>Gdx.graphics.getWidth()) entity.remove = true;
         }
 
-        if(checkCollision_Bullet.check_BulletWithMap(oldX, oldY)){
-            entity.remove = true;
-        }
+//        if(checkCollision_Bullet.check_BulletWithMap(oldX, oldY)){
+//            entity.remove = true;
+//        }
     }
 }
