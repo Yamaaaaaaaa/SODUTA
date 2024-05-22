@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Monster_Movement;
+import com.mygdx.game.model.gamemusic.MusicGame;
 import com.mygdx.game.view.GameScreen;
 
 public class Monster extends Entity{
@@ -134,7 +135,12 @@ public class Monster extends Entity{
     int attackCounter = 0;
     public void check_MonsterAttackKnight(){
         if(this.status == Entity_Status.WALKING && this.getRectangle().overlaps( this.gameScreen.knight.rectangle)){
-            if(attackCounter % 60 == 0) this.gameScreen.knight.currentHp -= this.damage;
+            if(attackCounter % 60 == 0) {
+                this.gameScreen.knight.currentHp -= this.damage;
+                MusicGame zombieAttack_Music = new MusicGame(gameScreen.musicHandler.zombie_Eating, false);
+                zombieAttack_Music.setVolumeMusic(0.5f);
+                zombieAttack_Music.setPlay();
+            }
             attackCounter ++;
             if(attackCounter > 6000000) attackCounter = 0;
         }

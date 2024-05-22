@@ -24,16 +24,14 @@ public class Player_Movement implements Movement {
     private Entity entity;
     public boolean upKey, downKey, leftKey, rightKey;
     public boolean attack;
-    public boolean changeWeapon;
     private void updateDirection(Entity entity){
         upKey = Gdx.input.isKeyPressed(Input.Keys.W);
         rightKey = Gdx.input.isKeyPressed(Input.Keys.D);
         leftKey = Gdx.input.isKeyPressed(Input.Keys.A);
         downKey = Gdx.input.isKeyPressed(Input.Keys.S);
 
-        changeWeapon = Gdx.input.isKeyPressed(Input.Keys.J);
 
-        attack = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        attack = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
 
         if(leftKey || rightKey || upKey || downKey) {
             entity.status = Entity_Status.WALKING;
@@ -67,12 +65,8 @@ public class Player_Movement implements Movement {
             entity.status = Entity_Status.IDLE;
         }
 
-        if(changeWeapon){
-            // if(knight.attackStatus == Attack_Status.NONE) knight.attackStatus = Attack_Status.STAB;
-            // else
-            if(entity.attackStatus == Attack_Status.STAB) entity.attackStatus = Attack_Status.SHOOT;
-            else if(entity.attackStatus == Attack_Status.SHOOT) entity.attackStatus = Attack_Status.STAB;
-        }
+
+
     }
 
     private CheckCollision checkCollision;
