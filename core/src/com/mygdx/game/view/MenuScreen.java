@@ -50,7 +50,7 @@ public class MenuScreen implements Screen {
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/watery-graves-181198.mp3"));
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
-        background = new Texture("button/BackGround.png");
+        background = new Texture("button/Background.png");
         buttonNewGameIdle = new Texture("button/Play-Idle.png");
         buttonNewGameHover = new Texture("button/Play-Hover.png");
         buttonInforGameIdle = new Texture("button/Info-Idle.png");
