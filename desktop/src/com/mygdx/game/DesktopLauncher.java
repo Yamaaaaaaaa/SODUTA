@@ -11,6 +11,8 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setWindowedMode(800,800);
 		config.setTitle("ProGameCup");
+		config.setResizable(false);
+		//config.setWindowIcon("iconWindow.png");
 		new Lwjgl3Application(new SpaceGame(), config);
 	}
 }
