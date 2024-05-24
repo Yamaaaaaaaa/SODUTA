@@ -44,7 +44,7 @@ public class MenuScreen implements Screen {
     boolean checkSoundButtonRankOn = false;
     boolean checkSoundButtonMusicOnOn = false;
     boolean checkSoundButtonMusicOffOn = false;
-    boolean checkSoundOn = true;
+    static boolean checkSoundOn = true;
 
     public MenuScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
@@ -117,7 +117,7 @@ public class MenuScreen implements Screen {
         }
         // Button play game
 
-        int xPlay = 220; // tọa độ x của nút play
+        int xPlay = 220 + SIZE_BUTTON_WIDTH + 40; // tọa độ x của nút play
         int yPlay = 425; // tọa độ y của nút play
 
         Vector3 touchPointPlay = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -145,7 +145,7 @@ public class MenuScreen implements Screen {
 
 
         // Button infor game
-        int xInfor = 220 + SIZE_BUTTON_WIDTH + 40; // tọa độ x của nút infor
+        int xInfor = 220; // tọa độ x của nút infor
         int yInfor = 425; // tọa độ y của nút infor
 
         Vector3 touchPointInfor = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
