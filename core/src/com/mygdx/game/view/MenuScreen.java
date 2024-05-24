@@ -38,11 +38,11 @@ public class MenuScreen implements Screen {
     Texture buttonMusicOnHover;
     Texture buttonMusicOffIdle;
     Texture buttonMusicOffHover;
+
     // CHỨC NĂNG CHECK ÂM THANH
     boolean checkSoundButtonPlayOn = false;
     boolean checkSoundButtonInforOn = false;
     boolean checkSoundButtonRankOn = false;
-    boolean checkSoundButtonMusicOnOn = false;
     boolean checkSoundButtonMusicOffOn = false;
     static boolean checkSoundOn = true;
 
@@ -61,6 +61,7 @@ public class MenuScreen implements Screen {
         buttonMusicOnHover = new Texture("button/Music-On-Hover.png");
         buttonMusicOffIdle = new Texture("button/Music-Off-Idle.png");
         buttonMusicOffHover = new Texture("button/Music-Off-Hover.png");
+
     }
     public void show(){
         camera = new OrthographicCamera();
@@ -158,7 +159,9 @@ public class MenuScreen implements Screen {
             spaceGame.getBatch().draw(buttonInforGameHover, xInfor, yInfor, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 this.dispose();
-                //spaceGame.setScreen(new GameScreen(spaceGame));
+                clickButtonMusic.pause();
+                backgroundMusic.pause();
+                spaceGame.setScreen(new InforGameScreen(spaceGame));
             }
             if(!checkSoundButtonInforOn && checkSoundOn){
                 checkSoundButtonInforOn = true;
