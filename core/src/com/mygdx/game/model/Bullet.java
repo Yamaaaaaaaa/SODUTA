@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.CheckCollision;
@@ -17,7 +18,6 @@ public class Bullet extends Entity {
     public GameScreen gameScreen;
     private int width = 30, height = 30;
     private Texture texture;
-    public boolean remove = false;
 
 
     public Bullet(GameScreen gameScreen, float x, float y, float speed, Direction direction, TiledMapTileLayer collisionLayer) {
@@ -33,12 +33,13 @@ public class Bullet extends Entity {
         this.moving = Bullet_Movement.getInstance();
         //if(this.texture == null) this.texture = new Texture("basic/Bullet/Bullet_of.png");
     }
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch, ShapeRenderer shapeRenderer){
         //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
         float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
         rectangle.x = screenX;
         rectangle.y = screenY;
+        //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         if(!this.remove) batch.draw(texture,screenX,screenY);
     }
     public void update(){

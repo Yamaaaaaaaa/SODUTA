@@ -45,8 +45,9 @@ public class Monster extends Entity{
         // position
             this.setPlaceGen();
         //speed
-            this.setSpeed_Stright(120);
-            this.setSpeed_Cross((float) Math.sqrt(120*120 / 2));
+        int sp = 80;
+            this.setSpeed_Stright(sp);
+            this.setSpeed_Cross((float) Math.sqrt(sp*sp / 2));
         // atk, hp
             this.currentHp = 100;
             this.maxHP = 100;
@@ -123,6 +124,7 @@ public class Monster extends Entity{
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
         rectangle.x = screenX + 8;
         rectangle.y = screenY;
+        //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         check_MonsterAttackKnight();
         if(this.status == Entity_Status.WALKING){
             drawHealthBar(shapeRenderer, stateTime, screenX, screenY, index);
@@ -162,7 +164,7 @@ public class Monster extends Entity{
         }
         else if(status == Entity_Status.DEATH){
             deathCountingTime += 1;
-            System.out.println(deathCountingTime);
+            //System.out.println(deathCountingTime);
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
     }

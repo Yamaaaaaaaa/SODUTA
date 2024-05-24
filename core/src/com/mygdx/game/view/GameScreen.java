@@ -24,7 +24,6 @@ import com.mygdx.game.model.gamemusic.MusicHandler;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;
     private SpriteBatch batch;
@@ -102,40 +101,41 @@ public class GameScreen implements Screen {
         renderer.render();
 
         //update
-        knight.update();
-        //TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000
-        if (monsters.size() < 3){
-            Monster monster = new Monster(  collsionLayer, this,"vertical");
-         //   this.zombie_WaveStart_Music.setPlay();
-            monsters.add(monster);
-            timeGenBabyMonster = (Long)TimeUtils.nanoTime();
-        }
-        statusUI.update();
+            knight.update();
+            //monsters.size() < 3
+            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0) {
+                Monster monster = new Monster(collsionLayer, this, "vertical");
+                //   this.zombie_WaveStart_Music.setPlay();
+                monsters.add(monster);
+                timeGenBabyMonster = (Long) TimeUtils.nanoTime();
+            }
+            statusUI.update();
 
-        for(Monster monster : monsters){
-            monster.update();
-        }
-        stateTime += delta;
+            for (Monster monster : monsters) {
+                monster.update();
+            }
+            stateTime += delta;
 
         //draw , shape trc, batch sau.
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
         if(knight.attackStatus == Attack_Status.SHOOT){
             for(Bullet bullet: knight.bullets){
-                bullet.render(batch);
+                bullet.render(batch, shapeRenderer);
             }
         }
         knight.draw(batch, stateTime, shapeRenderer);
         for(Monster monster : monsters){
             monster.draw(batch, stateTime, shapeRenderer);
         }
-
         statusUI.draw(batch,shapeRenderer);
         batch.end();
         shapeRenderer.end();
+        if(knight.currentHp <= 0){
+            knight.status = Entity_Status.DEATH;
+            monsters.clear();
+        }
     }
-
-
     @Override
     public void resize(int width, int height) {
         camera.viewportWidth = width;
