@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.mygdx.game.SpaceGame;
+import com.mygdx.game.model.gamemusic.MusicGame;
+import com.mygdx.game.model.gamemusic.MusicHandler;
 import com.mygdx.game.setting.Media_Menu;
 import com.mygdx.game.setting.Setting_MenuScreen;
 
@@ -25,12 +27,21 @@ public class MenuScreen implements Screen {
     TextButton buttonOldGame;
     TextButton buttonExit;
     Media_Menu mediaMenu;
+    MusicHandler musicHandler;
+    MusicGame background_Menu_Music, clickButton_Menu_Music, open_Game_Music;
     public MenuScreen(final SpaceGame game){
         this.game = game;
         this.stage = new Stage(new FillViewport(Setting_MenuScreen.WINDOWS_SIZE, Setting_MenuScreen.WINDOWS_SIZE));
-
+        this.musicHandler = new MusicHandler();
+        this.setMusic();
         mediaMenu = new Media_Menu();
         mediaMenu.loadAssets();
+    }
+    public void setMusic(){
+        this.background_Menu_Music = new MusicGame(musicHandler.background_Menu,true);
+        this.clickButton_Menu_Music = new MusicGame(musicHandler.clickbutton_Menu, false);
+        this.open_Game_Music = new MusicGame(musicHandler.open_Game, false);
+        this.background_Menu_Music.setPlay();
     }
     @Override
     public void show() {
@@ -67,6 +78,7 @@ public class MenuScreen implements Screen {
         buttonMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                clickButton_Menu_Music.setPlay();
                 // Xóa màn hình, thêm các nút của menu
                 stage.clear();
                 //stage.addActor(buttonRecordFunction);
@@ -84,7 +96,10 @@ public class MenuScreen implements Screen {
         buttonLevel1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Chọn ải 1.");
+                clickButton_Menu_Music.setPlay();
+                background_Menu_Music.setStop();
+                open_Game_Music.setPlay();
+                //System.out.println("Chọn ải 1.");
                 dispose();
                 game.setScreen(new GameScreen(game));
             }
@@ -109,6 +124,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Xóa màn hình, thêm các nút chọn ải.
+                clickButton_Menu_Music.setPlay();
                 stage.clear();
                 stage.addActor(buttonLevel1);
                 //stage.addActor(buttonLevel2);

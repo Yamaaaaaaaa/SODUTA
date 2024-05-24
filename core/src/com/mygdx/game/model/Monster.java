@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Monster_Movement;
+import com.mygdx.game.model.gamemusic.MusicGame;
 import com.mygdx.game.view.GameScreen;
 
 public class Monster extends Entity{
@@ -44,8 +45,9 @@ public class Monster extends Entity{
         // position
             this.setPlaceGen();
         //speed
-            this.setSpeed_Stright(120);
-            this.setSpeed_Cross((float) Math.sqrt(120*120 / 2));
+        int sp = 80;
+            this.setSpeed_Stright(sp);
+            this.setSpeed_Cross((float) Math.sqrt(sp*sp / 2));
         // atk, hp
             this.currentHp = 100;
             this.maxHP = 100;
@@ -122,6 +124,7 @@ public class Monster extends Entity{
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
         rectangle.x = screenX + 8;
         rectangle.y = screenY;
+        //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         check_MonsterAttackKnight();
         if(this.status == Entity_Status.WALKING){
             drawHealthBar(shapeRenderer, stateTime, screenX, screenY, index);
@@ -134,7 +137,12 @@ public class Monster extends Entity{
     int attackCounter = 0;
     public void check_MonsterAttackKnight(){
         if(this.status == Entity_Status.WALKING && this.getRectangle().overlaps( this.gameScreen.knight.rectangle)){
-            if(attackCounter % 60 == 0) this.gameScreen.knight.currentHp -= this.damage;
+            if(attackCounter % 60 == 0) {
+                this.gameScreen.knight.currentHp -= this.damage;
+                MusicGame zombieAttack_Music = new MusicGame(gameScreen.musicHandler.zombie_Eating, false);
+                zombieAttack_Music.setVolumeMusic(0.5f);
+                zombieAttack_Music.setPlay();
+            }
             attackCounter ++;
             if(attackCounter > 6000000) attackCounter = 0;
         }
@@ -156,7 +164,7 @@ public class Monster extends Entity{
         }
         else if(status == Entity_Status.DEATH){
             deathCountingTime += 1;
-            System.out.println(deathCountingTime);
+            //System.out.println(deathCountingTime);
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
     }
