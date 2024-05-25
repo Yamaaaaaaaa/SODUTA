@@ -18,6 +18,7 @@ public class MusicHandler {
     public String knight_Death = "music/Combat/Knight_DIe/dark-souls-you-died-sound-effect_hm5sYFG.mp3";
     public String pickup_Item = "music/Combat/PickUp_Item/weapon-gun-pickup-sound-half-life-counter-strike.mp3";
     public String reloadBullet = "music/Combat/Reload_Bullet/gunreload.mp3";
+    public String outOfBullet = "music/Combat/GunShoot/165660__pacmangamer__out-of-ammo-no-ammo.mp3";
 
     // Zombie:
     public String zombie_Eating = "music/Zombie_Attack/screen_recording_20210708-163854_chrome_1.mp3";

@@ -1,12 +1,18 @@
 package com.mygdx.game.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.model.Attack_Status;
 
+import java.awt.*;
+
 public class Status_UI {
+    private BitmapFont font;
     // Bao gom: Vu khi, HP, So Luong dan
     GameScreen gameScreen;
 
@@ -55,6 +61,13 @@ public class Status_UI {
         this.screen_BulletCounter_Y = 30;
         this.bulletCounter = gameScreen.knight.bulletCounter;
         this.bulletMax = gameScreen.knight.bulletMax;
+        
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SegoeUI-Black.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 36;
+        parameter.color = Color.WHITE;
+        font = generator.generateFont(parameter);
+
         // HP bar.
         this.hpBar = new Texture("basic/statusbar/healthbar/greenbar (2).png");
         this.screen_HPBar_Y = 15;
@@ -83,7 +96,11 @@ public class Status_UI {
             }
         }
 
+
         batch.draw(background_BulletCounter, screen_BulletCounter_X, screen_BulletCounter_Y);
+        this.font.draw(batch, this.gameScreen.knight.bulletCounter + " / " + this.gameScreen.knight.bulletMax, screen_BulletCounter_X + 40, screen_BulletCounter_Y + 40);
+
+
 
         int hpBarWidth = this.HPBar_size_Width * this.hp / this.hpMax;
         shapeRenderer.setColor(Color.GREEN);

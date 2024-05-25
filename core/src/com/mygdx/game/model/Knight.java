@@ -113,6 +113,7 @@ public class Knight extends Entity {
             this.moving.move(this, this.gameScreen);
         }
     }
+
     public void updateKill(){
         // check va cham đạn và monster
         ArrayList<Monster> rejMons = new ArrayList<Monster>();
@@ -156,15 +157,28 @@ public class Knight extends Entity {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && this.attackStatus == Attack_Status.SHOOT){
-            MusicGame shootms = new MusicGame(this.gameScreen.musicHandler.shoot,false);
-            shootms.setVolumeMusic(0.5f);
-            shootms.setPlay();
-            if(this.direction == Direction.DOWN) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY(),400,this.direction, this.collisionLayer));
-            else if(this.direction == Direction.UP) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY() + 32,400,this.direction, this.collisionLayer));
-            else if(this.direction == Direction.RIGHT || this.direction == Direction.DOWNRIGHT || this.direction == Direction.UPRIGHT) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 30,this.getY() + 10,400,this.direction, this.collisionLayer));
-            else if(this.direction == Direction.LEFT || this.direction == Direction.DOWNLEFT || this.direction == Direction.UPLEFT) this.bullets.add(new Bullet(this.gameScreen,this.getX(),this.getY() + 10,400,this.direction, this.collisionLayer));
+            if(this.bulletCounter > 0){
+                MusicGame shootms = new MusicGame(this.gameScreen.musicHandler.shoot,false);
+                shootms.setVolumeMusic(0.5f);
+                shootms.setPlay();
+                if(this.direction == Direction.DOWN) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY(),400,this.direction, this.collisionLayer));
+                else if(this.direction == Direction.UP) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY() + 32,400,this.direction, this.collisionLayer));
+                else if(this.direction == Direction.RIGHT || this.direction == Direction.DOWNRIGHT || this.direction == Direction.UPRIGHT) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 30,this.getY() + 10,400,this.direction, this.collisionLayer));
+                else if(this.direction == Direction.LEFT || this.direction == Direction.DOWNLEFT || this.direction == Direction.UPLEFT) this.bullets.add(new Bullet(this.gameScreen,this.getX(),this.getY() + 10,400,this.direction, this.collisionLayer));
+                this.bulletCounter --;
+            }
+            else{
+                MusicGame outOfBullet = new MusicGame(this.gameScreen.musicHandler.outOfBullet,false);
+                outOfBullet.setVolumeMusic(1f);
+                outOfBullet.setPlay();
+            }
         }
-
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R) && this.attackStatus == Attack_Status.SHOOT){
+            MusicGame reloadBullet_Music = new MusicGame(this.gameScreen.musicHandler.reloadBullet,false);
+            reloadBullet_Music.setVolumeMusic(0.3f);
+            reloadBullet_Music.setPlay();
+            this.bulletCounter = this.bulletMax;
+        }
         // update Bullet:
      //   if(this.attackStatus == Attack_Status.SHOOT){
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
@@ -174,6 +188,8 @@ public class Knight extends Entity {
      //   }
     }
 
+
+    int counterAnimationDeath = 0;
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
         //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
@@ -196,9 +212,12 @@ public class Knight extends Entity {
             }
         }
         if(status == Entity_Status.DEATH){
-            batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
+            counterAnimationDeath ++;
+            if(counterAnimationDeath <= 60){
+                batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
+            }else{
+                this.gameScreen.setEndGame_Screen();
+            }
         }
-
-
     }
 }

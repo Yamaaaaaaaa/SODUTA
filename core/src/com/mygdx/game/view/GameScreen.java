@@ -136,6 +136,10 @@ public class GameScreen implements Screen {
             monsters.clear();
         }
     }
+    public void setEndGame_Screen(){
+        this.dispose();
+        this.spaceGame.setScreen(new EndGameScreen());
+    }
     @Override
     public void resize(int width, int height) {
         camera.viewportWidth = width;
