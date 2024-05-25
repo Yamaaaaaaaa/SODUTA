@@ -64,7 +64,7 @@ public class Status_UI {
         
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SegoeUI-Black.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 36;
+        parameter.size = 33;
         parameter.color = Color.WHITE;
         font = generator.generateFont(parameter);
 
@@ -98,7 +98,7 @@ public class Status_UI {
 
 
         batch.draw(background_BulletCounter, screen_BulletCounter_X, screen_BulletCounter_Y);
-        this.font.draw(batch, this.gameScreen.knight.bulletCounter + " / " + this.gameScreen.knight.bulletMax, screen_BulletCounter_X + 40, screen_BulletCounter_Y + 40);
+        this.font.draw(batch, this.gameScreen.knight.bulletCounter + " / " + this.gameScreen.knight.bulletMax, screen_BulletCounter_X + 50, screen_BulletCounter_Y + 40);
 
 
 
