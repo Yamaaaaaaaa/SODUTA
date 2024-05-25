@@ -38,19 +38,19 @@ public class MenuScreen implements Screen {
     Texture buttonMusicOnHover;
     Texture buttonMusicOffIdle;
     Texture buttonMusicOffHover;
+
     // CHỨC NĂNG CHECK ÂM THANH
     boolean checkSoundButtonPlayOn = false;
     boolean checkSoundButtonInforOn = false;
     boolean checkSoundButtonRankOn = false;
-    boolean checkSoundButtonMusicOnOn = false;
     boolean checkSoundButtonMusicOffOn = false;
-    boolean checkSoundOn = true;
+    static boolean checkSoundOn = true;
 
     public MenuScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/watery-graves-181198.mp3"));
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
-        background = new Texture("button/BackGround.png");
+        background = new Texture("button/Background.png");
         buttonNewGameIdle = new Texture("button/Play-Idle.png");
         buttonNewGameHover = new Texture("button/Play-Hover.png");
         buttonInforGameIdle = new Texture("button/Info-Idle.png");
@@ -61,6 +61,7 @@ public class MenuScreen implements Screen {
         buttonMusicOnHover = new Texture("button/Music-On-Hover.png");
         buttonMusicOffIdle = new Texture("button/Music-Off-Idle.png");
         buttonMusicOffHover = new Texture("button/Music-Off-Hover.png");
+
     }
     public void show(){
         camera = new OrthographicCamera();
@@ -117,7 +118,7 @@ public class MenuScreen implements Screen {
         }
         // Button play game
 
-        int xPlay = 220; // tọa độ x của nút play
+        int xPlay = 220 + SIZE_BUTTON_WIDTH + 40; // tọa độ x của nút play
         int yPlay = 425; // tọa độ y của nút play
 
         Vector3 touchPointPlay = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -145,7 +146,7 @@ public class MenuScreen implements Screen {
 
 
         // Button infor game
-        int xInfor = 220 + SIZE_BUTTON_WIDTH + 40; // tọa độ x của nút infor
+        int xInfor = 220; // tọa độ x của nút infor
         int yInfor = 425; // tọa độ y của nút infor
 
         Vector3 touchPointInfor = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -158,7 +159,9 @@ public class MenuScreen implements Screen {
             spaceGame.getBatch().draw(buttonInforGameHover, xInfor, yInfor, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 this.dispose();
-                //spaceGame.setScreen(new GameScreen(spaceGame));
+                clickButtonMusic.pause();
+                backgroundMusic.pause();
+                spaceGame.setScreen(new InforGameScreen(spaceGame));
             }
             if(!checkSoundButtonInforOn && checkSoundOn){
                 checkSoundButtonInforOn = true;
