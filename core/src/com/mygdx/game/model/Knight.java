@@ -37,6 +37,9 @@ public class Knight extends Entity {
     public int bulletMax = 50;
     public ArrayList<Bullet> bullets;
     public MusicGame shoot_Music, stab_Music, change_Weapon_toGun_Music, change_Weapon_toKnife_Music, knight_Death_Music, pickup_Item_Music, reloadBullet_Music;
+
+    // Point - Counter.
+    public int point_Counter;
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         this.setMusic();
@@ -74,6 +77,8 @@ public class Knight extends Entity {
         // attack:
         this.attackStatus = Attack_Status.SHOOT; // Mặc định là ban đầu sẽ chém
         bullets = new ArrayList<Bullet>();
+
+        this.point_Counter = 0;
     }
     public void setMusic(){
         this.shoot_Music = new MusicGame(gameScreen.musicHandler.shoot, false);
@@ -113,7 +118,6 @@ public class Knight extends Entity {
             this.moving.move(this, this.gameScreen);
         }
     }
-
     public void updateKill(){
         // check va cham đạn và monster
         ArrayList<Monster> rejMons = new ArrayList<Monster>();
@@ -139,6 +143,7 @@ public class Knight extends Entity {
                 rejBullet.add(bullet);
             }
         }
+        point_Counter += rejMons.size();
         this.gameScreen.monsters.removeAll(rejMons);
         this.bullets.removeAll(rejBullet);
     }
@@ -159,7 +164,7 @@ public class Knight extends Entity {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && this.attackStatus == Attack_Status.SHOOT){
             if(this.bulletCounter > 0){
                 MusicGame shootms = new MusicGame(this.gameScreen.musicHandler.shoot,false);
-                shootms.setVolumeMusic(0.5f);
+                shootms.setVolumeMusic(0.2f);
                 shootms.setPlay();
                 if(this.direction == Direction.DOWN) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY(),400,this.direction, this.collisionLayer));
                 else if(this.direction == Direction.UP) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY() + 32,400,this.direction, this.collisionLayer));
@@ -167,18 +172,19 @@ public class Knight extends Entity {
                 else if(this.direction == Direction.LEFT || this.direction == Direction.DOWNLEFT || this.direction == Direction.UPLEFT) this.bullets.add(new Bullet(this.gameScreen,this.getX(),this.getY() + 10,400,this.direction, this.collisionLayer));
                 this.bulletCounter --;
             }
-            else{
-                MusicGame outOfBullet = new MusicGame(this.gameScreen.musicHandler.outOfBullet,false);
-                outOfBullet.setVolumeMusic(1f);
-                outOfBullet.setPlay();
+            else {
+                MusicGame outofBullet_Music = new MusicGame(this.gameScreen.musicHandler.outOfBullet,false);
+                outofBullet_Music.setVolumeMusic(0.5f);
+                outofBullet_Music.setPlay();
             }
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.R) && this.attackStatus == Attack_Status.SHOOT){
+            this.bulletCounter = 50;
             MusicGame reloadBullet_Music = new MusicGame(this.gameScreen.musicHandler.reloadBullet,false);
-            reloadBullet_Music.setVolumeMusic(0.3f);
+            reloadBullet_Music.setVolumeMusic(1.0f);
             reloadBullet_Music.setPlay();
-            this.bulletCounter = this.bulletMax;
         }
+
         // update Bullet:
      //   if(this.attackStatus == Attack_Status.SHOOT){
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
@@ -188,8 +194,6 @@ public class Knight extends Entity {
      //   }
     }
 
-
-    int counterAnimationDeath = 0;
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
         //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
@@ -212,12 +216,9 @@ public class Knight extends Entity {
             }
         }
         if(status == Entity_Status.DEATH){
-            counterAnimationDeath ++;
-            if(counterAnimationDeath <= 60){
-                batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
-            }else{
-                this.gameScreen.setEndGame_Screen();
-            }
+            batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
         }
+
+
     }
 }

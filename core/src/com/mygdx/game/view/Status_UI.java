@@ -32,6 +32,14 @@ public class Status_UI {
     int hp, hpMax;
     int screen_HPBar_X, screen_HPBar_Y;
     int HPBar_size_Width, HPBar_size_Height;
+
+    // Point - Counter:
+    Texture background_PointCounter;
+    int point;
+    int screen_PointCounter_X, screen_PointCounter_Y;
+    int screen_PointCounter_Width, screen_PointCounter_Height;
+
+
     public Status_UI(GameScreen gameScreen){
         this.gameScreen = gameScreen;
 
@@ -77,6 +85,11 @@ public class Status_UI {
         this.hpMax = gameScreen.knight.maxHP;
         this.HPBar_size_Width = 250;
         this.HPBar_size_Height = 10;
+
+        // Point - Counter:
+        this.background_PointCounter = new Texture("basic/statusbar/equipment/background.png");
+        this.screen_PointCounter_X = this.screen_PointCounter_Y = 740;
+        this.screen_PointCounter_Width = this.screen_PointCounter_Height = 46;
     }
     public void update(){
         if(gameScreen.knight.attackStatus == Attack_Status.STAB){
@@ -87,6 +100,7 @@ public class Status_UI {
         }
         this.bulletCounter = gameScreen.knight.bulletCounter;
         this.hp = gameScreen.knight.currentHp;
+        this.point = this.gameScreen.knight.point_Counter;
     }
     public void draw(SpriteBatch batch, ShapeRenderer shapeRenderer){
         for(int i = 0 ;i < 4; i++){
@@ -105,5 +119,9 @@ public class Status_UI {
         int hpBarWidth = this.HPBar_size_Width * this.hp / this.hpMax;
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(screen_HPBar_X, screen_HPBar_Y, hpBarWidth, this.HPBar_size_Height);
+
+
+        batch.draw(this.background_PointCounter, screen_PointCounter_X, screen_PointCounter_Y);
+        this.font.draw(batch, point + "", screen_PointCounter_X + 10, screen_PointCounter_Y + 30);
     }
 }

@@ -140,6 +140,7 @@ public class GameScreen implements Screen {
         this.dispose();
         this.spaceGame.setScreen(new EndGameScreen());
     }
+
     @Override
     public void resize(int width, int height) {
         camera.viewportWidth = width;
