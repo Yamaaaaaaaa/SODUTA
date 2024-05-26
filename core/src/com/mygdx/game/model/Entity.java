@@ -35,12 +35,13 @@ public class Entity {
     public Attack_Status attackStatus;
 
     // Dành riêng cho quái
+    public boolean remove = false;
 
         // SETTING DI CHUYỂN MẶC ĐỊNH TRONG MAP:
         public String direction_Static;
         public float xMin, yMin, xMax, yMax;
     // Dành riêng cho Bullet.
-        public boolean remove;
+
 
 // VA CHẠM
     public TiledMapTileLayer collisionLayer;

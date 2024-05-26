@@ -1,12 +1,18 @@
 package com.mygdx.game.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.model.Attack_Status;
 
+import java.awt.*;
+
 public class Status_UI {
+    private BitmapFont font;
     // Bao gom: Vu khi, HP, So Luong dan
     GameScreen gameScreen;
 
@@ -26,6 +32,14 @@ public class Status_UI {
     int hp, hpMax;
     int screen_HPBar_X, screen_HPBar_Y;
     int HPBar_size_Width, HPBar_size_Height;
+
+    // Point - Counter:
+    Texture background_PointCounter;
+    int point;
+    int screen_PointCounter_X, screen_PointCounter_Y;
+    int screen_PointCounter_Width, screen_PointCounter_Height;
+
+
     public Status_UI(GameScreen gameScreen){
         this.gameScreen = gameScreen;
 
@@ -55,6 +69,13 @@ public class Status_UI {
         this.screen_BulletCounter_Y = 30;
         this.bulletCounter = gameScreen.knight.bulletCounter;
         this.bulletMax = gameScreen.knight.bulletMax;
+        
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SegoeUI-Black.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 33;
+        parameter.color = Color.WHITE;
+        font = generator.generateFont(parameter);
+
         // HP bar.
         this.hpBar = new Texture("basic/statusbar/healthbar/greenbar (2).png");
         this.screen_HPBar_Y = 15;
@@ -64,6 +85,11 @@ public class Status_UI {
         this.hpMax = gameScreen.knight.maxHP;
         this.HPBar_size_Width = 250;
         this.HPBar_size_Height = 10;
+
+        // Point - Counter:
+        this.background_PointCounter = new Texture("basic/statusbar/equipment/background.png");
+        this.screen_PointCounter_X = this.screen_PointCounter_Y = 740;
+        this.screen_PointCounter_Width = this.screen_PointCounter_Height = 46;
     }
     public void update(){
         if(gameScreen.knight.attackStatus == Attack_Status.STAB){
@@ -74,6 +100,7 @@ public class Status_UI {
         }
         this.bulletCounter = gameScreen.knight.bulletCounter;
         this.hp = gameScreen.knight.currentHp;
+        this.point = this.gameScreen.knight.point_Counter;
     }
     public void draw(SpriteBatch batch, ShapeRenderer shapeRenderer){
         for(int i = 0 ;i < 4; i++){
@@ -83,10 +110,18 @@ public class Status_UI {
             }
         }
 
+
         batch.draw(background_BulletCounter, screen_BulletCounter_X, screen_BulletCounter_Y);
+        this.font.draw(batch, this.gameScreen.knight.bulletCounter + " / " + this.gameScreen.knight.bulletMax, screen_BulletCounter_X + 50, screen_BulletCounter_Y + 40);
+
+
 
         int hpBarWidth = this.HPBar_size_Width * this.hp / this.hpMax;
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(screen_HPBar_X, screen_HPBar_Y, hpBarWidth, this.HPBar_size_Height);
+
+
+        batch.draw(this.background_PointCounter, screen_PointCounter_X, screen_PointCounter_Y);
+        this.font.draw(batch, point + "", screen_PointCounter_X + 10, screen_PointCounter_Y + 30);
     }
 }

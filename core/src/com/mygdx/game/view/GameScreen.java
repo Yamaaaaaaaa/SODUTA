@@ -18,15 +18,17 @@ import com.mygdx.game.controller.Direction;
 import com.mygdx.game.model.*;
 
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.model.gamemusic.MusicGame;
+import com.mygdx.game.model.gamemusic.MusicHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
+    public MusicHandler musicHandler;
     private float stateTime = 0;
     private float tile_Size = 32;
 
@@ -48,11 +50,23 @@ public class GameScreen implements Screen {
     private long timeGenBabyMonster;
 // UI
     private Status_UI statusUI;
+
+// MUSIC:
+    public MusicGame background_Game_Music, zombie_WaveStart_Music;
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
         shapeRenderer = spaceGame.shapeRenderer;
+        this.musicHandler = new MusicHandler();
+        this.background_Game_Music = new MusicGame(this.musicHandler.background_Game, true);
+        this.background_Game_Music.setVolumeMusic(0.3f);
+        this.background_Game_Music.setPlay();
+
+        this.zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
+        this.zombie_WaveStart_Music.setVolumeMusic(0.8f);
+       // this.zombie_WaveStart_Music.setPlay();
     }
+
 
     @Override
     public void show() {
@@ -87,38 +101,45 @@ public class GameScreen implements Screen {
         renderer.render();
 
         //update
-        knight.update();
-        //TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000
-        if (monsters.size() < 3){
-            Monster monster = new Monster(  collsionLayer, this,"vertical");
-            monsters.add(monster);
-            timeGenBabyMonster = (Long)TimeUtils.nanoTime();
-        }
-        statusUI.update();
+            knight.update();
+            //monsters.size() < 3
+            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0) {
+                Monster monster = new Monster(collsionLayer, this, "vertical");
+                //   this.zombie_WaveStart_Music.setPlay();
+                monsters.add(monster);
+                timeGenBabyMonster = (Long) TimeUtils.nanoTime();
+            }
+            statusUI.update();
 
-        for(Monster monster : monsters){
-            monster.update();
-        }
-        stateTime += delta;
+            for (Monster monster : monsters) {
+                monster.update();
+            }
+            stateTime += delta;
 
         //draw , shape trc, batch sau.
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
         if(knight.attackStatus == Attack_Status.SHOOT){
             for(Bullet bullet: knight.bullets){
-                bullet.render(batch);
+                bullet.render(batch, shapeRenderer);
             }
         }
         knight.draw(batch, stateTime, shapeRenderer);
         for(Monster monster : monsters){
             monster.draw(batch, stateTime, shapeRenderer);
         }
-
         statusUI.draw(batch,shapeRenderer);
         batch.end();
         shapeRenderer.end();
+        if(knight.currentHp <= 0){
+            knight.status = Entity_Status.DEATH;
+            monsters.clear();
+        }
     }
-
+    public void setEndGame_Screen(){
+        this.dispose();
+        this.spaceGame.setScreen(new EndGameScreen());
+    }
 
     @Override
     public void resize(int width, int height) {
