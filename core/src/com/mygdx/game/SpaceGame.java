@@ -17,6 +17,7 @@ public class SpaceGame extends Game {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		Setting_MenuScreen.generateSkin();
+		this.fileHandler = new FileHandler();
 		this.menuScreen = new MenuScreen(this);
 		this.setScreen(this.menuScreen);
 	}

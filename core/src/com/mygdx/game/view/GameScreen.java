@@ -133,7 +133,8 @@ public class GameScreen implements Screen {
     }
     public void setEndGame_Screen(){
         this.dispose();
-        this.spaceGame.setScreen(new EndGameScreen());
+        this.background_Game_Music.setStop();
+        this.spaceGame.setScreen(this.spaceGame.menuScreen);
     }
 
     @Override
@@ -159,8 +160,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        batch.dispose();
+       // batch.dispose();
+       // shapeRenderer.dispose();
     }
-
-
 }

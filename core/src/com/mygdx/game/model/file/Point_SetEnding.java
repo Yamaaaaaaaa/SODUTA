@@ -1,13 +1,15 @@
 package com.mygdx.game.model.file;
 
-public class Save_Ranking {
+import java.io.Serializable;
+
+public class Point_SetEnding implements Serializable {
     private String nameRanking;
     private int pointRanking;
     private String dayRanking;
 
-    public Save_Ranking(String name,int turn, String dayRanking) {
+    public Point_SetEnding(String name, int point, String dayRanking) {
         this.nameRanking = name;
-        this.pointRanking = turn;
+        this.pointRanking = point;
         this.dayRanking = dayRanking;
     }
 
@@ -27,11 +29,11 @@ public class Save_Ranking {
         this.nameRanking = name;
     }
 
-    public int getTurn() {
+    public int getPoint() {
         return pointRanking;
     }
 
-    public void setTurn(int turn) {
-        this.pointRanking = turn;
+    public void setPoint(int point) {
+        this.pointRanking = point;
     }
 }

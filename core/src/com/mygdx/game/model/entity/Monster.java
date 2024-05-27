@@ -48,7 +48,7 @@ public class Monster extends Entity{
         // atk, hp
             this.currentHp = 100;
             this.maxHP = 100;
-            this.damage = 5;
+            this.damage = 30;
         // first setting:
         this.direction_Static = direction_Static;
         if(direction_Static.equals("vertical")) {
