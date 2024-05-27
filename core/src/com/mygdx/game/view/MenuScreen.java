@@ -46,6 +46,8 @@ public class MenuScreen implements Screen {
     boolean checkSoundButtonMusicOffOn = false;
     static boolean checkSoundOn = true;
 
+    // DỌC FILE:
+
     public MenuScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/watery-graves-181198.mp3"));
@@ -62,6 +64,9 @@ public class MenuScreen implements Screen {
         buttonMusicOffIdle = new Texture("button/Music-Off-Idle.png");
         buttonMusicOffHover = new Texture("button/Music-Off-Hover.png");
 
+
+        // Đọc File:
+        this.spaceGame.fileHandler.Read_Ranking();
     }
     public void show(){
         camera = new OrthographicCamera();

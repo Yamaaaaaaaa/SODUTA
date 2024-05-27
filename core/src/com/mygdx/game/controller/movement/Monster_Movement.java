@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Movement;
-import com.mygdx.game.model.Entity;
+import com.mygdx.game.model.entity.Entity;
 import com.mygdx.game.view.GameScreen;
 
 public class Monster_Movement implements Movement {

@@ -1,7 +1,6 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,19 +12,15 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
-import com.mygdx.game.controller.CheckCollision;
-import com.mygdx.game.controller.Direction;
-import com.mygdx.game.model.*;
 
-import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.model.entity.*;
 import com.mygdx.game.model.gamemusic.MusicGame;
 import com.mygdx.game.model.gamemusic.MusicHandler;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GameScreen implements Screen {
-    private SpaceGame spaceGame;
+    public SpaceGame spaceGame;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     public MusicHandler musicHandler;
