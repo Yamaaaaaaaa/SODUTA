@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Movement;
-import com.mygdx.game.model.Entity;
+import com.mygdx.game.model.entity.Entity;
 import com.mygdx.game.view.GameScreen;
 
 public class Bullet_Movement implements Movement {

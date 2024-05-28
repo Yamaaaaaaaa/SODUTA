@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.model.Attack_Status;
-
-import java.awt.*;
+import com.mygdx.game.model.entity.Attack_Status;
 
 public class Status_UI {
     private BitmapFont font;
