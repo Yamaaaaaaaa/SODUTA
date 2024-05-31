@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
 import com.mygdx.game.model.gamemusic.MusicGame;
@@ -37,6 +38,8 @@ public class Knight extends Entity {
     public int bulletMax = 50;
     public ArrayList<Bullet> bullets;
     public MusicGame shoot_Music, stab_Music, change_Weapon_toGun_Music, change_Weapon_toKnife_Music, knight_Death_Music, pickup_Item_Music, reloadBullet_Music;
+    public long timeKnightDeath = 0;
+
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         this.setMusic();
@@ -105,8 +108,9 @@ public class Knight extends Entity {
         }
     }
     public void update(){
-        if(this.currentHp <= 0){
+        if(this.currentHp <= 0 &&  timeKnightDeath == 0){
             this.status = Entity_Status.DEATH;
+            timeKnightDeath = (Long) TimeUtils.nanoTime();
         }else{
             updateAttack();
             updateKill();
@@ -189,7 +193,7 @@ public class Knight extends Entity {
     }
 
 
-    int counterAnimationDeath = 0;
+    public int counterAnimationDeath = 0;
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
         //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
@@ -211,13 +215,10 @@ public class Knight extends Entity {
                 batch.draw((TextureRegion) shootting[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
             }
         }
-        if(status == Entity_Status.DEATH){
-            counterAnimationDeath ++;
-            if(counterAnimationDeath <= 60){
-                batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
-            }else{
+        if(status == Entity_Status.DEATH) {
+            batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY, this.getWidth() * 2, this.getHeight() * 2);
+            if (TimeUtils.nanoTime() - timeKnightDeath >= 2000000000)
                 this.gameScreen.setEndGame_Screen();
-            }
         }
     }
 }

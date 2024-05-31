@@ -3,8 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.view.MenuScreen;
 import com.mygdx.game.setting.Setting_MenuScreen;
+import com.mygdx.game.view.MenuScreen;
+
 
 public class SpaceGame extends Game {
 	SpriteBatch batch;
