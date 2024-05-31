@@ -125,7 +125,7 @@ public class Knight extends Entity {
     }
 
     public void updateRanking(){
-        this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA_TMP",this.point_Counter, "00/00/0000");
+        this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA_TMP",this.point_Counter);
         this.gameScreen.spaceGame.fileHandler.coutRanking();
     }
     public void updateKill(){

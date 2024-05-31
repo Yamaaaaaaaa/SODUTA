@@ -7,6 +7,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class FileHandler {
@@ -17,8 +19,9 @@ public class FileHandler {
         this.coutRanking();
     }
 
-    public void addRanking(String name, int point, String day){
-        this.List_Ranking.add(new Point_SetEnding(name, point, day));
+    public void addRanking(String name, int point){
+        this.List_Ranking.add(new Point_SetEnding(name, point));
+        sortRanking();
     }
     public void coutRanking(){
         System.out.println("Xuat Ranking: ");
@@ -63,6 +66,8 @@ public class FileHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+    }
+    public void sortRanking(){
+        Collections.sort(List_Ranking);
     }
 }
