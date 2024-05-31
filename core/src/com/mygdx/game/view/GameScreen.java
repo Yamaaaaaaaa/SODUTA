@@ -134,7 +134,7 @@ public class GameScreen implements Screen {
     public void setEndGame_Screen(){
         this.dispose();
         this.background_Game_Music.setStop();
-        this.spaceGame.setScreen(this.spaceGame.menuScreen);
+        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame));
     }
 
     @Override

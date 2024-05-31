@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.model.file.FileHandler;
+import com.mygdx.game.view.EndGameScreen;
 import com.mygdx.game.view.MenuScreen;
 import com.mygdx.game.setting.Setting_MenuScreen;
 

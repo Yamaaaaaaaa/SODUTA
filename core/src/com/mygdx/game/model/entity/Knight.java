@@ -107,6 +107,7 @@ public class Knight extends Entity {
         }
     }
     int checkdie = 0;
+    int timeAnimationDeath = 0;
     public void update(){
         if(this.currentHp <= 0){
             if(checkdie == 0) {
@@ -114,6 +115,7 @@ public class Knight extends Entity {
                 checkdie = 1;
             }
             this.status = Entity_Status.DEATH;
+            this.timeAnimationDeath ++;
             if(this.currentHp < 0) currentHp = 0;
         }else{
             updateAttack();
@@ -230,8 +232,9 @@ public class Knight extends Entity {
         }
         if(status == Entity_Status.DEATH){
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
-            this.gameScreen.setEndGame_Screen();
+            if(this.timeAnimationDeath == 60) {
+                this.gameScreen.setEndGame_Screen();
+            }
         }
     }
-
 }
