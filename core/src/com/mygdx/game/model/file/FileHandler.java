@@ -13,15 +13,29 @@ import java.util.List;
 
 public class FileHandler {
     public List<Point_SetEnding> List_Ranking; // chỉ push ng thắng vô, sắp xếp.
+    private FileHandle fileHandle;
+    private String filePath = "";
     public FileHandler() {
         this.List_Ranking = new ArrayList<>();
+
+        fileHandle = Gdx.files.internal("file/ranking.txt");
+        String tmp = fileHandle.file().getAbsolutePath();
+        for(int i = 0 ;i  < tmp.length(); i++){
+            if(tmp.charAt(i) == '\\'){
+                filePath = filePath + tmp.charAt(i) + tmp.charAt(i);
+            }
+            else filePath = filePath + tmp.charAt(i);
+        }
+
         this.Read_Ranking();
         this.coutRanking();
+
     }
 
     public void addRanking(String name, int point){
         this.List_Ranking.add(new Point_SetEnding(name, point));
         sortRanking();
+        Write_Ranking();
     }
     public void coutRanking(){
         System.out.println("Xuat Ranking: ");
@@ -31,7 +45,9 @@ public class FileHandler {
     }
     public void Write_Ranking(){
         // PHƯƠNG THỨC NÀY DÙNG 1 LẦN DUY NHẤT LÀ KHI THOÁT CHƯƠNG TRÌNH.
-        File file = new File("D:\\A.Documents\\Code\\Lib_GDX_Learning\\Group5_BTCK_PGC-Endless_Way\\assets\\file\\ranking.txt");
+       // File file = new File("D:\\A.Documents\\Code\\Lib_GDX_Learning\\Group5_BTCK_PGC-Endless_Way\\assets\\file\\ranking.txt");
+       // File file = fileHandle.file();
+        File file = new File(this.filePath);
         try {
             OutputStream os = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(os);
@@ -48,7 +64,9 @@ public class FileHandler {
     public void Read_Ranking(){
         // PHƯƠNG THỨC NÀY DÙNG 1 LẦN DUY NHẤT LÀ KHI KHỞI TẠO CHƯƠNG TRÌNH:
             // ĐỌc file, luu list xuống ARRAAYLIST.
-        File file = new File("D:\\A.Documents\\Code\\Lib_GDX_Learning\\Group5_BTCK_PGC-Endless_Way\\assets\\file\\ranking.txt");
+       // File file = new File("D:\\A.Documents\\Code\\Lib_GDX_Learning\\Group5_BTCK_PGC-Endless_Way\\assets\\file\\ranking.txt");
+
+        File file = new File(this.filePath);
         try {
             InputStream is = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(is);
