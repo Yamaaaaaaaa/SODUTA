@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
 
-public class InforGameScreen implements Screen {
+public class RankGameScreen implements Screen {
     // KÍCH THƯỚC NÚT
     private int SIZE_BUTTON_WIDTH = 88;
     private int SIZE_BUTTON_HEIGHT = 88;
@@ -30,28 +30,28 @@ public class InforGameScreen implements Screen {
     Texture buttonMusicOnHover;
     Texture buttonMusicOffIdle;
     Texture buttonMusicOffHover;
-    Texture howToPlay;
+    Texture rankTable;
     Texture buttonHomeIdle;
     Texture buttonHomeHover;
-    Texture linkGithub;
+
     // CHỨC NĂNG CHECK ÂM THANH
     boolean checkSoundButtonMusicOffOn = false;
     boolean isCheckSoundButtonHomeOn = false;
     static boolean checkSoundOn = true;
 
-    public InforGameScreen(SpaceGame spaceGame){
+    public RankGameScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-comedy-121626.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
         background = new Texture("button/Background.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");
         buttonMusicOnHover = new Texture("button/Music-On-Hover.png");
         buttonMusicOffIdle = new Texture("button/Music-Off-Idle.png");
         buttonMusicOffHover = new Texture("button/Music-Off-Hover.png");
-        howToPlay = new Texture("button/inforGame/HowToPlayGame.png");
+        rankTable = new Texture("button/inforGame/RankTable.png");
         buttonHomeHover = new Texture("button/inforGame/Home-Hover.png");
         buttonHomeIdle = new Texture("button/inforGame/Home-Idle.png");
-        linkGithub = new Texture("button/inforGame/iconGithub.png");
+
     }
     public void show() {
         camera = new OrthographicCamera();
@@ -67,11 +67,10 @@ public class InforGameScreen implements Screen {
 
         spaceGame.getBatch().begin();
         spaceGame.getBatch().draw(background, 0, 0, 800, 800);
-        // icon Github
-        spaceGame.getBatch().draw(linkGithub,300 + SIZE_BUTTON_WIDTH + 40, 0,SIZE_BUTTON_WIDTH,SIZE_BUTTON_HEIGHT);
+
 
         // Button go back
-        int xHome = 300 ; // tọa độ x của nút home
+        int xHome = 350 ; // tọa độ x của nút home
         int yHome = 0; // tọa độ y của nút home
 
         Vector3 touchPointHome = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -97,8 +96,8 @@ public class InforGameScreen implements Screen {
             spaceGame.getBatch().draw(buttonHomeIdle, xHome, yHome, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
             isCheckSoundButtonHomeOn = false;
         }
-        // how to play
-        spaceGame.getBatch().draw(howToPlay,125,100,550,600);
+        // Rank table
+        spaceGame.getBatch().draw(rankTable,30,100,750,700);
         // button music
         int x = 0;
         int y = 0;
@@ -111,7 +110,7 @@ public class InforGameScreen implements Screen {
             if(checkSoundOn) spaceGame.getBatch().draw(buttonMusicOnHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
             else spaceGame.getBatch().draw(buttonMusicOffHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
             if (Gdx.input.justTouched()) {
-                //this.dispose();
+                this.dispose();
 
                 if(checkSoundOn) {
 

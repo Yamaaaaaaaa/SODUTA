@@ -43,6 +43,7 @@ public class MenuScreen implements Screen {
     boolean checkSoundButtonPlayOn = false;
     boolean checkSoundButtonInforOn = false;
     boolean checkSoundButtonRankOn = false;
+
     boolean checkSoundButtonMusicOffOn = false;
     static boolean checkSoundOn = true;
 
@@ -87,7 +88,7 @@ public class MenuScreen implements Screen {
         if (isTouchingButtonMusic) {
             if(checkSoundOn) spaceGame.getBatch().draw(buttonMusicOnHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
             else spaceGame.getBatch().draw(buttonMusicOffHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 this.dispose();
 
                 if(checkSoundOn) {
@@ -98,8 +99,8 @@ public class MenuScreen implements Screen {
                 }
                 else {
                     //spaceGame.getBatch().draw(buttonMusicOnHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
-                    backgroundMusic.play();
                     checkSoundOn = true;
+                    backgroundMusic.play();
                 }
             }
             if(checkSoundOn){
@@ -113,8 +114,6 @@ public class MenuScreen implements Screen {
             if(checkSoundOn) spaceGame.getBatch().draw(buttonMusicOnIdle, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
             else spaceGame.getBatch().draw(buttonMusicOffIdle, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
             checkSoundButtonMusicOffOn = false;
-
-
         }
         // Button play game
 
@@ -129,7 +128,7 @@ public class MenuScreen implements Screen {
 
         if (isTouchingButtonPlay) {
             spaceGame.getBatch().draw(buttonNewGameHover, xPlay, yPlay, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 this.dispose();
                 backgroundMusic.pause();
                 spaceGame.setScreen(new GameScreen(spaceGame));
@@ -157,7 +156,7 @@ public class MenuScreen implements Screen {
 
         if (isTouchingButtonInfor) {
             spaceGame.getBatch().draw(buttonInforGameHover, xInfor, yInfor, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 this.dispose();
                 clickButtonMusic.pause();
                 backgroundMusic.pause();
@@ -185,9 +184,10 @@ public class MenuScreen implements Screen {
 
         if (isTouchingButtonRank) {
             spaceGame.getBatch().draw(buttonRankGameHover, xRank, yRank, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 this.dispose();
-                //spaceGame.setScreen(new GameScreen(spaceGame));
+                backgroundMusic.pause();
+                spaceGame.setScreen(new RankGameScreen(spaceGame));
             }
             if(!checkSoundButtonRankOn && checkSoundOn){
                 checkSoundButtonRankOn = true;

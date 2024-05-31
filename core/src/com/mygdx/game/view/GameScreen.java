@@ -3,14 +3,17 @@ package com.mygdx.game.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
 import com.mygdx.game.controller.CheckCollision;
@@ -26,12 +29,21 @@ import java.util.Iterator;
 
 public class GameScreen implements Screen {
     private SpaceGame spaceGame;
+
+    public SpaceGame getSpaceGame() {
+        return spaceGame;
+    }
+
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     public MusicHandler musicHandler;
     private float stateTime = 0;
     private float tile_Size = 32;
-
+    // KÍCH THƯỚC NÚT
+    private int SIZE_BUTTON_WIDTH = 88;
+    private int SIZE_BUTTON_HEIGHT = 88;
+    private int SIZE_BUTTON_MUSIC_WIDTH = SIZE_BUTTON_WIDTH/2;
+    private int SIZE_BUTTON_MUSIC_HEIGHT = SIZE_BUTTON_HEIGHT/2;
 //NHÂN VẬT:
     // DI CHUYEN NHAN VAT
     public float speed;
@@ -52,7 +64,17 @@ public class GameScreen implements Screen {
     private Status_UI statusUI;
 
 // MUSIC:
-    public MusicGame background_Game_Music, zombie_WaveStart_Music;
+
+//    // Nút music trong game
+//    Texture buttonMusicOnIdle;
+//    Texture buttonMusicOnHover;
+//    Texture buttonMusicOffIdle;
+//    Texture buttonMusicOffHover;
+//    // check âm thanh bật tắt
+//    Music clickButtonMusic;
+//    boolean checkSoundButtonMusicOffOn = false;
+//    static boolean checkSoundOn = true;
+      public MusicGame background_Game_Music, zombie_WaveStart_Music;
     public GameScreen(SpaceGame spaceGame) {
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
@@ -65,6 +87,11 @@ public class GameScreen implements Screen {
         this.zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
         this.zombie_WaveStart_Music.setVolumeMusic(0.8f);
        // this.zombie_WaveStart_Music.setPlay();
+//        clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
+//        buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");
+//        buttonMusicOnHover = new Texture("button/Music-On-Hover.png");
+//        buttonMusicOffIdle = new Texture("button/Music-Off-Idle.png");
+//        buttonMusicOffHover = new Texture("button/Music-Off-Hover.png");
     }
 
 
@@ -93,6 +120,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         camera.position.x = knight.getX();
         camera.position.y = knight.getY();
         camera.update();
@@ -119,6 +147,7 @@ public class GameScreen implements Screen {
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
+
         if(knight.attackStatus == Attack_Status.SHOOT){
             for(Bullet bullet: knight.bullets){
                 bullet.render(batch, shapeRenderer);
@@ -136,10 +165,7 @@ public class GameScreen implements Screen {
             monsters.clear();
         }
     }
-    public void setEndGame_Screen(){
-        this.dispose();
-        this.spaceGame.setScreen(new EndGameScreen());
-    }
+
 
     @Override
     public void resize(int width, int height) {

@@ -11,14 +11,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.SpaceGame;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
 import com.mygdx.game.model.gamemusic.MusicGame;
+import com.mygdx.game.view.EndGameScreen;
 import com.mygdx.game.view.GameScreen;
+import com.mygdx.game.view.MenuScreen;
 
 import java.util.ArrayList;
 
 public class Knight extends Entity {
+    public SpaceGame spaceGame;
+
     public float screenX = 400, screenY = 400; // Cái này chỉ riêng tk NV Chính có.
     public GameScreen gameScreen;
     // ROLLS:
@@ -43,12 +48,13 @@ public class Knight extends Entity {
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         this.setMusic();
+        spaceGame = gameScreen.getSpaceGame();
         // hinh anh
         this.texture_walking = new Texture("basic/character/Walk.png");
         this.texture_shooting = new Texture("basic/character/Shoot.png");
         this.texture_stabbing = new Texture("basic/character/Stab.png");
         this.texture_death = new Texture("basic/character/Death.png");
-        this.setPosision(x,y);
+        this.setPosision(x, y);
         this.setSpeed_Stright(speed);
         this.setSpeed_Cross((float) Math.sqrt(speed * speed / 2));
 
@@ -166,6 +172,7 @@ public class Knight extends Entity {
                 MusicGame shootms = new MusicGame(this.gameScreen.musicHandler.shoot,false);
                 shootms.setVolumeMusic(0.2f);
                 shootms.setPlay();
+
                 if(this.direction == Direction.DOWN) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY(),400,this.direction, this.collisionLayer));
                 else if(this.direction == Direction.UP) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 20,this.getY() + 32,400,this.direction, this.collisionLayer));
                 else if(this.direction == Direction.RIGHT || this.direction == Direction.DOWNRIGHT || this.direction == Direction.UPRIGHT) this.bullets.add(new Bullet(this.gameScreen,this.getX() + 30,this.getY() + 10,400,this.direction, this.collisionLayer));
@@ -217,6 +224,8 @@ public class Knight extends Entity {
         }
         if(status == Entity_Status.DEATH){
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
+            //spaceGame.dispose();
+            //gameScreen.background_Game_Music.setPause();
         }
 
 
