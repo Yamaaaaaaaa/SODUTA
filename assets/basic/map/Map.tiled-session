@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Walk.tsx",
+    "activeFile": "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -90,17 +90,16 @@
         "Mini_Map.tmx",
         "TileSet-1.tsx",
         "Walk.tsx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
-        "Medium_Map.tmx"
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx"
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
-        "Medium_Map.tmx",
         "Map.tmx",
         "Mini_Map.tmx",
         "TileSet-1.tsx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
         "Walk.tsx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
+        "Medium_Map.tmx",
         "MediumMap.tmx",
         "Set1-3.tsx",
         "Set1-2.tsx",
