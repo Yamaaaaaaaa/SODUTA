@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Walk.tsx",
+    "activeFile": "Medium_Map.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -19,8 +19,8 @@
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": -182,
-                "y": 1594
+                "x": -190,
+                "y": 1586
             }
         },
         "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/object_tiles.tsx": {
@@ -30,8 +30,8 @@
             "scale": 0.25,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3168,
-                "y": 3542
+                "x": 5406,
+                "y": 3554
             }
         },
         "MediumMap.tmx": {
@@ -43,19 +43,19 @@
             }
         },
         "Medium_Map.tmx": {
-            "scale": 0.33,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2489.3939393939395,
-                "y": 1477.2727272727275
+                "x": 2622,
+                "y": 2150
             }
         },
         "Mini_Map.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 320,
-                "y": 320.66666666666663
+                "x": 1064.6666666666665,
+                "y": 325.99999999999994
             }
         },
         "Set1-1.tsx": {
@@ -95,12 +95,12 @@
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
-        "Medium_Map.tmx",
         "Map.tmx",
         "Mini_Map.tmx",
         "TileSet-1.tsx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
         "Walk.tsx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
+        "Medium_Map.tmx",
         "MediumMap.tmx",
         "Set1-3.tsx",
         "Set1-2.tsx",
