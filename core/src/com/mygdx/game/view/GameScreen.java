@@ -1,6 +1,7 @@
 package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -83,11 +84,15 @@ public class GameScreen implements Screen {
     }
 
     float cnt = 0;
+    public static boolean isPaused = false;
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            isPaused = true;
+        }
+        if(isPaused) setPauseGame();
         camera.position.x = knight.getX();
         camera.position.y = knight.getY();
         camera.update();
@@ -130,6 +135,16 @@ public class GameScreen implements Screen {
             knight.status = Entity_Status.DEATH;
             monsters.clear();
         }
+    }
+    public void setPauseGame(){
+        this.dispose();
+        knight.setSpeed_Cross(0);
+        knight.setSpeed_Stright(0);
+        for(Monster monster : monsters) {
+            monster.setSpeed_Cross(0);
+            monster.setSpeed_Stright(0);
+        }
+        this.spaceGame.setScreen(new PauseGameScreen(this.spaceGame,this,this.knight,this.monsters));
     }
     public void setEndGame_Screen(){
         this.dispose();
