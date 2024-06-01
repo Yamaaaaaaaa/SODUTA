@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
+    "activeFile": "Walk.tsx",
     "expandedProjectPaths": [
         "."
     ],
@@ -19,8 +19,8 @@
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": -170,
-                "y": 1606
+                "x": -182,
+                "y": 1594
             }
         },
         "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/object_tiles.tsx": {
@@ -30,8 +30,8 @@
             "scale": 0.25,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3338,
-                "y": 2134
+                "x": 3168,
+                "y": 3542
             }
         },
         "MediumMap.tmx": {
@@ -42,12 +42,20 @@
                 "y": 3625.757575757576
             }
         },
+        "Medium_Map.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 2489.3939393939395,
+                "y": 1477.2727272727275
+            }
+        },
         "Mini_Map.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 594,
-                "y": 321.99999999999994
+                "x": 320,
+                "y": 320.66666666666663
             }
         },
         "Set1-1.tsx": {
@@ -82,17 +90,18 @@
         "Mini_Map.tmx",
         "TileSet-1.tsx",
         "Walk.tsx",
-        "MediumMap.tmx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx"
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
+        "Medium_Map.tmx"
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
+        "Medium_Map.tmx",
         "Map.tmx",
         "Mini_Map.tmx",
         "TileSet-1.tsx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
         "Walk.tsx",
         "MediumMap.tmx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx",
         "Set1-3.tsx",
         "Set1-2.tsx",
         "Set1-1.tsx"

@@ -166,7 +166,7 @@ public class Monster extends Entity{
         }
     }
     public void setPlaceGen(){
-        int rong = 600, cao = 600, kc = 100; // screen
+        int rong = 3200, cao = 3200, kc = 100; // screen
         int x = MathUtils.random(1, 4); // trái - phải
         if(x == 1){
             setPosision(kc, cao-kc);

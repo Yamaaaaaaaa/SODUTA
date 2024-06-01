@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         loader = new TmxMapLoader();
-        map = loader.load("basic/map/Mini_Map.tmx");
+        map = loader.load("basic/map/Medium_Map.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
    //     camera.zoom = .8f;
@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
         this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
        // System.out.println(collsionLayer.getName());
         this.speed = 250;
-        this.knight = new Knight(this,tile_Size * 13,tile_Size * 13, this.speed, collsionLayer);
+        this.knight = new Knight(this,tile_Size * 13,tile_Size * 80, this.speed, collsionLayer);
         monsters = new ArrayList<Monster>();
         Monster monster = new Monster(collsionLayer, this,"vertical");
         monsters.add(monster);
