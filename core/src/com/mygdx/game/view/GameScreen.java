@@ -46,10 +46,17 @@ public class GameScreen implements Screen {
     private long timeGenBabyMonster;
 // UI
     private Status_UI statusUI;
+// Pause:
+    public boolean isPaused = false;
+    public boolean newGame = true;
 
 // MUSIC:
     public MusicGame background_Game_Music, zombie_WaveStart_Music;
+
+
     public GameScreen(SpaceGame spaceGame) {
+        System.out.println("New");
+
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
         shapeRenderer = spaceGame.shapeRenderer;
@@ -66,30 +73,32 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        loader = new TmxMapLoader();
-        map = loader.load("basic/map/Medium_Map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-        camera = new OrthographicCamera();
-   //     camera.zoom = .8f;
+        if(newGame){
+            loader = new TmxMapLoader();
+            map = loader.load("basic/map/Medium_Map.tmx");
+            renderer = new OrthogonalTiledMapRenderer(map);
+            camera = new OrthographicCamera();
+            //     camera.zoom = .8f;
 
-        this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
-       // System.out.println(collsionLayer.getName());
-        this.speed = 250;
-        this.knight = new Knight(this,tile_Size * 13,tile_Size * 80, this.speed, collsionLayer);
-        monsters = new ArrayList<Monster>();
-        Monster monster = new Monster(collsionLayer, this,"vertical");
-        monsters.add(monster);
-        timeGenBabyMonster = (Long)TimeUtils.nanoTime();
-        this.statusUI = new Status_UI(this);
+            this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
+            // System.out.println(collsionLayer.getName());
+            this.speed = 250;
+            this.knight = new Knight(this,tile_Size * 13,tile_Size * 80, this.speed, collsionLayer);
+            monsters = new ArrayList<Monster>();
+            Monster monster = new Monster(collsionLayer, this,"vertical");
+            monsters.add(monster);
+            timeGenBabyMonster = (Long)TimeUtils.nanoTime();
+            this.statusUI = new Status_UI(this);
+            newGame = false;
+        }
     }
 
     float cnt = 0;
-    public static boolean isPaused = false;
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             isPaused = true;
         }
         if(isPaused) setPauseGame();
@@ -138,16 +147,16 @@ public class GameScreen implements Screen {
     }
     public void setPauseGame(){
         this.dispose();
-        knight.setSpeed_Cross(0);
-        knight.setSpeed_Stright(0);
-        for(Monster monster : monsters) {
-            monster.setSpeed_Cross(0);
-            monster.setSpeed_Stright(0);
-        }
-        this.spaceGame.setScreen(new PauseGameScreen(this.spaceGame,this,this.knight,this.monsters));
+//        knight.setSpeed_Cross(0);
+//        knight.setSpeed_Stright(0);
+//        for(Monster monster : monsters) {
+//            monster.setSpeed_Cross(0);
+//            monster.setSpeed_Stright(0);
+//        }
+        this.spaceGame.setScreen(new PauseGameScreen(this.spaceGame,this));
     }
     public void setEndGame_Screen(){
-        this.dispose();
+     //   this.dispose();
         this.background_Game_Music.setStop();
         this.spaceGame.setScreen(new EndGameScreen(this.spaceGame));
     }

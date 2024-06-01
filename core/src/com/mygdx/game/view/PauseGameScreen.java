@@ -17,8 +17,6 @@ public class PauseGameScreen implements Screen {
     // Trạng thái hiện tại
     SpaceGame spaceGame;
     GameScreen gameScreen;
-    Knight knight;
-    ArrayList<Monster> monsters = new ArrayList<Monster>();
     private OrthographicCamera camera;
     // hình ảnh
     Texture backGround;
@@ -27,11 +25,9 @@ public class PauseGameScreen implements Screen {
     Texture buttonExitHover;
     Texture buttonExitIdle;
     //public PauseGameScreen(){}
-    public PauseGameScreen(SpaceGame spaceGame,GameScreen gameScreen, Knight knight, ArrayList<Monster> monsters){
+    public PauseGameScreen(SpaceGame spaceGame,GameScreen gameScreen){
         this.spaceGame = spaceGame;
         this.gameScreen = gameScreen;
-        this.knight = knight;
-        this.monsters = monsters;
         backGround = new Texture("button/PauseScreen/bgPause.png");
         buttonResumeHover = new Texture("button/PauseScreen/ResumeHover@2x.png");
         buttonResumeIdle = new Texture("button/PauseScreen/ResumeIdle@2x.png");
@@ -66,6 +62,7 @@ public class PauseGameScreen implements Screen {
             spaceGame.getBatch().draw(buttonResumeHover, xInfor, yInfor, 88, 88);
             if (Gdx.input.justTouched()) {
                 this.dispose();
+                this.gameScreen.isPaused = false;
 //                clickButtonMusic.pause();
 //                backgroundMusic.pause();
                 spaceGame.setScreen(gameScreen);
@@ -97,7 +94,7 @@ public class PauseGameScreen implements Screen {
 //                clickButtonMusic.pause();
 //                backgroundMusic.pause();
                 gameScreen.background_Game_Music.setStop();
-                spaceGame.setScreen(new MenuScreen(spaceGame));
+                spaceGame.setScreen(this.spaceGame.menuScreen);
             }
 //            if(!checkSoundButtonInforOn && checkSoundOn){
 //                checkSoundButtonInforOn = true;
