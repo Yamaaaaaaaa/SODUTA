@@ -1,10 +1,7 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.entity;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -109,14 +106,27 @@ public class Knight extends Entity {
             idle[i] = region1[i][1];
         }
     }
+    int checkdie = 0;
+    int timeAnimationDeath = 0;
     public void update(){
         if(this.currentHp <= 0){
+            if(checkdie == 0) {
+                this.updateRanking();
+                checkdie = 1;
+            }
             this.status = Entity_Status.DEATH;
+            this.timeAnimationDeath ++;
+            if(this.currentHp < 0) currentHp = 0;
         }else{
             updateAttack();
             updateKill();
             this.moving.move(this, this.gameScreen);
         }
+    }
+
+    public void updateRanking(){
+        this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA_TMP",this.point_Counter);
+        this.gameScreen.spaceGame.fileHandler.coutRanking();
     }
     public void updateKill(){
         // check va cham đạn và monster
@@ -147,6 +157,9 @@ public class Knight extends Entity {
         this.gameScreen.monsters.removeAll(rejMons);
         this.bullets.removeAll(rejBullet);
     }
+
+
+
     public void updateAttack(){
         boolean changeWeapon = Gdx.input.isKeyJustPressed(Input.Keys.J);
 
@@ -194,6 +207,8 @@ public class Knight extends Entity {
      //   }
     }
 
+
+
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
         //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
@@ -217,8 +232,9 @@ public class Knight extends Entity {
         }
         if(status == Entity_Status.DEATH){
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
+            if(this.timeAnimationDeath == 60) {
+                this.gameScreen.setEndGame_Screen();
+            }
         }
-
-
     }
 }

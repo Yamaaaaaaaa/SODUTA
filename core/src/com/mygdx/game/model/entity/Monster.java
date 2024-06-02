@@ -1,6 +1,5 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Monster_Movement;
 import com.mygdx.game.model.gamemusic.MusicGame;
@@ -51,7 +48,7 @@ public class Monster extends Entity{
         // atk, hp
             this.currentHp = 100;
             this.maxHP = 100;
-            this.damage = 5;
+            this.damage = 30;
         // first setting:
         this.direction_Static = direction_Static;
         if(direction_Static.equals("vertical")) {
@@ -169,7 +166,7 @@ public class Monster extends Entity{
         }
     }
     public void setPlaceGen(){
-        int rong = 600, cao = 600, kc = 100; // screen
+        int rong = 3200, cao = 3200, kc = 100; // screen
         int x = MathUtils.random(1, 4); // trái - phải
         if(x == 1){
             setPosision(kc, cao-kc);

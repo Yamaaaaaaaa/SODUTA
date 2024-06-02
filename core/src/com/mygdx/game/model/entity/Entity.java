@@ -1,4 +1,4 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.entity;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;

@@ -13,19 +13,15 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.SpaceGame;
-import com.mygdx.game.controller.CheckCollision;
-import com.mygdx.game.controller.Direction;
-import com.mygdx.game.model.*;
 
-import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.model.entity.*;
 import com.mygdx.game.model.gamemusic.MusicGame;
 import com.mygdx.game.model.gamemusic.MusicHandler;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GameScreen implements Screen {
-    private SpaceGame spaceGame;
+    public SpaceGame spaceGame;
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     public MusicHandler musicHandler;
@@ -50,7 +46,9 @@ public class GameScreen implements Screen {
     private long timeGenBabyMonster;
 // UI
     private Status_UI statusUI;
-
+    // Pause:
+    public boolean isPaused = false;
+    public boolean newGame = true;
 // MUSIC:
     public MusicGame background_Game_Music, zombie_WaveStart_Music;
     public GameScreen(SpaceGame spaceGame) {
@@ -70,21 +68,24 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        loader = new TmxMapLoader();
-        map = loader.load("basic/map/Mini_Map.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-        camera = new OrthographicCamera();
-   //     camera.zoom = .8f;
+        if(this.newGame) {
+            loader = new TmxMapLoader();
+            map = loader.load("basic/map/Medium_Map.tmx");
+            renderer = new OrthogonalTiledMapRenderer(map);
+            camera = new OrthographicCamera();
+            //     camera.zoom = .8f;
 
-        this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
-       // System.out.println(collsionLayer.getName());
-        this.speed = 250;
-        this.knight = new Knight(this,tile_Size * 13,tile_Size * 13, this.speed, collsionLayer);
-        monsters = new ArrayList<Monster>();
-        Monster monster = new Monster(collsionLayer, this,"vertical");
-        monsters.add(monster);
-        timeGenBabyMonster = (Long)TimeUtils.nanoTime();
-        this.statusUI = new Status_UI(this);
+            this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
+            // System.out.println(collsionLayer.getName());
+            this.speed = 250;
+            this.knight = new Knight(this, tile_Size * 13, tile_Size * 80, this.speed, collsionLayer);
+            monsters = new ArrayList<Monster>();
+            Monster monster = new Monster(collsionLayer, this, "vertical");
+            monsters.add(monster);
+            timeGenBabyMonster = (Long) TimeUtils.nanoTime();
+            this.statusUI = new Status_UI(this);
+            this.newGame = false;
+        }
     }
 
     float cnt = 0;
@@ -92,6 +93,10 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            isPaused = true;
+        }
+        if(isPaused) setPauseGame();
 
         camera.position.x = knight.getX();
         camera.position.y = knight.getY();
@@ -136,9 +141,20 @@ public class GameScreen implements Screen {
             monsters.clear();
         }
     }
+    public void setPauseGame(){
+        this.dispose();
+//        knight.setSpeed_Cross(0);
+//        knight.setSpeed_Stright(0);
+//        for(Monster monster : monsters) {
+//            monster.setSpeed_Cross(0);
+//            monster.setSpeed_Stright(0);
+//        }
+        this.spaceGame.setScreen(new PauseGameScreen(this.spaceGame,this));
+    }
     public void setEndGame_Screen(){
         this.dispose();
-        this.spaceGame.setScreen(new EndGameScreen());
+        this.background_Game_Music.setStop();
+        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame));
     }
 
     @Override
@@ -164,8 +180,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        batch.dispose();
+       // batch.dispose();
+       // shapeRenderer.dispose();
     }
-
-
 }

@@ -5,9 +5,8 @@ import com.badlogic.gdx.Input;
 import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.Movement;
-import com.mygdx.game.model.Attack_Status;
-import com.mygdx.game.model.Entity;
-import com.mygdx.game.model.Entity_Status;
+import com.mygdx.game.model.entity.Entity;
+import com.mygdx.game.model.entity.Entity_Status;
 import com.mygdx.game.view.GameScreen;
 
 public class Player_Movement implements Movement {
