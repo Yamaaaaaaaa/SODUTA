@@ -38,6 +38,8 @@ public class MenuScreen implements Screen {
     Texture buttonMusicOnHover;
     Texture buttonMusicOffIdle;
     Texture buttonMusicOffHover;
+    Texture buttonExitIdle;
+    Texture buttonExitHover;
 
     // CHỨC NĂNG CHECK ÂM THANH
     boolean checkSoundButtonPlayOn = false;
@@ -46,6 +48,7 @@ public class MenuScreen implements Screen {
 
     boolean checkSoundButtonMusicOffOn = false;
     static boolean checkSoundOn = true;
+    boolean checkSoundButtonExit = false;
 
     public MenuScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
@@ -62,7 +65,8 @@ public class MenuScreen implements Screen {
         buttonMusicOnHover = new Texture("button/Music-On-Hover.png");
         buttonMusicOffIdle = new Texture("button/Music-Off-Idle.png");
         buttonMusicOffHover = new Texture("button/Music-Off-Hover.png");
-
+        buttonExitIdle = new Texture("button/PauseScreen/Exit-Idle@2x.png");
+        buttonExitHover = new Texture("button/PauseScreen/Exit-Hover@2x.png");
     }
     public void show(){
         camera = new OrthographicCamera();
@@ -77,6 +81,36 @@ public class MenuScreen implements Screen {
 
         spaceGame.getBatch().begin();
         spaceGame.getBatch().draw(background, 0, 0, 800, 800);
+
+        // Button Exit Game
+        int xE = 220 + SIZE_BUTTON_WIDTH + 40; // tọa độ x
+        int yE = 125; // tọa độ y
+
+        Vector3 touchPoint = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPoint); // Chuyển đổi tọa độ
+
+        boolean isTouchingButton = touchPoint.x > xE && touchPoint.x < xE + SIZE_BUTTON_WIDTH &&
+                touchPoint.y > yE && touchPoint.y < yE + SIZE_BUTTON_HEIGHT;
+
+        if (isTouchingButton) {
+            spaceGame.getBatch().draw(buttonExitHover, xE, yE, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
+            if (Gdx.input.justTouched()) {
+                // lưu kết quả
+                this.dispose();
+                this.spaceGame.fileHandler.Write_Ranking();
+                Gdx.app.exit();
+            }
+            if(!checkSoundButtonExit && checkSoundOn){
+                checkSoundButtonExit = true;
+                clickButtonMusic.play();
+            }
+
+        } else {
+            spaceGame.getBatch().draw(buttonExitIdle, xE, yE, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
+            checkSoundButtonExit = false;
+        }
+
+
         // button music
         int x = 0;
         int y = 0;
