@@ -79,8 +79,9 @@ public class MenuScreen implements Screen {
 
         spaceGame.getBatch().begin();
         spaceGame.getBatch().draw(background, 0, 0, 800, 800);
-        // Button Exit Game
 
+
+        // Button Exit Game
         int xE = 220 + SIZE_BUTTON_WIDTH + 40; // tọa độ x
         int yE = 125; // tọa độ y
 
@@ -95,6 +96,7 @@ public class MenuScreen implements Screen {
             if (Gdx.input.justTouched()) {
                 // lưu kết quả
                 this.dispose();
+                this.spaceGame.fileHandler.Write_Ranking();
                 Gdx.app.exit();
             }
             if(!checkSoundButtonExit && checkSoundOn){

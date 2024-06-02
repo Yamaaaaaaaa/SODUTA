@@ -29,13 +29,11 @@ public class FileHandler {
 
         this.Read_Ranking();
         this.coutRanking();
-
     }
 
     public void addRanking(String name, int point){
         this.List_Ranking.add(new Point_SetEnding(name, point));
         sortRanking();
-        Write_Ranking();
     }
     public void coutRanking(){
         System.out.println("Xuat Ranking: ");
