@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class GameScreen implements Screen {
     public SpaceGame spaceGame;
     private SpriteBatch batch;
+    private String mapPath;
     private ShapeRenderer shapeRenderer;
     public MusicHandler musicHandler;
     private float stateTime = 0;
@@ -51,7 +52,8 @@ public class GameScreen implements Screen {
     public boolean newGame = true;
 // MUSIC:
     public MusicGame background_Game_Music, zombie_WaveStart_Music;
-    public GameScreen(SpaceGame spaceGame) {
+    public GameScreen(SpaceGame spaceGame, String mapPath) {
+        this.mapPath = mapPath;
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
         shapeRenderer = spaceGame.shapeRenderer;
@@ -70,7 +72,7 @@ public class GameScreen implements Screen {
     public void show() {
         if(this.newGame) {
             loader = new TmxMapLoader();
-            map = loader.load("basic/map/Medium_Map.tmx");
+            map = loader.load(this.mapPath);
             renderer = new OrthogonalTiledMapRenderer(map);
             camera = new OrthographicCamera();
             //     camera.zoom = .8f;
@@ -78,7 +80,7 @@ public class GameScreen implements Screen {
             this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
             // System.out.println(collsionLayer.getName());
             this.speed = 250;
-            this.knight = new Knight(this, tile_Size * 13, tile_Size * 80, this.speed, collsionLayer);
+            this.knight = new Knight(this, tile_Size * 13, tile_Size * 60, this.speed, collsionLayer);
             monsters = new ArrayList<Monster>();
             Monster monster = new Monster(collsionLayer, this, "vertical");
             monsters.add(monster);

@@ -1,0 +1,183 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/MediumMap.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 935,
+                "y": 1171
+            }
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/forest_tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/house_tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/map.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3200,
+                "y": 1474
+            }
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/mapDifficult.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1834,
+                "y": 1797.9999999999998
+            }
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/mapTest.tmx": {
+            "scale": 0.17931249999999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3203.903799233183,
+                "y": 1475.078424538167
+            }
+        },
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/object_tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 2166,
+                "y": 2683
+            }
+        },
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3301,
+                "y": 1739.75
+            }
+        },
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx": {
+            "scale": 0.17931249999999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3848.030672708261,
+                "y": 1475.078424538167
+            }
+        },
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1272,
+                "y": 1278
+            }
+        },
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Map.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 3192,
+                "y": 1910
+            }
+        },
+        "MediumMap.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1592.4242424242425,
+                "y": 3625.757575757576
+            }
+        },
+        "Medium_Map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1586.6666666666665,
+                "y": 2138
+            }
+        },
+        "Mini_Map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 320,
+                "y": 320.66666666666663
+            }
+        },
+        "Set1-1.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "Set1-2.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "Set1-3.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "TileSet-1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Walk.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/character",
+    "map.height": 80,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 80,
+    "openFiles": [
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
+        "Medium_Map.tmx",
+        "Map.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx"
+    ],
+    "project": "Map.tiled-project",
+    "recentFiles": [
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
+        "Map.tmx",
+        "Medium_Map.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/MediumMap.tmx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/mapDifficult.tmx",
+        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/house_tiles.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
