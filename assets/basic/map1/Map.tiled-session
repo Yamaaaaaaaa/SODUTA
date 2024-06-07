@@ -62,26 +62,26 @@
             "scaleInEditor": 1
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx": {
-            "scale": 0.17931249999999999,
-            "selectedLayer": 0,
+            "scale": 0.5,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 3203.903799233183,
-                "y": 1475.078424538167
+                "x": 2166,
+                "y": 2683
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx": {
-            "scale": 1.5,
+            "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 2118.6666666666665,
-                "y": 1707
+                "x": 3301,
+                "y": 1739.75
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx": {
             "scale": 0.17931249999999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 3859.1843848030676,
+                "x": 3848.030672708261,
                 "y": 1475.078424538167
             }
         },
@@ -89,8 +89,8 @@
             "scale": 0.25,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1280,
-                "y": 1282
+                "x": 1272,
+                "y": 1278
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx": {
@@ -101,8 +101,8 @@
             "scale": 0.25,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3200,
-                "y": 1918
+                "x": 3192,
+                "y": 1910
             }
         },
         "MediumMap.tmx": {
@@ -117,8 +117,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1589.3333333333333,
-                "y": 2140.6666666666665
+                "x": 1586.6666666666665,
+                "y": 2138
             }
         },
         "Mini_Map.tmx": {
