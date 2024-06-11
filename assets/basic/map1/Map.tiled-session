@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
+    "activeFile": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -62,11 +62,11 @@
             "scaleInEditor": 1
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx": {
-            "scale": 0.5,
+            "scale": 0.125,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 2166,
-                "y": 2683
+                "x": -792,
+                "y": 572
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx": {
@@ -162,16 +162,19 @@
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
         "Medium_Map.tmx",
         "Map.tmx",
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx"
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx"
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
-        "Map.tmx",
-        "Medium_Map.tmx",
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
+        "Medium_Map.tmx",
+        "Map.tmx",
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",

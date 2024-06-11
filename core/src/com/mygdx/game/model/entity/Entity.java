@@ -20,7 +20,7 @@ public class Entity {
     private float speed_Cross;
 
     public int damage;
-
+    public int damageGun, damageKnife;
     public int currentHp;
     public int maxHP;
 

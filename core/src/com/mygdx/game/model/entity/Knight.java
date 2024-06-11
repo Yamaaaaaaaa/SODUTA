@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
 import com.mygdx.game.model.gamemusic.MusicGame;
 import com.mygdx.game.view.GameScreen;
-
 import java.util.ArrayList;
 
 public class Knight extends Entity {
@@ -23,10 +23,19 @@ public class Knight extends Entity {
     private Texture texture_shooting;
     private Texture texture_stabbing;
     private Texture texture_death;
+    private Texture texture_slash_up;
+    private Texture texture_slash_down;
+    private Texture texture_slash_left;
+    private Texture texture_slash_right;
+
     private Animation[] walking;
     private Animation[] shootting;
     private Animation[] stabbing;
     private Animation[] death;
+    private Animation[] slashing_right;
+    private Animation[] slashing_up;
+    private Animation[] slashing_down;
+    private Animation[] slashing_left;
     private TextureRegion[] idle; // Ta chỉ set 1 số ảnh để làm IDLE thôi, Ko cần 1 cái Standing riêng, vì nó sẽ bị giật giật khi chuyển qua lại các status.
 
     //Bullet:
@@ -37,6 +46,11 @@ public class Knight extends Entity {
 
     // Point - Counter.
     public int point_Counter;
+
+    //Tấn công bằng dao:
+    public Rectangle stab_Border = new Rectangle();
+
+
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         this.setMusic();
@@ -45,6 +59,12 @@ public class Knight extends Entity {
         this.texture_shooting = new Texture("basic/character/Shoot.png");
         this.texture_stabbing = new Texture("basic/character/Stab.png");
         this.texture_death = new Texture("basic/character/Death.png");
+        this.texture_slash_right = new Texture("basic/slash/small_sting.png");
+        this.texture_slash_up = new Texture("basic/slash/stingup.png");
+        this.texture_slash_down = new Texture("basic/slash/stingdown.png");
+        this.texture_slash_left = new Texture("basic/slash/stingleft.png");
+
+
         this.setPosision(x,y);
         this.setSpeed_Stright(speed);
         this.setSpeed_Cross((float) Math.sqrt(speed * speed / 2));
@@ -58,12 +78,20 @@ public class Knight extends Entity {
         // atk, hp
         this.currentHp = 100;
         this.maxHP = 100;
-        this.damage = 50;
+        this.damageGun = 50;
+        this.damageKnife = 30;
 
         this.rectangle.x = 400 + 8;
         this.rectangle.y = 400;
         this.rectangle.width = 48;
         this.rectangle.height = 55;
+
+
+        this.stab_Border.x = (int) (this.rectangle.x + 13);
+        this.stab_Border.y = (int) (this.rectangle.y - 50);
+        this.stab_Border.width = 24;
+        this.stab_Border.height = 44;
+
 
         // Gọi cái class qua lý di chuyển ra
         this.moving = Player_Movement.getInstance();
@@ -92,18 +120,36 @@ public class Knight extends Entity {
         walking = new Animation[10];
         stabbing = new Animation[10];
         shootting = new Animation[10];
+        slashing_right = new Animation[10];
+        slashing_up = new Animation[10];
+        slashing_down = new Animation[10];
+        slashing_left = new Animation[10];
+
+
         death = new Animation[10];
         idle = new TextureRegion[10];
+
         TextureRegion[][] region1 = TextureRegion.split(this.texture_walking, this.getWidth(), this.getHeight());
         TextureRegion[][] region2 = TextureRegion.split(this.texture_stabbing, this.getWidth(), this.getHeight());
         TextureRegion[][] region3 = TextureRegion.split(this.texture_shooting, this.getWidth(), this.getHeight());
         TextureRegion[][] region4 = TextureRegion.split(this.texture_death, this.getWidth(), this.getHeight());
+        TextureRegion[][] region5 = TextureRegion.split(this.texture_slash_right, 88, 45);
+        TextureRegion[][] region6 = TextureRegion.split(this.texture_slash_up, 45, 89);
+
+        TextureRegion[][] region7 = TextureRegion.split(this.texture_slash_down, 45, 89);
+        TextureRegion[][] region8 = TextureRegion.split(this.texture_slash_left, 88, 45);
         for(int i = 0; i < 4; ++i){
             walking[i] = new Animation(0.2f, region1[i]);
             stabbing[i] = new Animation(0.2f, region2[i]);
             shootting[i] = new Animation(0.2f, region3[i]);
             death[i] = new Animation(0.2f, region4[i]);
             idle[i] = region1[i][1];
+        }
+        for(int i = 0; i < 1; ++i){
+            slashing_right[i] = new Animation(0.3f, region5[i]);
+            slashing_up[i] = new Animation(0.3f, region6[i]);
+            slashing_left[i] = new Animation(0.3f, region8[i]);
+            slashing_down[i] = new Animation(0.3f, region7[i]);
         }
     }
     int checkdie = 0;
@@ -118,9 +164,9 @@ public class Knight extends Entity {
             this.timeAnimationDeath ++;
             if(this.currentHp < 0) currentHp = 0;
         }else{
-            updateAttack();
-            updateKill();
             this.moving.move(this, this.gameScreen);
+            updateAttack();
+            updateKill_byBullet();
         }
     }
 
@@ -128,38 +174,6 @@ public class Knight extends Entity {
         this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA_TMP",this.point_Counter);
         this.gameScreen.spaceGame.fileHandler.coutRanking();
     }
-    public void updateKill(){
-        // check va cham đạn và monster
-        ArrayList<Monster> rejMons = new ArrayList<Monster>();
-        ArrayList<Bullet> rejBullet = new ArrayList<Bullet>();
-        for(Monster monster : this.gameScreen.monsters){
-            if(monster.status == Entity_Status.DEATH && monster.deathCountingTime >= 60){
-                rejMons.add(monster);
-            }
-            else if(monster.status == Entity_Status.WALKING){
-                for(Bullet bullet : this.bullets){
-                    if(!bullet.remove && monster.status == Entity_Status.WALKING && monster.getRectangle().overlaps( bullet.rectangle)){
-                        monster.currentHp -= this.damage;
-                        rejBullet.add(bullet);
-                        if(monster.currentHp <= 0) {
-                            monster.status = Entity_Status.DEATH;
-                        }
-                    }
-                }
-            }
-        }
-        for(Bullet bullet : this.bullets) {
-            if (bullet.remove == true) {
-                rejBullet.add(bullet);
-            }
-        }
-        point_Counter += rejMons.size();
-        this.gameScreen.monsters.removeAll(rejMons);
-        this.bullets.removeAll(rejBullet);
-    }
-
-
-
     public void updateAttack(){
         boolean changeWeapon = Gdx.input.isKeyJustPressed(Input.Keys.J);
 
@@ -191,6 +205,43 @@ public class Knight extends Entity {
                 outofBullet_Music.setPlay();
             }
         }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && this.attackStatus == Attack_Status.STAB){
+            MusicGame stabMusic = new MusicGame(this.gameScreen.musicHandler.stab, false);
+            stabMusic.setVolumeMusic(0.2f);
+            stabMusic.setPlay();
+
+            if(this.direction == Direction.UP || this.direction == Direction.UPLEFT || direction == Direction.UPRIGHT){
+                this.counterSlashAnimation_up = 0;
+                this.stab_Border.x = (int) (this.rectangle.x + 13);
+                this.stab_Border.y = (int) (this.rectangle.y + 60);
+                this.stab_Border.width = 24;
+                this.stab_Border.height = 44;
+            }
+            else if(this.direction == Direction.DOWN || this.direction == Direction.DOWNLEFT || direction == Direction.DOWNRIGHT){
+                this.counterSlashAnimation_down = 0;
+                this.stab_Border.x = (int) (this.rectangle.x + 13);
+                this.stab_Border.y = (int) (this.rectangle.y - 50);
+                this.stab_Border.width = 24;
+                this.stab_Border.height = 44;
+            }
+            else if(this.direction == Direction.RIGHT){
+                this.counterSlashAnimation_right = 0;
+                this.stab_Border.x = (int) (this.rectangle.x + 10 + 30);
+                this.stab_Border.y = (int) (this.rectangle.y + 20);
+                this.stab_Border.width = 44;
+                this.stab_Border.height = 22;
+            }
+            else if(this.direction == Direction.LEFT){
+                this.counterSlashAnimation_left = 0;
+                this.stab_Border.x = (int) (this.rectangle.x + 10 - 50);
+                this.stab_Border.y = (int) (this.rectangle.y + 20);
+                this.stab_Border.width = 44;
+                this.stab_Border.height = 22;
+            }
+
+            updateKill_byKnife();
+        }
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.R) && this.attackStatus == Attack_Status.SHOOT){
             this.bulletCounter = 50;
             MusicGame reloadBullet_Music = new MusicGame(this.gameScreen.musicHandler.reloadBullet,false);
@@ -199,15 +250,68 @@ public class Knight extends Entity {
         }
 
         // update Bullet:
-     //   if(this.attackStatus == Attack_Status.SHOOT){
+        //   if(this.attackStatus == Attack_Status.SHOOT){
         ArrayList<Bullet> bulletToRemove = new ArrayList<Bullet>();
         for(Bullet bullet : this.bullets){
             bullet.update();
         }
-     //   }
+        //   }
+    }
+    public void updateKill_byKnife(){
+        // check va cham đạn và monster
+        ArrayList<Monster> rejMons = new ArrayList<Monster>();
+        for(Monster monster : this.gameScreen.monsters){
+            if(monster.status == Entity_Status.DEATH && monster.deathCountingTime >= 60){
+                rejMons.add(monster);
+            }
+            else if(monster.status == Entity_Status.WALKING){
+                if(monster.getRectangle().overlaps(stab_Border)){
+                    monster.currentHp -= this.damageKnife;
+                    if(monster.currentHp <= 0) {
+                        monster.status = Entity_Status.DEATH;
+                    }
+                }
+            }
+        }
+        point_Counter += rejMons.size();
+        this.gameScreen.monsters.removeAll(rejMons);
+    }
+
+    public void updateKill_byBullet(){
+        // check va cham đạn và monster
+        ArrayList<Monster> rejMons = new ArrayList<Monster>();
+        ArrayList<Bullet> rejBullet = new ArrayList<Bullet>();
+        for(Monster monster : this.gameScreen.monsters){
+            if(monster.status == Entity_Status.DEATH && monster.deathCountingTime >= 60){
+                rejMons.add(monster);
+            }
+            else if(monster.status == Entity_Status.WALKING){
+                for(Bullet bullet : this.bullets){
+                    if(!bullet.remove && monster.status == Entity_Status.WALKING && monster.getRectangle().overlaps( bullet.rectangle)){
+                        monster.currentHp -= this.damageGun;
+                        rejBullet.add(bullet);
+                        if(monster.currentHp <= 0) {
+                            monster.status = Entity_Status.DEATH;
+                        }
+                    }
+                }
+            }
+        }
+        for(Bullet bullet : this.bullets) {
+            if (bullet.remove == true) {
+                rejBullet.add(bullet);
+            }
+        }
+        point_Counter += rejMons.size();
+        this.gameScreen.monsters.removeAll(rejMons);
+        this.bullets.removeAll(rejBullet);
     }
 
 
+    private int counterSlashAnimation_up = 30;
+    private int counterSlashAnimation_down = 30;
+    private int counterSlashAnimation_left = 30;
+    private int counterSlashAnimation_right = 30;
 
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
         int index;
@@ -236,5 +340,25 @@ public class Knight extends Entity {
                 this.gameScreen.setEndGame_Screen();
             }
         }
+
+        //shapeRenderer.rect(stab_Border.x, stab_Border.y, stab_Border.width, stab_Border.height);
+        if(counterSlashAnimation_right < 15){
+            batch.draw((TextureRegion) slashing_right[0].getKeyFrame(stateTime, true), stab_Border.x, stab_Border.y,stab_Border.width * 2, stab_Border.height * 2);
+            this.counterSlashAnimation_right ++;
+        }
+        if(counterSlashAnimation_left < 15){
+            batch.draw((TextureRegion) slashing_left[0].getKeyFrame(stateTime, true), stab_Border.x, stab_Border.y,stab_Border.width , stab_Border.height * 2);
+            this.counterSlashAnimation_left ++;
+        }
+        if(counterSlashAnimation_up < 15){
+            batch.draw((TextureRegion) slashing_up[0].getKeyFrame(stateTime, true), stab_Border.x, stab_Border.y,stab_Border.width * 2, stab_Border.height );
+            this.counterSlashAnimation_up ++;
+        }
+        if(counterSlashAnimation_down < 15){
+            batch.draw((TextureRegion) slashing_down[0].getKeyFrame(stateTime, true), stab_Border.x, stab_Border.y,stab_Border.width * 2, stab_Border.height * 2);
+            this.counterSlashAnimation_down ++;
+        }
+
+
     }
 }
