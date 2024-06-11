@@ -257,6 +257,7 @@ public class Knight extends Entity {
         }
         //   }
     }
+
     public void updateKill_byKnife(){
         // check va cham đạn và monster
         ArrayList<Monster> rejMons = new ArrayList<Monster>();
