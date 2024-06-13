@@ -80,9 +80,9 @@ public class GameScreen implements Screen {
             this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
             // System.out.println(collsionLayer.getName());
             this.speed = 250;
-            this.knight = new Knight(this, tile_Size * 13, tile_Size * 60, this.speed, collsionLayer);
+            this.knight = new Knight(this, tile_Size * 30, tile_Size * 50, this.speed, collsionLayer);
             monsters = new ArrayList<Monster>();
-            Monster monster = new Monster(collsionLayer, this, "vertical");
+            Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY());
             monsters.add(monster);
             timeGenBabyMonster = (Long) TimeUtils.nanoTime();
             this.statusUI = new Status_UI(this);
@@ -111,7 +111,7 @@ public class GameScreen implements Screen {
             knight.update();
             //monsters.size() < 3
             if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0) {
-                Monster monster = new Monster(collsionLayer, this, "vertical");
+                Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY());
                 //   this.zombie_WaveStart_Music.setPlay();
                 monsters.add(monster);
                 timeGenBabyMonster = (Long) TimeUtils.nanoTime();

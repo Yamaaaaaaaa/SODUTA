@@ -155,7 +155,7 @@ public class Knight extends Entity {
     int checkdie = 0;
     int timeAnimationDeath = 0;
     public void update(){
-        if(this.currentHp <= 0){
+       if(this.currentHp <= 0){
             if(checkdie == 0) {
                 this.updateRanking();
                 checkdie = 1;
@@ -358,7 +358,5 @@ public class Knight extends Entity {
             batch.draw((TextureRegion) slashing_down[0].getKeyFrame(stateTime, true), stab_Border.x, stab_Border.y,stab_Border.width * 2, stab_Border.height * 2);
             this.counterSlashAnimation_down ++;
         }
-
-
     }
 }
