@@ -71,19 +71,32 @@ public class GameScreen implements Screen {
         itemBullets = new ArrayList<Item_Bullet>();
         medKits = new ArrayList<Item_Bullet>();
         if(mapType == 1){
-
+            setMap1(this.spaceGame, this.mapPath);
         }
         else if(mapType == 2){
             setMap2(this.spaceGame, this.mapPath);
         }
     }
     private void setMap1(SpaceGame spaceGame, String mapPath){
-        // set vị trí item xuất hiện
+    // set vị trí item xuất hiện
+        // bang dan
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 28 * tile_Size, 94 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 95 * tile_Size, 95 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 34 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 39 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 27 * tile_Size));
+
+
+        //medkit
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 47 * tile_Size, 21 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 40 * tile_Size, 31 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 84 * tile_Size, 33 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 6 * tile_Size, 80 * tile_Size));
 
     }
     private void setMap2(SpaceGame spaceGame, String mapPath){
-        // set vị trí item xuất hiện
-
+    // set vị trí item xuất hiện
         // bang dan
         itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 10 * tile_Size, 70 * tile_Size));
         itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 35 * tile_Size, 70 * tile_Size));
@@ -95,7 +108,6 @@ public class GameScreen implements Screen {
         itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 42 * tile_Size, 48 * tile_Size));
 
         //medkit
-// bang dan
         medKits.add(new Item_Bullet("basic/item/medkit.png",this, 35 * tile_Size, 45 * tile_Size));
         medKits.add(new Item_Bullet("basic/item/medkit.png",this, 38 * tile_Size, 30 * tile_Size));
         medKits.add(new Item_Bullet("basic/item/medkit.png",this, 53 * tile_Size, 46 * tile_Size));

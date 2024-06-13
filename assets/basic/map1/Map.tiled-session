@@ -34,11 +34,11 @@
             }
         },
         "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/mapDifficult.tmx": {
-            "scale": 0.75,
+            "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1834,
-                "y": 1797.9999999999998
+                "x": 2796,
+                "y": 1326
             }
         },
         "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/mapTest.tmx": {
@@ -86,11 +86,11 @@
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx": {
-            "scale": 0.5,
+            "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1032,
-                "y": 1171
+                "x": 669.69696969697,
+                "y": 1283.3333333333335
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx": {
@@ -101,8 +101,8 @@
             "scale": 0.25,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3184,
-                "y": 1902
+                "x": 3180,
+                "y": 1898
             }
         },
         "MediumMap.tmx": {
@@ -114,19 +114,19 @@
             }
         },
         "Medium_Map.tmx": {
-            "scale": 0.75,
+            "scale": 0.25,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1585.333333333333,
-                "y": 2136.6666666666665
+                "x": 1664,
+                "y": 1550
             }
         },
         "Mini_Map.tmx": {
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 320,
-                "y": 320.66666666666663
+                "x": 317.33333333333337,
+                "y": 319.33333333333326
             }
         },
         "Set1-1.tsx": {
@@ -164,6 +164,9 @@
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
+        "Mini_Map.tmx",
+        "TileSet-1.tsx",
+        "Walk.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
@@ -172,10 +175,7 @@
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",
         "Map.tmx",
-        "Medium_Map.tmx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/MediumMap.tmx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/mapDifficult.tmx",
-        "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/house_tiles.tsx"
+        "Medium_Map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
