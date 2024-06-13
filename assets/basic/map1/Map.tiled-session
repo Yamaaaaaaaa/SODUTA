@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",
+    "activeFile": "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -65,32 +65,32 @@
             "scale": 0.125,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": -792,
-                "y": 572
+                "x": -808,
+                "y": 564
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx": {
             "scale": 2,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 3301,
-                "y": 1739.75
+                "x": 3300.5,
+                "y": 1739.25
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx": {
             "scale": 0.17931249999999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 3848.030672708261,
+                "x": 3842.453816660858,
                 "y": 1475.078424538167
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx": {
-            "scale": 0.25,
-            "selectedLayer": 1,
+            "scale": 0.5,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1272,
-                "y": 1278
+                "x": 1032,
+                "y": 1171
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx": {
@@ -101,8 +101,8 @@
             "scale": 0.25,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 3192,
-                "y": 1910
+                "x": 3184,
+                "y": 1902
             }
         },
         "MediumMap.tmx": {
@@ -117,8 +117,8 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1586.6666666666665,
-                "y": 2138
+                "x": 1585.333333333333,
+                "y": 2136.6666666666665
             }
         },
         "Mini_Map.tmx": {
@@ -159,25 +159,20 @@
     "openFiles": [
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
-        "Medium_Map.tmx",
-        "Map.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx",
-        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx"
+        "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx"
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
-        "Medium_Map.tmx",
-        "Map.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",
+        "Map.tmx",
+        "Medium_Map.tmx",
         "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/MediumMap.tmx",
         "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/mapDifficult.tmx",
         "C:/Users/Admin/Desktop/New folder/zombie-survival/core/assets/map/house_tiles.tsx"

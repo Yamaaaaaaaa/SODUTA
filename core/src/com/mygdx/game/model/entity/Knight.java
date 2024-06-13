@@ -46,11 +46,11 @@ public class Knight extends Entity {
 
     // Point - Counter.
     public int point_Counter;
-
     //Tấn công bằng dao:
     public Rectangle stab_Border = new Rectangle();
-
-
+    //Item:
+    public int counter_ItemBullet = 0;
+    public int counter_MedKit = 0;
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         this.setMusic();
@@ -104,6 +104,9 @@ public class Knight extends Entity {
         bullets = new ArrayList<Bullet>();
 
         this.point_Counter = 0;
+
+        //Item:
+
     }
     public void setMusic(){
         this.shoot_Music = new MusicGame(gameScreen.musicHandler.shoot, false);
@@ -111,7 +114,7 @@ public class Knight extends Entity {
         this.change_Weapon_toGun_Music = new MusicGame(gameScreen.musicHandler.change_Weapon_toGun, false);
         this.change_Weapon_toKnife_Music = new MusicGame(gameScreen.musicHandler.change_Weapon_toKnife, false);
         this.knight_Death_Music = new MusicGame(gameScreen.musicHandler.knight_Death, false);
-        this.pickup_Item_Music = new MusicGame(gameScreen.musicHandler.pickup_Item, false);
+
         this.reloadBullet_Music = new MusicGame(gameScreen.musicHandler.reloadBullet, false);
 
     }
@@ -165,7 +168,9 @@ public class Knight extends Entity {
             if(this.currentHp < 0) currentHp = 0;
         }else{
             this.moving.move(this, this.gameScreen);
+            check_PickUpItem();
             updateAttack();
+            update_Healing();
             updateKill_byBullet();
         }
     }
@@ -173,6 +178,22 @@ public class Knight extends Entity {
     public void updateRanking(){
         this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA_TMP",this.point_Counter);
         this.gameScreen.spaceGame.fileHandler.coutRanking();
+    }
+    public void update_Healing(){
+        if(status != Entity_Status.DEATH && Gdx.input.isKeyJustPressed(Input.Keys.H)){
+            if(counter_MedKit > 0){
+                this.currentHp = this.maxHP;
+                MusicGame healing_Music = new MusicGame(this.gameScreen.musicHandler.healing,false);
+                healing_Music.setVolumeMusic(0.5f);
+                healing_Music.setPlay();
+                counter_MedKit --;
+            }
+            else {
+                MusicGame outofBullet_Music = new MusicGame(this.gameScreen.musicHandler.outOfBullet,false);
+                outofBullet_Music.setVolumeMusic(0.5f);
+                outofBullet_Music.setPlay();
+            }
+        }
     }
     public void updateAttack(){
         boolean changeWeapon = Gdx.input.isKeyJustPressed(Input.Keys.J);
@@ -242,11 +263,20 @@ public class Knight extends Entity {
             updateKill_byKnife();
         }
 
+        // Sạc đạn
         if(Gdx.input.isKeyJustPressed(Input.Keys.R) && this.attackStatus == Attack_Status.SHOOT){
-            this.bulletCounter = 50;
-            MusicGame reloadBullet_Music = new MusicGame(this.gameScreen.musicHandler.reloadBullet,false);
-            reloadBullet_Music.setVolumeMusic(1.0f);
-            reloadBullet_Music.setPlay();
+            if(counter_ItemBullet > 0){
+                this.bulletCounter = 50;
+                MusicGame reloadBullet_Music = new MusicGame(this.gameScreen.musicHandler.reloadBullet,false);
+                reloadBullet_Music.setVolumeMusic(1.0f);
+                reloadBullet_Music.setPlay();
+                counter_ItemBullet --;
+            }
+            else {
+                MusicGame outofBullet_Music = new MusicGame(this.gameScreen.musicHandler.outOfBullet,false);
+                outofBullet_Music.setVolumeMusic(0.5f);
+                outofBullet_Music.setPlay();
+            }
         }
 
         // update Bullet:
@@ -306,7 +336,47 @@ public class Knight extends Entity {
         this.gameScreen.monsters.removeAll(rejMons);
         this.bullets.removeAll(rejBullet);
     }
+    public void check_PickUpItem(){
+        for(Item_Bullet it: this.gameScreen.itemBullets){
+            if(this.getRectangle().overlaps(it.rectangle)){
+                if(it.alive){
+                    // hiển thị yêu cầu bấm phím F đêr nhặt
+                    it.collisionKnight = true;
+                    // check bấm F
+                    if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+                        MusicGame pickup_Item_Music = new MusicGame(gameScreen.musicHandler.pickup_Item, false);
+                        pickup_Item_Music.setVolumeMusic(0.5f);
+                        pickup_Item_Music.setPlay();
+                        it.alive = false;
+                        it.counterTime = 60 * 5; //3600 * 3; // tru dan ve 0
+                        this.counter_ItemBullet ++;
+                    }
+                }
+                else it.collisionKnight = false;
+            }
+            else it.collisionKnight = false;
+        }
 
+        for(Item_Bullet med: this.gameScreen.medKits){
+            if(this.getRectangle().overlaps(med.rectangle)){
+                if(med.alive){
+                    // hiển thị yêu cầu bấm phím F đêr nhặt
+                    med.collisionKnight = true;
+                    // check bấm F
+                    if(Gdx.input.isKeyJustPressed(Input.Keys.F)){
+                        MusicGame pickup_Item_Music = new MusicGame(gameScreen.musicHandler.pickup_Item, false);
+                        pickup_Item_Music.setVolumeMusic(0.5f);
+                        pickup_Item_Music.setPlay();
+                        med.alive = false;
+                        med.counterTime = 60 * 5; //3600 * 3; // tru dan ve 0
+                        this.counter_MedKit ++;
+                    }
+                }
+                else med.collisionKnight = false;
+            }
+            else med.collisionKnight = false;
+        }
+    }
 
     private int counterSlashAnimation_up = 30;
     private int counterSlashAnimation_down = 30;

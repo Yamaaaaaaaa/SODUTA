@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.model.entity.Attack_Status;
 
 public class Status_UI {
-    private BitmapFont font;
+    private BitmapFont font, font2;
     // Bao gom: Vu khi, HP, So Luong dan
     GameScreen gameScreen;
 
@@ -40,14 +40,22 @@ public class Status_UI {
 
     public Status_UI(GameScreen gameScreen){
         this.gameScreen = gameScreen;
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SegoeUI-Black.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 33;
+        parameter.color = Color.WHITE;
+        font = generator.generateFont(parameter);
 
+        parameter.size = 15;
+        parameter.color = Color.WHITE;
+        font2 = generator.generateFont(parameter);
         // equipment
 
         this.background_Equipment = new Texture[4];
         this.background_Equipment[0] = new Texture("basic/statusbar/equipment/handgun.png");
         this.background_Equipment[1] = new Texture("basic/statusbar/equipment/knife.png");
-        this.background_Equipment[2] = new Texture("basic/statusbar/equipment/background.png");
-        this.background_Equipment[3] = new Texture("basic/statusbar/equipment/background.png");
+        this.background_Equipment[2] = new Texture("basic/statusbar/equipment/rifleAmmo.png");
+        this.background_Equipment[3] = new Texture("basic/statusbar/equipment/medkit.png");
         this.selector = new Texture("basic/statusbar/equipment/selector.png");
         this.background_Equipment_Size = 46;
         this.screen_Equipment_X = new int[4]; this.screen_Equipment_X[0] = 570;
@@ -68,11 +76,7 @@ public class Status_UI {
         this.bulletCounter = gameScreen.knight.bulletCounter;
         this.bulletMax = gameScreen.knight.bulletMax;
         
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SegoeUI-Black.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 33;
-        parameter.color = Color.WHITE;
-        font = generator.generateFont(parameter);
+
 
         // HP bar.
         this.hpBar = new Texture("basic/statusbar/healthbar/greenbar (2).png");
@@ -112,7 +116,8 @@ public class Status_UI {
         batch.draw(background_BulletCounter, screen_BulletCounter_X, screen_BulletCounter_Y);
         this.font.draw(batch, this.gameScreen.knight.bulletCounter + " / " + this.gameScreen.knight.bulletMax, screen_BulletCounter_X + 50, screen_BulletCounter_Y + 40);
 
-
+        this.font2.draw(batch, "x" +this.gameScreen.knight.counter_ItemBullet, 718, 110);
+        this.font2.draw(batch, "x" +this.gameScreen.knight.counter_MedKit, 774, 110);
 
         int hpBarWidth = this.HPBar_size_Width * this.hp / this.hpMax;
         shapeRenderer.setColor(Color.GREEN);
