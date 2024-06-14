@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.model.entity.Attack_Status;
 
 public class Status_UI {
-    private BitmapFont font, font2;
+    private BitmapFont font, font2, font3;
     // Bao gom: Vu khi, HP, So Luong dan
     GameScreen gameScreen;
 
@@ -49,6 +49,9 @@ public class Status_UI {
         parameter.size = 15;
         parameter.color = Color.WHITE;
         font2 = generator.generateFont(parameter);
+        parameter.size = 20;
+        parameter.color = Color.WHITE;
+        font3 = generator.generateFont(parameter);
         // equipment
 
         this.background_Equipment = new Texture[4];
@@ -110,6 +113,8 @@ public class Status_UI {
             if(index_Equipment == i){
                 batch.draw(selector, screen_Equipment_X[i], screen_Equipment_Y[i] - 10);
             }
+            if(i == 2) this.font3.draw(batch, "R", screen_Equipment_X[i],screen_Equipment_Y[i]);
+            if(i == 3) this.font3.draw(batch, "H", screen_Equipment_X[i],screen_Equipment_Y[i]);
         }
 
 
