@@ -113,8 +113,8 @@ public class Status_UI {
             if(index_Equipment == i){
                 batch.draw(selector, screen_Equipment_X[i], screen_Equipment_Y[i] - 10);
             }
-            if(i == 2) this.font3.draw(batch, "R", screen_Equipment_X[i],screen_Equipment_Y[i]);
-            if(i == 3) this.font3.draw(batch, "H", screen_Equipment_X[i],screen_Equipment_Y[i]);
+            if(i == 2) this.font3.draw(batch, "R", screen_Equipment_X[i],screen_Equipment_Y[i] + 46);
+            if(i == 3) this.font3.draw(batch, "H", screen_Equipment_X[i],screen_Equipment_Y[i] + 46);
         }
 
 
