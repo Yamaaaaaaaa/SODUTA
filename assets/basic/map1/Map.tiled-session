@@ -90,7 +90,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 669.69696969697,
-                "y": 1283.3333333333335
+                "y": 1280.3030303030305
             }
         },
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx": {
@@ -164,13 +164,13 @@
     ],
     "project": "Map.tiled-project",
     "recentFiles": [
-        "Mini_Map.tmx",
-        "TileSet-1.tsx",
-        "Walk.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/forest_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/house_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/object_tiles.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mediumMap.tmx",
+        "Mini_Map.tmx",
+        "TileSet-1.tsx",
+        "Walk.tsx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapTest.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/mapDifficult.tmx",
         "D:/A.Documents/Code/Lib_GDX_Learning/Group5_BTCK_PGC-Endless_Way/assets/basic/map2/map.tmx",

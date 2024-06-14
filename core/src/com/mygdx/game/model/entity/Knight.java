@@ -175,8 +175,9 @@ public class Knight extends Entity {
             updateKill_byBullet();
         }
     }
-
+    public int rank = 0;
     public void updateRanking(){
+        rank = this.gameScreen.spaceGame.fileHandler.checkRanking(this.point_Counter);
         this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA_TMP",this.point_Counter);
         this.gameScreen.spaceGame.fileHandler.coutRanking();
     }
@@ -408,7 +409,7 @@ public class Knight extends Entity {
         if(status == Entity_Status.DEATH){
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() *2, this.getHeight()*2 );
             if(this.timeAnimationDeath == 60) {
-                this.gameScreen.setEndGame_Screen();
+                this.gameScreen.setEndGame_Screen(this.point_Counter, this.rank);
             }
         }
 

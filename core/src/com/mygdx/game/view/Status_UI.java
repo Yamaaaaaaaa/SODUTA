@@ -40,7 +40,7 @@ public class Status_UI {
 
     public Status_UI(GameScreen gameScreen){
         this.gameScreen = gameScreen;
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/SegoeUI-Black.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 33;
         parameter.color = Color.WHITE;

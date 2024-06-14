@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mygdx.game.model.entity.Bullet;
+import com.mygdx.game.model.entity.Entity_Status;
+import com.mygdx.game.model.entity.Monster;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -47,6 +50,16 @@ public class FileHandler {
         // PHƯƠNG THỨC NÀY DÙNG 1 LẦN DUY NHẤT LÀ KHI THOÁT CHƯƠNG TRÌNH.
        // File file = new File("D:\\A.Documents\\Code\\Lib_GDX_Learning\\Group5_BTCK_PGC-Endless_Way\\assets\\file\\ranking.txt");
        // File file = fileHandle.file();
+
+        if(List_Ranking.size() > 7){
+            ArrayList<Point_SetEnding> rejBullet = new ArrayList<Point_SetEnding>();
+            for(int i = 7 ; i < List_Ranking.size(); i++){
+                rejBullet.add(this.List_Ranking.get(i));
+            }
+
+            this.List_Ranking.removeAll(rejBullet);
+        }
+
         File file = new File(this.filePath);
         try {
             OutputStream os = new FileOutputStream(file);
@@ -87,5 +100,24 @@ public class FileHandler {
     }
     public void sortRanking(){
         Collections.sort(List_Ranking);
+    }
+    public int checkRanking(int point){
+        sortRanking();
+        if(List_Ranking.size() < 7){
+            for(int i = 0; i < List_Ranking.size(); i++){
+                if(List_Ranking.get(i).getPoint() <= point){
+                    return i + 1;
+                }
+            }
+            return List_Ranking.size() + 1;
+        }
+        else{
+            for(int i = 0; i < 7; i++){
+                if(List_Ranking.get(i).getPoint() <= point){
+                    return i + 1;
+                }
+            }
+        }
+        return 0;
     }
 }

@@ -210,10 +210,10 @@ public class GameScreen implements Screen {
 //        }
         this.spaceGame.setScreen(new PauseGameScreen(this.spaceGame,this));
     }
-    public void setEndGame_Screen(){
+    public void setEndGame_Screen(int point, int rank){
         this.dispose();
         this.background_Game_Music.setStop();
-        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame));
+        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame, point, rank));
     }
 
     @Override

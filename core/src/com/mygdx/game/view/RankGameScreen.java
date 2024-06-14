@@ -169,7 +169,7 @@ public class RankGameScreen implements Screen {
         this.parameter.color = Color.BLACK;
         this.font = generator.generateFont(parameter);
 
-        if(this.spaceGame.fileHandler.List_Ranking.size() < 5){
+        if(this.spaceGame.fileHandler.List_Ranking.size() < 7){
             for(int i = 0 ; i < this.spaceGame.fileHandler.List_Ranking.size(); i++){
                 int row_y = ranking_Row_Y - (i + 1) * 30 - 20;
                 int col1_y = ranking_Columns1_X;
@@ -181,7 +181,7 @@ public class RankGameScreen implements Screen {
             }
         }
         else{
-            for(int i = 0 ; i < 5; i++){
+            for(int i = 0 ; i < 7; i++){
                 int row_y = ranking_Row_Y - (i + 1) * 30;
                 int col1_y = ranking_Columns1_X;
                 int col2_y = ranking_Columns2_X;
