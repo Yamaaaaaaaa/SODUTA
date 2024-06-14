@@ -19,8 +19,8 @@ public class EndGameScreen implements Screen {
     public EndGameScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         background = new Texture("button/backgroundEndGame.png");
-        continueButtonIdle = new Texture("button/continueImgIdle.png");
-        continueButtonHover = new Texture("button/continueImgHover.png");
+        continueButtonIdle = new Texture("button/continueImgHover.png");
+        continueButtonHover = new Texture("button/continueImgIdle.png");
     }
     public void show(){
         camera = new OrthographicCamera();

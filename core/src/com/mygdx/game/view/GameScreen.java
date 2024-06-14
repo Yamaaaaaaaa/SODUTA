@@ -52,7 +52,10 @@ public class GameScreen implements Screen {
     public boolean newGame = true;
 // MUSIC:
     public MusicGame background_Game_Music, zombie_WaveStart_Music;
-    public GameScreen(SpaceGame spaceGame, String mapPath) {
+// ITEM
+    public ArrayList<Item_Bullet> itemBullets;
+    public ArrayList<Item_Bullet> medKits;
+    public GameScreen(SpaceGame spaceGame, String mapPath, int mapType) {
         this.mapPath = mapPath;
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
@@ -64,10 +67,52 @@ public class GameScreen implements Screen {
 
         this.zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
         this.zombie_WaveStart_Music.setVolumeMusic(0.8f);
-       // this.zombie_WaveStart_Music.setPlay();
+        // this.zombie_WaveStart_Music.setPlay();
+        itemBullets = new ArrayList<Item_Bullet>();
+        medKits = new ArrayList<Item_Bullet>();
+        if(mapType == 1){
+            setMap1(this.spaceGame, this.mapPath);
+        }
+        else if(mapType == 2){
+            setMap2(this.spaceGame, this.mapPath);
+        }
     }
+    private void setMap1(SpaceGame spaceGame, String mapPath){
+    // set vị trí item xuất hiện
+        // bang dan
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 28 * tile_Size, 94 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 95 * tile_Size, 95 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 34 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 39 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 27 * tile_Size));
 
 
+        //medkit
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 47 * tile_Size, 21 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 40 * tile_Size, 31 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 84 * tile_Size, 33 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 6 * tile_Size, 80 * tile_Size));
+
+    }
+    private void setMap2(SpaceGame spaceGame, String mapPath){
+    // set vị trí item xuất hiện
+        // bang dan
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 10 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 35 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 70 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 73 * tile_Size, 36 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 7 * tile_Size, 7 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 42 * tile_Size, 54 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 42 * tile_Size, 51 * tile_Size));
+        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 42 * tile_Size, 48 * tile_Size));
+
+        //medkit
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 35 * tile_Size, 45 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 38 * tile_Size, 30 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 53 * tile_Size, 46 * tile_Size));
+        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 68 * tile_Size, 10 * tile_Size));
+    }
     @Override
     public void show() {
         if(this.newGame) {
@@ -80,9 +125,9 @@ public class GameScreen implements Screen {
             this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
             // System.out.println(collsionLayer.getName());
             this.speed = 250;
-            this.knight = new Knight(this, tile_Size * 13, tile_Size * 60, this.speed, collsionLayer);
+            this.knight = new Knight(this, tile_Size * 30, tile_Size * 50, this.speed, collsionLayer);
             monsters = new ArrayList<Monster>();
-            Monster monster = new Monster(collsionLayer, this, "vertical");
+            Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY());
             monsters.add(monster);
             timeGenBabyMonster = (Long) TimeUtils.nanoTime();
             this.statusUI = new Status_UI(this);
@@ -109,9 +154,8 @@ public class GameScreen implements Screen {
 
         //update
             knight.update();
-            //monsters.size() < 3
-            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0) {
-                Monster monster = new Monster(collsionLayer, this, "vertical");
+            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0 && monsters.size() < 25) {
+                Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY());
                 //   this.zombie_WaveStart_Music.setPlay();
                 monsters.add(monster);
                 timeGenBabyMonster = (Long) TimeUtils.nanoTime();
@@ -123,9 +167,22 @@ public class GameScreen implements Screen {
             }
             stateTime += delta;
 
+
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
+        for(Item_Bullet it: this.itemBullets){
+            it.update();
+            if(it.alive){
+                it.render(batch, shapeRenderer);
+            }
+        }
+        for(Item_Bullet med : this.medKits){
+            med.update();
+            if(med.alive){
+                med.render(batch, shapeRenderer);
+            }
+        }
         if(knight.attackStatus == Attack_Status.SHOOT){
             for(Bullet bullet: knight.bullets){
                 bullet.render(batch, shapeRenderer);

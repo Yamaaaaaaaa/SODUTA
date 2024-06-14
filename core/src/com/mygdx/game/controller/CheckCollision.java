@@ -61,12 +61,20 @@ public class CheckCollision {
             }
         }
     }
+    public void checkX(float olxd){
+
+    }
+    public void checkY(float old){
+        if(collidesBottom() || collidesTop()){
+            entity.setY(old);
+        }
+    }
     public void check_MonsterWithMap(float oldX, float oldY) {
+        if(collidesTop() || collidesBottom() ) {
+            entity.setY(oldY);
+        }
         if(collidesLeft() || collidesRight()){
             entity.setX(oldX);
-        }
-        if(collidesTop() || collidesBottom()){
-            entity.setY(oldY);
         }
     }
 
@@ -182,4 +190,5 @@ public class CheckCollision {
                 return true;
         return false;
     }
+
 }

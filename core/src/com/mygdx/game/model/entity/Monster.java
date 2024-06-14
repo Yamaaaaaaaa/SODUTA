@@ -31,7 +31,7 @@ public class Monster extends Entity{
 
     // CHẾT:
     public int deathCountingTime = 0;
-    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
+    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight) {
         this.gameScreen = gameScreen;
 
         //image
@@ -40,7 +40,7 @@ public class Monster extends Entity{
             //this.texture_stabbing = new Texture("basic/character/Stab.png");
             this.texture_death = new Texture("Apocalypse Character Pack/Zombie/Death.png");
         // position
-            this.setPlaceGen();
+            this.setPlaceGen2(xKnight, yKnight);
         //speed
         int sp = 80;
             this.setSpeed_Stright(sp);
@@ -48,7 +48,7 @@ public class Monster extends Entity{
         // atk, hp
             this.currentHp = 100;
             this.maxHP = 100;
-            this.damage = 30;
+            this.damage = 20;
         // first setting:
         this.direction_Static = direction_Static;
         if(direction_Static.equals("vertical")) {
@@ -119,7 +119,7 @@ public class Monster extends Entity{
         //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
         float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
-        rectangle.x = screenX + 8;
+        rectangle.x = screenX +8;
         rectangle.y = screenY;
         //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         check_MonsterAttackKnight();
@@ -165,17 +165,53 @@ public class Monster extends Entity{
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
     }
-    public void setPlaceGen(){
-        int rong = 3200, cao = 3200, kc = 100; // screen
-        int x = MathUtils.random(1, 4); // trái - phải
-        if(x == 1){
-            setPosision(kc, cao-kc);
+    public void setPlaceGen(float xKnight, float yKnight){
+        int kc = 800/2; // 800 la do rong screen
+        int x = MathUtils.random(1, 4); // tren, phai, duoi, trai
+        int randomX = MathUtils.random(-kc, kc);
+        int randomY = MathUtils.random(-kc, kc);
+        setPosision((xKnight + randomX) > 0 ? (xKnight + randomX) : 0, (yKnight + randomY) > 0 ? (yKnight + randomY): 0);
+       /* if(x == 1){
+            setPosision(xKnight + random, yKnight + kc);
         }else if(x == 2){
-            setPosision(rong-kc, cao-kc);
+            setPosision(xKnight + kc, yKnight + random);
         } else if(x == 3){
-            setPosision(rong-kc, kc);
+            setPosision(xKnight + random, yKnight - kc);
         }else if(x == 4){
-            setPosision(kc, kc);
-        }
+            setPosision(xKnight - kc, yKnight + random);
+        }*/
     }
+
+    public void setPlaceGen2 (float x, float y){ // float xKnight, float yKnight
+        int area = findAreaKnight(x, y);
+        int tileSize = 32;
+        if(area == 1){
+            setPosision(30*tileSize, 45*tileSize);
+        }else if(area == 2){
+            setPosision(50*tileSize, 55*tileSize);
+        }else if(area == 3){
+            setPosision(45*tileSize, 35*tileSize);
+        }else if(area == 4){
+            setPosision(15*tileSize, 65*tileSize);
+        }else if(area == 5){
+            setPosision(65*tileSize, 65*tileSize);
+        }else if(area == 6){
+            setPosision(65*tileSize, 15*tileSize);
+        }else if(area == 7){
+            setPosision(15*tileSize, 15*tileSize);
+        }else setPosision(63*tileSize, 40*tileSize);
+    }
+    public int findAreaKnight(float x, float y){
+        int tileSize = 32;
+        x = x/tileSize; y = y/tileSize;
+        if(x > 20 && x < 40 && y > 40 && y < 60) return 1;
+        else if(x > 40 && x < 60 && y > 40 && y < 60) return 2;
+        else if(x > 20 && x < 60 && y > 20 && y < 40) return 3;
+        else if( x < 40 && y > 40 ) return 4;
+        else if(x > 40  && y > 40 ) return 5;
+        else if(x > 40  &&  y < 40) return 6;
+        else return 7;
+    }
+
+
 }
