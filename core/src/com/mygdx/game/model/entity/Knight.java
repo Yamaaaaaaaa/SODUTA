@@ -80,7 +80,7 @@ public class Knight extends Entity {
         this.maxHP = 100;
 
         this.damageGun = 50;
-        this.damageKnife = 30;
+        this.damageKnife = 40;
 
         this.rectangle.x = 400 + 8;
         this.rectangle.y = 400;
