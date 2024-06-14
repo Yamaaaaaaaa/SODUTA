@@ -13,5 +13,4 @@ public class DesktopLauncher {
 		config.setTitle("ProGameCup");
 		new Lwjgl3Application(new SpaceGame(), config);
 	}
-
 }

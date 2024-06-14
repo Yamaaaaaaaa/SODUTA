@@ -78,6 +78,7 @@ public class Knight extends Entity {
         // atk, hp
         this.currentHp = 100;
         this.maxHP = 100;
+
         this.damageGun = 50;
         this.damageKnife = 30;
 
@@ -368,7 +369,7 @@ public class Knight extends Entity {
                         pickup_Item_Music.setVolumeMusic(0.5f);
                         pickup_Item_Music.setPlay();
                         med.alive = false;
-                        med.counterTime = 60 * 5; //3600 * 3; // tru dan ve 0
+                        med.counterTime = 3600 * 3; //3600 * 3; // tru dan ve 0
                         this.counter_MedKit ++;
                     }
                 }

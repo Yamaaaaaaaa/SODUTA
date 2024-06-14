@@ -168,7 +168,7 @@ public class MenuScreen implements Screen {
 
                 String mapPath1 = "basic/map1/Medium_Map.tmx";
                 String mapPath2 = "basic/map2/mediumMap.tmx";
-                spaceGame.setScreen(new GameScreen(spaceGame, mapPath1,1));
+                spaceGame.setScreen(new GameScreen(spaceGame, mapPath2,2));
             }
             if(!checkSoundButtonPlayOn && checkSoundOn){
                 checkSoundButtonPlayOn = true;

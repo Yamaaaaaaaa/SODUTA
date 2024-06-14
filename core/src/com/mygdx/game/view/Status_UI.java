@@ -85,7 +85,7 @@ public class Status_UI {
 
         this.hp = gameScreen.knight.currentHp;
         this.hpMax = gameScreen.knight.maxHP;
-        this.HPBar_size_Width = 250;
+        this.HPBar_size_Width = 214;
         this.HPBar_size_Height = 10;
 
         // Point - Counter:
@@ -120,6 +120,7 @@ public class Status_UI {
         this.font2.draw(batch, "x" +this.gameScreen.knight.counter_MedKit, 774, 110);
 
         int hpBarWidth = this.HPBar_size_Width * this.hp / this.hpMax;
+        System.out.println(hpBarWidth);
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(screen_HPBar_X, screen_HPBar_Y, hpBarWidth, this.HPBar_size_Height);
 
