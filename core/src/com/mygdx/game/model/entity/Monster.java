@@ -40,7 +40,7 @@ public class Monster extends Entity{
             //this.texture_stabbing = new Texture("basic/character/Stab.png");
             this.texture_death = new Texture("Apocalypse Character Pack/Zombie/Death.png");
         // position
-            this.setPlaceGen(xKnight, yKnight);
+            this.setPlaceGen2(xKnight, yKnight);
         //speed
         int sp = 80;
             this.setSpeed_Stright(sp);
@@ -181,4 +181,37 @@ public class Monster extends Entity{
             setPosision(xKnight - kc, yKnight + random);
         }*/
     }
+
+    public void setPlaceGen2 (float x, float y){ // float xKnight, float yKnight
+        int area = findAreaKnight(x, y);
+        int tileSize = 32;
+        if(area == 1){
+            setPosision(30*tileSize, 45*tileSize);
+        }else if(area == 2){
+            setPosision(50*tileSize, 55*tileSize);
+        }else if(area == 3){
+            setPosision(45*tileSize, 35*tileSize);
+        }else if(area == 4){
+            setPosision(15*tileSize, 65*tileSize);
+        }else if(area == 5){
+            setPosision(65*tileSize, 65*tileSize);
+        }else if(area == 6){
+            setPosision(65*tileSize, 15*tileSize);
+        }else if(area == 7){
+            setPosision(15*tileSize, 15*tileSize);
+        }else setPosision(63*tileSize, 40*tileSize);
+    }
+    public int findAreaKnight(float x, float y){
+        int tileSize = 32;
+        x = x/tileSize; y = y/tileSize;
+        if(x > 20 && x < 40 && y > 40 && y < 60) return 1;
+        else if(x > 40 && x < 60 && y > 40 && y < 60) return 2;
+        else if(x > 20 && x < 60 && y > 20 && y < 40) return 3;
+        else if( x < 40 && y > 40 ) return 4;
+        else if(x > 40  && y > 40 ) return 5;
+        else if(x > 40  &&  y < 40) return 6;
+        else return 7;
+    }
+
+
 }

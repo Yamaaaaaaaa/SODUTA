@@ -142,8 +142,7 @@ public class GameScreen implements Screen {
 
         //update
             knight.update();
-            //monsters.size() < 3
-            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0) {
+            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0 && monsters.size() < 25) {
                 Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY());
                 //   this.zombie_WaveStart_Music.setPlay();
                 monsters.add(monster);
