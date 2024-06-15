@@ -80,10 +80,10 @@ public class EndGameScreen implements Screen {
         //Thông tin
         if(rank > 0){
             this.font3.draw(spaceGame.getBatch(), "NEW RANKING RECORD", 300, 570);
-            this.font4.draw(spaceGame.getBatch(), "#" + this.rank, 400, 450);
+            //this.font4.draw(spaceGame.getBatch(), "#" + this.rank, 400, 450);
         }
         else{
-            this.font4.draw(spaceGame.getBatch(), "GÀ", 400, 450);
+        //    this.font4.draw(spaceGame.getBatch(), "GÀ", 400, 450);
         }
 
         // VẼ NHÂN VẬT THEO MẪU SAU: VỊ TRÍ THÌ THAY ĐÔI CHO PHÙ HỢP
