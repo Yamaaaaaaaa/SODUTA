@@ -31,7 +31,7 @@ public class Monster extends Entity{
 
     // CHẾT:
     public int deathCountingTime = 0;
-    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight) {
+    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight, int numberMap) {
         this.gameScreen = gameScreen;
 
         //image
@@ -40,7 +40,8 @@ public class Monster extends Entity{
             //this.texture_stabbing = new Texture("basic/character/Stab.png");
             this.texture_death = new Texture("Apocalypse Character Pack/Zombie/Death.png");
         // position
-            this.setPlaceGen2(xKnight, yKnight);
+        if (numberMap == 1) this.setPlaceGenMap1(xKnight, yKnight);
+        else  this.setPlaceGenMap2(xKnight, yKnight);
         //speed
         int sp = 80;
             this.setSpeed_Stright(sp);
@@ -182,8 +183,8 @@ public class Monster extends Entity{
         }*/
     }
 
-    public void setPlaceGen2 (float x, float y){ // float xKnight, float yKnight
-        int area = findAreaKnight(x, y);
+    public void setPlaceGenMap2 (float x, float y){ // float xKnight, float yKnight
+        int area = findAreaKnightMap2(x, y);
         int tileSize = 32;
         if(area == 1){
             setPosision(30*tileSize, 45*tileSize);
@@ -201,7 +202,7 @@ public class Monster extends Entity{
             setPosision(15*tileSize, 15*tileSize);
         }else setPosision(63*tileSize, 40*tileSize);
     }
-    public int findAreaKnight(float x, float y){
+    public int findAreaKnightMap2(float x, float y){
         int tileSize = 32;
         x = x/tileSize; y = y/tileSize;
         if(x > 20 && x < 40 && y > 40 && y < 60) return 1;
@@ -211,6 +212,33 @@ public class Monster extends Entity{
         else if(x > 40  && y > 40 ) return 5;
         else if(x > 40  &&  y < 40) return 6;
         else return 7;
+    }
+    public void setPlaceGenMap1 (float x, float y){ // float xKnight, float yKnight
+        int area = findAreaKnightMap1(x, y);
+        int tileSize = 32;
+        if(area == 1){
+            setPosision(15*tileSize, 80*tileSize);
+        }else if(area == 2){
+            setPosision(30*tileSize, 90*tileSize);
+        }else if(area == 3){
+            setPosision(86*tileSize, 70*tileSize);
+        }else if(area == 4){
+            setPosision(90*tileSize, 30*tileSize);
+        }else if(area == 5){
+            setPosision(50*tileSize, 55*tileSize);
+        }else if(area == 6){
+            setPosision(40*tileSize, 20*tileSize);
+        }
+    }
+    public int findAreaKnightMap1(float x, float y){
+        int tileSize = 32;
+        x = x/tileSize; y = y/tileSize;
+        if(x < 20 && y > 70 ) return 1;
+        else if(x > 20 && x < 60 && y > 70 ) return 2;
+        else if(x > 60 && y > 60) return 3;
+        else if( x > 80 && x < 95 && y > 20 && y < 45 ) return 4;
+        else if(y > 30  && y < 60 ) return 5;
+        else  return 6; // y < 30;
     }
 
 
