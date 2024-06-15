@@ -9,17 +9,16 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-public class InforGameScreen implements Screen {
-    // KÍCH THƯỚC NÚT
+public class MapScreen implements Screen {
+    // KÍCH THƯỚC MAP
     private int SIZE_BUTTON_WIDTH = 88;
     private int SIZE_BUTTON_HEIGHT = 88;
     private int SIZE_BUTTON_MUSIC_WIDTH = SIZE_BUTTON_WIDTH/2;
     private int SIZE_BUTTON_MUSIC_HEIGHT = SIZE_BUTTON_HEIGHT/2;
+    private int SIZE_MAP_1_WIDTH = 300;
+    private int SIZE_MAP_1_HEIGHT = 215;
+    private int SIZE_MAP_2_WIDTH = 300;
+    private int SIZE_MAP_2_HEIGHT = 208;
 
     // CÁC CHỨC NĂNG KHÁC
     SpaceGame spaceGame;
@@ -35,32 +34,39 @@ public class InforGameScreen implements Screen {
     Texture buttonMusicOnHover;
     Texture buttonMusicOffIdle;
     Texture buttonMusicOffHover;
-    Texture howToPlay;
+    Texture buttonMap1Idle;
+    Texture buttonMap1Hover;
+    Texture buttonMap2Idle;
+    Texture buttonMap2Hover;
     Texture buttonHomeIdle;
     Texture buttonHomeHover;
-    Texture buttonGithubIdle;
-    Texture buttonGithubHover;
+
     // CHỨC NĂNG CHECK ÂM THANH
     boolean checkSoundButtonMusicOffOn = false;
+    boolean isCheckSoundButtonMap1On = false;
+    boolean isCheckSoundButtonMap2On = false;
     boolean isCheckSoundButtonHomeOn = false;
-    boolean isCheckSoundButtonGithubOn = false;
     static boolean checkSoundOn = true;
 
-    public InforGameScreen(SpaceGame spaceGame){
+    public MapScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-comedy-121626.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/watery-graves-181198.mp3"));
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
-        background = new Texture("button/Background.png");
+        background = new Texture("button/MapScreen/BG.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");
         buttonMusicOnHover = new Texture("button/Music-On-Hover.png");
         buttonMusicOffIdle = new Texture("button/Music-Off-Idle.png");
         buttonMusicOffHover = new Texture("button/Music-Off-Hover.png");
-        howToPlay = new Texture("button/inforGame/HowToPlayGame.png");
+
+        buttonMap1Hover = new Texture("button/MapScreen/map1Hover.png");
+        buttonMap1Idle = new Texture("button/MapScreen/map1Idle.png");
+        buttonMap2Hover = new Texture("button/MapScreen/map2Hover.png");
+        buttonMap2Idle = new Texture("button/MapScreen/map2Idle.png");
+
         buttonHomeHover = new Texture("button/inforGame/Home-Hover.png");
         buttonHomeIdle = new Texture("button/inforGame/Home-Idle.png");
-        buttonGithubIdle = new Texture("button/inforGame/iconGithubIdle.png");
-        buttonGithubHover = new Texture("button/inforGame/iconGithubHover.png");
     }
+    @Override
     public void show() {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -75,41 +81,17 @@ public class InforGameScreen implements Screen {
 
         spaceGame.getBatch().begin();
         spaceGame.getBatch().draw(background, 0, 0, 800, 800);
-        // icon Github
-        int xGit = 300 + SIZE_BUTTON_WIDTH + 40;
-        int yGit = 0;
-        Vector3 touchPointGit = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.unproject(touchPointGit); // Chuyển đổi tọa độ
-
-        boolean isTouchingButtonGit = touchPointGit.x > xGit && touchPointGit.x < xGit + SIZE_BUTTON_WIDTH &&
-                touchPointGit.y > yGit && touchPointGit.y < yGit + SIZE_BUTTON_HEIGHT;
-
-        if (isTouchingButtonGit) {
-            spaceGame.getBatch().draw(buttonGithubHover, xGit, yGit, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()) {
-                this.dispose();
-                openlink("https://github.com/Yamaaaaaaaa/Group5_BTCK_PGC-Endless_Way.git");
-            }
-            if(!isCheckSoundButtonGithubOn && checkSoundOn){
-                isCheckSoundButtonGithubOn = true;
-                clickButtonMusic.play();
-            }
-
-        } else {
-            spaceGame.getBatch().draw(buttonGithubIdle, xGit, yGit, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
-            isCheckSoundButtonGithubOn = false;
-        }
         // Button go back
-        int xHome = 300 ; // tọa độ x của nút home
-        int yHome = 0; // tọa độ y của nút home
+        int xHome = 340 ; // tọa độ x của nút home
+        int yHome = 25; // tọa độ y của nút home
 
         Vector3 touchPointHome = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(touchPointHome); // Chuyển đổi tọa độ
 
-        boolean isTouchingButtonPlay = touchPointHome.x > xHome && touchPointHome.x < xHome + SIZE_BUTTON_WIDTH &&
+        boolean isTouchingButtonHome = touchPointHome.x > xHome && touchPointHome.x < xHome + SIZE_BUTTON_WIDTH &&
                 touchPointHome.y > yHome && touchPointHome.y < yHome + SIZE_BUTTON_HEIGHT;
 
-        if (isTouchingButtonPlay) {
+        if (isTouchingButtonHome) {
             spaceGame.getBatch().draw(buttonHomeHover, xHome, yHome, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 this.dispose();
@@ -126,8 +108,67 @@ public class InforGameScreen implements Screen {
             spaceGame.getBatch().draw(buttonHomeIdle, xHome, yHome, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
             isCheckSoundButtonHomeOn = false;
         }
-        // how to play
-        spaceGame.getBatch().draw(howToPlay,125,100,550,600);
+        // Text
+        spaceGame.getBatch().draw(new Texture("button/MapScreen/TextMap2.png"),450,340,128*2,32*2);
+        spaceGame.getBatch().draw(new Texture("button/MapScreen/TextMap1.png"),70,340,128*2,32*2);
+        spaceGame.getBatch().draw(new Texture("button/MapScreen/Text.png"),200,200,128*3,32*3 );
+        // button Map1
+        int x1 = 50 ; // tọa độ x
+        int y1 = 400; // tọa độ y
+
+        Vector3 touchPoint1 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPoint1); // Chuyển đổi tọa độ
+
+        boolean isTouchingButtonPlay = touchPoint1.x > x1 && touchPoint1.x < x1 + SIZE_MAP_1_WIDTH &&
+                touchPoint1.y > y1 && touchPoint1.y < y1 + SIZE_MAP_1_HEIGHT;
+
+        if (isTouchingButtonPlay) {
+            spaceGame.getBatch().draw(buttonMap1Hover, x1, y1, SIZE_MAP_1_WIDTH, SIZE_MAP_1_HEIGHT);
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                backgroundMusic.pause();
+                clickButtonMusic.pause();
+                String mapPath1 = "basic/map1/Medium_Map.tmx";
+                spaceGame.setScreen(new GameScreen(spaceGame, mapPath1,1));
+            }
+            if(!isCheckSoundButtonMap1On && checkSoundOn){
+                isCheckSoundButtonMap1On = true;
+                clickButtonMusic.play();
+            }
+
+        } else {
+            spaceGame.getBatch().draw(buttonMap1Idle, x1, y1, SIZE_MAP_1_WIDTH, SIZE_MAP_1_HEIGHT);
+            isCheckSoundButtonMap1On = false;
+        }
+
+        // button Map2
+        int x2 = 75 + SIZE_MAP_1_WIDTH + 50 ; // tọa độ x
+        int y2 = 400; // tọa độ y
+
+        Vector3 touchPoint2 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPoint2); // Chuyển đổi tọa độ
+
+        boolean isTouchingButtonPlay2 = touchPoint1.x > x2 && touchPoint1.x < x2 + SIZE_MAP_2_WIDTH &&
+                touchPoint1.y > y2 && touchPoint1.y < y2 + SIZE_MAP_2_HEIGHT;
+
+        if (isTouchingButtonPlay2) {
+            spaceGame.getBatch().draw(buttonMap2Hover, x2, y2, SIZE_MAP_2_WIDTH, SIZE_MAP_2_HEIGHT);
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                backgroundMusic.pause();
+                clickButtonMusic.pause();
+                String mapPath2 = "basic/map2/mediumMap.tmx";
+                spaceGame.setScreen(new GameScreen(spaceGame, mapPath2,2));
+            }
+            if(!isCheckSoundButtonMap2On && checkSoundOn){
+                isCheckSoundButtonMap2On = true;
+                clickButtonMusic.play();
+            }
+
+        } else {
+            spaceGame.getBatch().draw(buttonMap2Idle, x2, y2, SIZE_MAP_2_WIDTH, SIZE_MAP_2_HEIGHT);
+            isCheckSoundButtonMap2On = false;
+        }
         // button music
         int x = 0;
         int y = 0;
@@ -139,7 +180,7 @@ public class InforGameScreen implements Screen {
         if (isTouchingButtonMusic) {
             if(checkSoundOn) spaceGame.getBatch().draw(buttonMusicOnHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
             else spaceGame.getBatch().draw(buttonMusicOffHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
-            if (Gdx.input.justTouched()) {
+            if (Gdx.input.isTouched()) {
                 this.dispose();
 
                 if(checkSoundOn) {
@@ -168,7 +209,6 @@ public class InforGameScreen implements Screen {
 
 
         }
-
         spaceGame.getBatch().end();
     }
 
@@ -194,18 +234,6 @@ public class InforGameScreen implements Screen {
 
     @Override
     public void dispose() {
-
-    }
-    public void openlink(String path){
-        try{
-            if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)){
-                Desktop.getDesktop().browse(new URI(path));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 }

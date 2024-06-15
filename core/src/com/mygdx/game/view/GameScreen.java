@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -28,6 +29,8 @@ public class GameScreen implements Screen {
     public MusicHandler musicHandler;
     private float stateTime = 0;
     private float tile_Size = 32;
+    private int numberMap;
+    public float timePlayed;
 
 //NHÂN VẬT:
     // DI CHUYEN NHAN VAT
@@ -55,7 +58,15 @@ public class GameScreen implements Screen {
 // ITEM
     public ArrayList<Item_Bullet> itemBullets;
     public ArrayList<Item_Bullet> medKits;
+//Mod cuồng loạn
+    public int time_s;
+    public int time_m;
+    public int timeEndGodWave_m = 0, timeEndGodWave_s = 0;
+    public boolean godMod = false;
+
     public GameScreen(SpaceGame spaceGame, String mapPath, int mapType) {
+        timePlayed = 0;
+        this.numberMap = mapType;
         this.mapPath = mapPath;
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
@@ -125,19 +136,20 @@ public class GameScreen implements Screen {
             this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
             // System.out.println(collsionLayer.getName());
             this.speed = 250;
-            this.knight = new Knight(this, tile_Size * 30, tile_Size * 50, this.speed, collsionLayer);
+            this.knight = new Knight(this, tile_Size * 35, tile_Size * 50, this.speed, collsionLayer);
             monsters = new ArrayList<Monster>();
-            Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY());
-            monsters.add(monster);
             timeGenBabyMonster = (Long) TimeUtils.nanoTime();
             this.statusUI = new Status_UI(this);
             this.newGame = false;
         }
     }
 
-    float cnt = 0;
     @Override
     public void render(float delta) {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        timePlayed += deltaTime;
+
+
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
@@ -154,8 +166,27 @@ public class GameScreen implements Screen {
 
         //update
             knight.update();
+
+            time_s = (int) this.timePlayed;
+            time_m = (int) time_s / 60;
+            time_s = time_s % 60;
+
+            if(time_m == timeEndGodWave_m && time_s == timeEndGodWave_s && godMod == true){
+                godMod = false;
+            }
+
+
+            if(time_m % 2 == 0 && time_s == 0 && time_m != 0){
+                timeEndGodWave_m = time_m;
+                timeEndGodWave_s = 30;
+                MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
+                zombie_WaveStart_Music.setVolumeMusic(0.7f);
+                zombie_WaveStart_Music.setPlay();
+                godMod = true;
+            }
+
             if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0 && monsters.size() < 25) {
-                Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY());
+                Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY(), numberMap, godMod);
                 //   this.zombie_WaveStart_Music.setPlay();
                 monsters.add(monster);
                 timeGenBabyMonster = (Long) TimeUtils.nanoTime();
@@ -171,6 +202,7 @@ public class GameScreen implements Screen {
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
+        batch.draw(new Texture("button/GameScreen/Text.png"),-5,750,128*2,32*2);
         for(Item_Bullet it: this.itemBullets){
             it.update();
             if(it.alive){
