@@ -9,6 +9,11 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class InforGameScreen implements Screen {
     // KÍCH THƯỚC NÚT
     private int SIZE_BUTTON_WIDTH = 88;
@@ -33,10 +38,12 @@ public class InforGameScreen implements Screen {
     Texture howToPlay;
     Texture buttonHomeIdle;
     Texture buttonHomeHover;
-    Texture linkGithub;
+    Texture buttonGithubIdle;
+    Texture buttonGithubHover;
     // CHỨC NĂNG CHECK ÂM THANH
     boolean checkSoundButtonMusicOffOn = false;
     boolean isCheckSoundButtonHomeOn = false;
+    boolean isCheckSoundButtonGithubOn = false;
     static boolean checkSoundOn = true;
 
     public InforGameScreen(SpaceGame spaceGame){
@@ -51,7 +58,8 @@ public class InforGameScreen implements Screen {
         howToPlay = new Texture("button/inforGame/HowToPlayGame.png");
         buttonHomeHover = new Texture("button/inforGame/Home-Hover.png");
         buttonHomeIdle = new Texture("button/inforGame/Home-Idle.png");
-        linkGithub = new Texture("button/inforGame/iconGithub.png");
+        buttonGithubIdle = new Texture("button/inforGame/iconGithubIdle.png");
+        buttonGithubHover = new Texture("button/inforGame/iconGithubHover.png");
     }
     public void show() {
         camera = new OrthographicCamera();
@@ -68,7 +76,29 @@ public class InforGameScreen implements Screen {
         spaceGame.getBatch().begin();
         spaceGame.getBatch().draw(background, 0, 0, 800, 800);
         // icon Github
-        spaceGame.getBatch().draw(linkGithub,300 + SIZE_BUTTON_WIDTH + 40, 0,SIZE_BUTTON_WIDTH,SIZE_BUTTON_HEIGHT);
+        int xGit = 300 + SIZE_BUTTON_WIDTH + 40;
+        int yGit = 0;
+        Vector3 touchPointGit = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPointGit); // Chuyển đổi tọa độ
+
+        boolean isTouchingButtonGit = touchPointGit.x > xGit && touchPointGit.x < xGit + SIZE_BUTTON_WIDTH &&
+                touchPointGit.y > yGit && touchPointGit.y < yGit + SIZE_BUTTON_HEIGHT;
+
+        if (isTouchingButtonGit) {
+            spaceGame.getBatch().draw(buttonGithubHover, xGit, yGit, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                openlink("https://github.com/Yamaaaaaaaa/Group5_BTCK_PGC-Endless_Way.git");
+            }
+            if(!isCheckSoundButtonGithubOn && checkSoundOn){
+                isCheckSoundButtonGithubOn = true;
+                clickButtonMusic.play();
+            }
+
+        } else {
+            spaceGame.getBatch().draw(buttonGithubIdle, xGit, yGit, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
+            isCheckSoundButtonGithubOn = false;
+        }
         // Button go back
         int xHome = 300 ; // tọa độ x của nút home
         int yHome = 0; // tọa độ y của nút home
@@ -109,7 +139,7 @@ public class InforGameScreen implements Screen {
         if (isTouchingButtonMusic) {
             if(checkSoundOn) spaceGame.getBatch().draw(buttonMusicOnHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
             else spaceGame.getBatch().draw(buttonMusicOffHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 this.dispose();
 
                 if(checkSoundOn) {
@@ -164,6 +194,18 @@ public class InforGameScreen implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+    public void openlink(String path){
+        try{
+            if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)){
+                Desktop.getDesktop().browse(new URI(path));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
