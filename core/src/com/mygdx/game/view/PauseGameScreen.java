@@ -11,6 +11,10 @@ import com.mygdx.game.SpaceGame;
 import com.mygdx.game.model.entity.Knight;
 import com.mygdx.game.model.entity.Monster;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class PauseGameScreen implements Screen {
@@ -24,6 +28,8 @@ public class PauseGameScreen implements Screen {
     Texture buttonResumeIdle;
     Texture buttonExitHover;
     Texture buttonExitIdle;
+    Texture buttonGithubIdle;
+    Texture buttonGithubHover;
     //public PauseGameScreen(){}
     public PauseGameScreen(SpaceGame spaceGame,GameScreen gameScreen){
         this.spaceGame = spaceGame;
@@ -33,6 +39,8 @@ public class PauseGameScreen implements Screen {
         buttonResumeIdle = new Texture("button/PauseScreen/ResumeIdle@2x.png");
         buttonExitHover = new Texture("button/PauseScreen/Exit-Hover@2x.png");
         buttonExitIdle = new Texture("button/PauseScreen/Exit-Idle@2x.png");
+        buttonGithubIdle = new Texture("button/inforGame/iconGithubIdle.png");
+        buttonGithubHover = new Texture("button/inforGame/iconGithubHover.png");
     }
     public void show() {
         camera = new OrthographicCamera();
@@ -48,6 +56,26 @@ public class PauseGameScreen implements Screen {
         spaceGame.getBatch().begin();
         //
         spaceGame.getBatch().draw(backGround,0,0,800,800);
+        // open local repo github
+        int xGit = 220 + 88 + 40 + 88 + 40;
+        int yGit = 425;
+        Vector3 touchPointGit = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(touchPointGit); // Chuyển đổi tọa độ
+
+        boolean isTouchingButtonGit = touchPointGit.x > xGit && touchPointGit.x < xGit + 88 &&
+                touchPointGit.y > yGit && touchPointGit.y < yGit + 88;
+
+        if (isTouchingButtonGit) {
+            spaceGame.getBatch().draw(buttonGithubHover, xGit, yGit, 88, 88);
+            if (Gdx.input.isTouched()) {
+                this.dispose();
+                openlink("https://github.com/Yamaaaaaaaa/Group5_BTCK_PGC-Endless_Way.git");
+            }
+
+        } else {
+            spaceGame.getBatch().draw(buttonGithubIdle, xGit, yGit, 88, 88);
+
+        }
         // Button resume
         int xInfor = 220; // tọa độ x của nút infor
         int yInfor = 425; // tọa độ y của nút infor
@@ -130,6 +158,18 @@ public class PauseGameScreen implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+    public void openlink(String path){
+        try{
+            if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)){
+                Desktop.getDesktop().browse(new URI(path));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
