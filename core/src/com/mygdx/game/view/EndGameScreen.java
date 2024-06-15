@@ -3,6 +3,7 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -88,9 +89,11 @@ public class EndGameScreen implements Screen {
 
         // VẼ NHÂN VẬT THEO MẪU SAU: VỊ TRÍ THÌ THAY ĐÔI CHO PHÙ HỢP
         //spaceGame.getBatch().draw(background, 0, 0, 800, 800);
-
+        spaceGame.getBatch().draw(new Texture("button/character.png"),400,300,96*2 + 32,96*2 + 32);
         this.font2.draw(spaceGame.getBatch(), "Your Point: " + this.point, 200, 500);
         this.font2.draw(spaceGame.getBatch(), "Time: " + "...", 200, 450);
+        Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-comedy-121626.mp3"));
+        backgroundMusic.play();
         //Bảng Rank
 
       //  shapeRenderer.line(250, 500, 700, 500);
