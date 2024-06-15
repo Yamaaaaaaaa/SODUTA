@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
 
 public class EndGameScreen implements Screen {
+    private ShapeRenderer shapeRenderer;
     SpaceGame spaceGame;
     private OrthographicCamera camera;
     Texture background, backPoint;
@@ -31,6 +33,8 @@ public class EndGameScreen implements Screen {
         this.backPoint = new Texture("basic/hinh-nen-den-hoa-tiet-vai_021355204.png");
         this.backPointBG = new Sprite(this.backPoint);
         this.backPointBG.setAlpha(0.8f);
+
+        shapeRenderer = spaceGame.shapeRenderer;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -62,13 +66,18 @@ public class EndGameScreen implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 0);
         ScreenUtils.clear(1, 1, 1, 0);
         int x = 320,  y = 100, h = 80, w = 200;
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         spaceGame.getBatch().begin();
+
+        //BackGround
         spaceGame.getBatch().draw(background, 0, 0, 800, 800);
         this.backPointBG.setPosition(150,200);
         this.backPointBG.draw(spaceGame.getBatch());
 
         this.font1.draw(spaceGame.getBatch(), "DEFEAT !!!", 290, 650);
 
+        //Thông tin
         if(rank > 0){
             this.font3.draw(spaceGame.getBatch(), "NEW RANKING RECORD", 300, 570);
             this.font4.draw(spaceGame.getBatch(), "#" + this.rank, 400, 450);
@@ -76,9 +85,12 @@ public class EndGameScreen implements Screen {
         else{
             this.font4.draw(spaceGame.getBatch(), "GÀ", 400, 450);
         }
+
         this.font2.draw(spaceGame.getBatch(), "Your Point: " + this.point, 200, 500);
         this.font2.draw(spaceGame.getBatch(), "Time: " + "...", 200, 450);
+        //Bảng Rank
 
+      //  shapeRenderer.line(250, 500, 700, 500);
 
         Vector3 touchPointMusic = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(touchPointMusic); // chuyển tỏa độ
@@ -95,6 +107,7 @@ public class EndGameScreen implements Screen {
         }
 
         spaceGame.getBatch().end();
+        shapeRenderer.end();
     }
 
     public void resize(int var1, int var2){

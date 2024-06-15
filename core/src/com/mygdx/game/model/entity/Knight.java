@@ -224,7 +224,7 @@ public class Knight extends Entity {
             }
             else {
                 MusicGame outofBullet_Music = new MusicGame(this.gameScreen.musicHandler.outOfBullet,false);
-                outofBullet_Music.setVolumeMusic(0.5f);
+                outofBullet_Music.setVolumeMusic(1f);
                 outofBullet_Music.setPlay();
             }
         }

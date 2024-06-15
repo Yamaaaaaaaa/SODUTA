@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.model.entity.Attack_Status;
 
 public class Status_UI {
-    private BitmapFont font, font2, font3;
+    private BitmapFont font, font1, font2, font3, font4;
     // Bao gom: Vu khi, HP, So Luong dan
     GameScreen gameScreen;
 
@@ -37,14 +37,18 @@ public class Status_UI {
     int screen_PointCounter_X, screen_PointCounter_Y;
     int screen_PointCounter_Width, screen_PointCounter_Height;
 
-
+    Texture warning;
     public Status_UI(GameScreen gameScreen){
         this.gameScreen = gameScreen;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/pixel_font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 33;
+        parameter.size = 25;
         parameter.color = Color.WHITE;
         font = generator.generateFont(parameter);
+
+        parameter.size = 40;
+        parameter.color = Color.WHITE;
+        font1 = generator.generateFont(parameter);
 
         parameter.size = 15;
         parameter.color = Color.WHITE;
@@ -52,6 +56,10 @@ public class Status_UI {
         parameter.size = 20;
         parameter.color = Color.WHITE;
         font3 = generator.generateFont(parameter);
+
+        parameter.size = 33;
+        parameter.color = Color.WHITE;
+        font4 = generator.generateFont(parameter);
         // equipment
 
         this.background_Equipment = new Texture[4];
@@ -93,8 +101,12 @@ public class Status_UI {
 
         // Point - Counter:
         this.background_PointCounter = new Texture("basic/statusbar/equipment/background.png");
-        this.screen_PointCounter_X = this.screen_PointCounter_Y = 740;
+        this.screen_PointCounter_X = 660;
+        this.screen_PointCounter_Y = 750;
         this.screen_PointCounter_Width = this.screen_PointCounter_Height = 46;
+
+        // god mod:
+        this.warning = new Texture("basic/warning/Custom-Icon-Design-Flatastic-9-Warning.64.png");
     }
     public void update(){
         if(gameScreen.knight.attackStatus == Attack_Status.STAB){
@@ -107,6 +119,7 @@ public class Status_UI {
         this.hp = gameScreen.knight.currentHp;
         this.point = this.gameScreen.knight.point_Counter;
     }
+
     public void draw(SpriteBatch batch, ShapeRenderer shapeRenderer){
         for(int i = 0 ;i < 4; i++){
             batch.draw(background_Equipment[i], screen_Equipment_X[i], screen_Equipment_Y[i]);
@@ -118,8 +131,13 @@ public class Status_UI {
         }
 
 
+
         batch.draw(background_BulletCounter, screen_BulletCounter_X, screen_BulletCounter_Y);
-        this.font.draw(batch, this.gameScreen.knight.bulletCounter + " / " + this.gameScreen.knight.bulletMax, screen_BulletCounter_X + 50, screen_BulletCounter_Y + 40);
+        if(this.gameScreen.knight.attackStatus == Attack_Status.SHOOT )this.font4.draw(batch, this.gameScreen.knight.bulletCounter + " / " + this.gameScreen.knight.bulletMax, screen_BulletCounter_X + 50, screen_BulletCounter_Y + 40);
+        else {
+            this.font1.draw(batch, "OO" , screen_BulletCounter_X + 80, screen_BulletCounter_Y + 40);
+        }
+
 
         this.font2.draw(batch, "x" +this.gameScreen.knight.counter_ItemBullet, 718, 110);
         this.font2.draw(batch, "x" +this.gameScreen.knight.counter_MedKit, 774, 110);
@@ -129,8 +147,15 @@ public class Status_UI {
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.rect(screen_HPBar_X, screen_HPBar_Y, hpBarWidth, this.HPBar_size_Height);
 
+        int timePlay_s = (int) (this.gameScreen.timePlayed);
+        int timePlay_m = (int) timePlay_s / 60;
+        timePlay_s = timePlay_s % 60;
+        batch.draw(this.background_PointCounter, screen_PointCounter_X, screen_PointCounter_Y - 36, 130,80);
+        this.font.draw(batch, "KILL: " + point, screen_PointCounter_X + 10, screen_PointCounter_Y + 30);
+        this.font.draw(batch, "TIME: " + timePlay_m + ":" + timePlay_s, screen_PointCounter_X + 10, screen_PointCounter_Y - 10);
 
-        batch.draw(this.background_PointCounter, screen_PointCounter_X, screen_PointCounter_Y);
-        this.font.draw(batch, point + "", screen_PointCounter_X + 10, screen_PointCounter_Y + 30);
+        if(gameScreen.godMod && timePlay_s % 2 == 0){
+            batch.draw(this.warning, 700, 600);
+        }
     }
 }

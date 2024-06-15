@@ -31,9 +31,8 @@ public class Monster extends Entity{
 
     // CHẾT:
     public int deathCountingTime = 0;
-    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight, int numberMap) {
+    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight, int numberMap, boolean godmod) {
         this.gameScreen = gameScreen;
-
         //image
             this.texture_walking = new Texture("Apocalypse Character Pack/Zombie/Walk.png");
             //this.texture_shooting = new Texture("basic/character/Shoot.png");
@@ -44,6 +43,7 @@ public class Monster extends Entity{
         else  this.setPlaceGenMap2(xKnight, yKnight);
         //speed
         int sp = 80;
+            if(godmod) sp = 160;
             this.setSpeed_Stright(sp);
             this.setSpeed_Cross((float) Math.sqrt(sp*sp / 2));
         // atk, hp
