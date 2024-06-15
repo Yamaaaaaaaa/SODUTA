@@ -176,7 +176,8 @@ public class GameScreen implements Screen {
             }
 
 
-            if(time_m % 2 == 0 && time_s == 0 && time_m != 0){
+          //  if(time_m % 2 == 0 && time_s == 0 && time_m != 0){
+            if(time_m % 2 == 0 && time_s == 0){
                 timeEndGodWave_m = time_m;
                 timeEndGodWave_s = 30;
                 MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);

@@ -86,6 +86,9 @@ public class EndGameScreen implements Screen {
             this.font4.draw(spaceGame.getBatch(), "GÀ", 400, 450);
         }
 
+        // VẼ NHÂN VẬT THEO MẪU SAU: VỊ TRÍ THÌ THAY ĐÔI CHO PHÙ HỢP
+        //spaceGame.getBatch().draw(background, 0, 0, 800, 800);
+
         this.font2.draw(spaceGame.getBatch(), "Your Point: " + this.point, 200, 500);
         this.font2.draw(spaceGame.getBatch(), "Time: " + "...", 200, 450);
         //Bảng Rank
