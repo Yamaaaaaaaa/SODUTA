@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -171,6 +172,7 @@ public class GameScreen implements Screen {
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
+        batch.draw(new Texture("button/GameScreen/Text.png"),-5,750,128*2,32*2);
         for(Item_Bullet it: this.itemBullets){
             it.update();
             if(it.alive){

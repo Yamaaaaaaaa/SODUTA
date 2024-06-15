@@ -165,10 +165,11 @@ public class MenuScreen implements Screen {
             if (Gdx.input.justTouched()) {
                 this.dispose();
                 backgroundMusic.pause();
-
-                String mapPath1 = "basic/map1/Medium_Map.tmx";
-                String mapPath2 = "basic/map2/mediumMap.tmx";
-                spaceGame.setScreen(new GameScreen(spaceGame, mapPath2,2));
+                clickButtonMusic.pause();
+                spaceGame.setScreen(new MapScreen(spaceGame));
+//                String mapPath1 = "basic/map1/Medium_Map.tmx";
+//                String mapPath2 = "basic/map2/mediumMap.tmx";
+     //           spaceGame.setScreen(new GameScreen(spaceGame, mapPath2,2));
             }
             if(!checkSoundButtonPlayOn && checkSoundOn){
                 checkSoundButtonPlayOn = true;
