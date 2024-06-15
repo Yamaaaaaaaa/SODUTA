@@ -28,6 +28,10 @@ public class Knight extends Entity {
     private Texture texture_slash_left;
     private Texture texture_slash_right;
 
+    public Animation[] getWalking() {
+        return walking;
+    }
+
     private Animation[] walking;
     private Animation[] shootting;
     private Animation[] stabbing;
@@ -51,6 +55,7 @@ public class Knight extends Entity {
     //Item:
     public int counter_ItemBullet = 0;
     public int counter_MedKit = 0;
+    public Knight(){}
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         this.setMusic();

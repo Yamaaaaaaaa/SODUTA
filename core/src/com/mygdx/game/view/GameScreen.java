@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     public SpaceGame spaceGame;
+
+
     private SpriteBatch batch;
     private String mapPath;
     private ShapeRenderer shapeRenderer;
