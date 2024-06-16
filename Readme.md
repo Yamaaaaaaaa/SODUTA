@@ -1,4 +1,4 @@
-# DỰ ÁN CHO CUỘC THI PROGAMECUP
+# DỰ ÁN CHO CUỘC THI [PROGAMECUP]
 ## 1. Thông Tin Nhóm
 
 **Tên Dự Án:** [SODUTA]
