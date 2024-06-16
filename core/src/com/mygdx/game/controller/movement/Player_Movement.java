@@ -20,7 +20,6 @@ public class Player_Movement implements Movement {
         return instance;
     }
 
-    private Entity entity;
     public boolean upKey, downKey, leftKey, rightKey;
     public boolean attack;
     private void updateDirection(Entity entity){

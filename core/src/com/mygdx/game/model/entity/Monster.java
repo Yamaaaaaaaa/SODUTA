@@ -31,6 +31,8 @@ public class Monster extends Entity{
 
     // CHẾT:
     public int deathCountingTime = 0;
+
+    public Monster(){}
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight, int numberMap, boolean godmod) {
         this.gameScreen = gameScreen;
         //image
@@ -45,7 +47,7 @@ public class Monster extends Entity{
         int sp = 80;
             if(godmod) sp = 160;
             this.setSpeed_Stright(sp);
-            this.setSpeed_Cross((float) Math.sqrt(sp*sp / 2));
+            this.setSpeed_Cross((float) Math.sqrt((double) (sp * sp) / 2));
         // atk, hp
             this.currentHp = 100;
             this.maxHP = 100;
@@ -166,23 +168,6 @@ public class Monster extends Entity{
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
     }
-    public void setPlaceGen(float xKnight, float yKnight){
-        int kc = 800/2; // 800 la do rong screen
-        int x = MathUtils.random(1, 4); // tren, phai, duoi, trai
-        int randomX = MathUtils.random(-kc, kc);
-        int randomY = MathUtils.random(-kc, kc);
-        setPosision((xKnight + randomX) > 0 ? (xKnight + randomX) : 0, (yKnight + randomY) > 0 ? (yKnight + randomY): 0);
-       /* if(x == 1){
-            setPosision(xKnight + random, yKnight + kc);
-        }else if(x == 2){
-            setPosision(xKnight + kc, yKnight + random);
-        } else if(x == 3){
-            setPosision(xKnight + random, yKnight - kc);
-        }else if(x == 4){
-            setPosision(xKnight - kc, yKnight + random);
-        }*/
-    }
-
     public void setPlaceGenMap2 (float x, float y){ // float xKnight, float yKnight
         int area = findAreaKnightMap2(x, y);
         int tileSize = 32;

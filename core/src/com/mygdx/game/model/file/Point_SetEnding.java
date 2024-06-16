@@ -7,6 +7,7 @@ public class Point_SetEnding implements Serializable, Comparable<Point_SetEnding
     private int pointRanking;
     private String dayRanking;
 
+    public Point_SetEnding(){}
     public Point_SetEnding(String name, int point) {
         this.nameRanking = name;
         this.pointRanking = point;

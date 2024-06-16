@@ -335,7 +335,7 @@ public class Knight extends Entity {
             }
         }
         for(Bullet bullet : this.bullets) {
-            if (bullet.remove == true) {
+            if (bullet.remove) {
                 rejBullet.add(bullet);
             }
         }

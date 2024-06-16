@@ -20,7 +20,6 @@ public class FileHandler {
     private String filePath = "";
     public FileHandler() {
         this.List_Ranking = new ArrayList<>();
-
         fileHandle = Gdx.files.internal("file/ranking.txt");
         String tmp = fileHandle.file().getAbsolutePath();
         for(int i = 0 ;i  < tmp.length(); i++){
@@ -29,10 +28,8 @@ public class FileHandler {
             }
             else filePath = filePath + tmp.charAt(i);
         }
-
         this.Read_Ranking();
         this.coutRanking();
-
     }
 
     public void addRanking(String name, int point){

@@ -48,9 +48,10 @@ public class MapScreen implements Screen {
     boolean isCheckSoundButtonHomeOn = false;
     static boolean checkSoundOn = true;
 
+    public MapScreen(){}
     public MapScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/watery-graves-181198.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
         background = new Texture("button/MapScreen/BG.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");

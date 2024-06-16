@@ -13,7 +13,7 @@ public class Bullet extends Entity {
     private int width = 30, height = 30;
     private Texture texture;
 
-
+    public Bullet(){}
     public Bullet(GameScreen gameScreen, float x, float y, float speed, Direction direction, TiledMapTileLayer collisionLayer) {
         this.texture = new Texture("basic/Bullet/Bullet_of.png");
         this.gameScreen = gameScreen;
