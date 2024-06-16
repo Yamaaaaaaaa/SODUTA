@@ -41,15 +41,6 @@ Sau mỗi tuần, team sẽ merge `develop` vào `master` để release phiên b
 
 **MÔ TẢ:** **[SODUTA]** là 1 tựa game sinh tồn dựa trên ý tưởng thời đại mà đại dịch Zombie càn quét khắp nơi trên thế giới. Nhân vật chính có nhiệm vụ phải tiêu diệt càng nhiều Zombie càng tốt để bảo vệ Trái Đất.
 
-**Video:** [[SODUTA-YTB]([https://github.com/Yamaaaaaaaa/Group5_BTCK_PGC-Endless_Way.git](https://youtu.be/j1kQNntlTBg))](#)
-
-**1 Số ảnh minh họa:**
-
-
-![image](https://github.com/Yamaaaaaaaa/SODUTA/assets/110320455/f0aec631-c77a-4047-9f51-6f3071a824dd)
-![image](https://github.com/Yamaaaaaaaa/SODUTA/assets/110320455/ef0b74b4-3c97-4731-8b1c-7e22b4bb57b3)
-![image](https://github.com/Yamaaaaaaaa/SODUTA/assets/110320455/b12c076e-c345-4af1-a08c-add14ac856ec)
-
 
 ## 3. Các Chức Năng Chính
 
@@ -96,11 +87,13 @@ Diễn giải:
 - ...
 ## 5. Ảnh và Video Demo
 
-**Ảnh Demo:**
-![Ảnh Demo](#)
+**Video:** [[SODUTA-YTB](https://youtu.be/j1kQNntlTBg)](#)
 
-**Video Demo:**
-[Video Link](#)
+**1 Số ảnh minh họa:**
+
+![image](https://github.com/Yamaaaaaaaa/SODUTA/assets/110320455/f0aec631-c77a-4047-9f51-6f3071a824dd)
+![image](https://github.com/Yamaaaaaaaa/SODUTA/assets/110320455/ef0b74b4-3c97-4731-8b1c-7e22b4bb57b3)
+![image](https://github.com/Yamaaaaaaaa/SODUTA/assets/110320455/b12c076e-c345-4af1-a08c-add14ac856ec)
 
 
 
