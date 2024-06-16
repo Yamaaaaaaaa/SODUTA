@@ -27,6 +27,8 @@ public class EndGameScreen implements Screen {
     Texture continueButtonHover;
     BitmapFont font1, font2, font3, font4;
     int point, rank;
+    private Music backgroundMusic;
+
     public EndGameScreen(SpaceGame spaceGame, int point, int rank){
         this.texture_walking = new Texture("basic/character/Walk.png");
         walking = new Animation[10];
@@ -63,6 +65,8 @@ public class EndGameScreen implements Screen {
         font4 = generator.generateFont(parameter);
         this.point = point;
         this.rank = rank;
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-comedy-121626.mp3"));
     }
     public void show(){
         camera = new OrthographicCamera();
@@ -100,7 +104,7 @@ public class EndGameScreen implements Screen {
         spaceGame.getBatch().draw((TextureRegion) walking[0].getKeyFrame(statetime, true), 420, 300,  32 * 6, 32 * 6);
         this.font2.draw(spaceGame.getBatch(), "Your Point: " + this.point, 200, 500);
         this.font2.draw(spaceGame.getBatch(), "Time: " + "...", 200, 450);
-        Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-comedy-121626.mp3"));
+
         backgroundMusic.play();
         //Bảng Rank
 
@@ -114,6 +118,7 @@ public class EndGameScreen implements Screen {
             spaceGame.getBatch().draw(continueButtonHover, x, y, w, h);
             if (Gdx.input.isTouched()) {
                 this.dispose();
+                this.backgroundMusic.stop();
                 spaceGame.setScreen(new MenuScreen(spaceGame));
             }
         }else{

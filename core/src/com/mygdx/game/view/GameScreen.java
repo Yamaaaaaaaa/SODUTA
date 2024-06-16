@@ -145,7 +145,7 @@ public class GameScreen implements Screen {
             this.newGame = false;
         }
     }
-
+    boolean endgame = false;
     @Override
     public void render(float delta) {
         float deltaTime = Gdx.graphics.getDeltaTime();
@@ -182,9 +182,11 @@ public class GameScreen implements Screen {
             if(time_m % 2 == 0 && time_s == 0){
                 timeEndGodWave_m = time_m;
                 timeEndGodWave_s = 30;
-                MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
-                zombie_WaveStart_Music.setVolumeMusic(0.7f);
-                zombie_WaveStart_Music.setPlay();
+                if(!endgame) {
+                    MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
+                    zombie_WaveStart_Music.setVolumeMusic(0.7f);
+                    zombie_WaveStart_Music.setPlay();
+                }
                 godMod = true;
             }
 
@@ -249,6 +251,7 @@ public class GameScreen implements Screen {
         this.dispose();
         this.background_Game_Music.setStop();
         this.spaceGame.setScreen(new EndGameScreen(this.spaceGame, point, rank));
+        endgame = true;
     }
 
     @Override
