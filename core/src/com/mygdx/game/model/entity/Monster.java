@@ -47,7 +47,7 @@ public class Monster extends Entity{
         else  this.setPlaceGenMap2(xKnight, yKnight);
         //speed
         int sp = 80;
-            if(godmod) sp = 160;
+            if(godmod) sp = 240;
             this.setSpeed_Stright(sp);
             this.setSpeed_Cross((float) Math.sqrt((double) (sp * sp) / 2));
         // atk, hp

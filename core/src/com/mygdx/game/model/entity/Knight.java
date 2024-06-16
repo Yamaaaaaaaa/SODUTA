@@ -360,7 +360,7 @@ public class Knight extends Entity {
                         pickup_Item_Music.setVolumeMusic(0.5f);
                         pickup_Item_Music.setPlay();
                         it.alive = false;
-                        it.counterTime = 3600 * 2; //3600 * 3; // tru dan ve 0
+                        it.counterTime = 3600 * 1; //3600 * 3; // tru dan ve 0
                         this.counter_ItemBullet ++;
                     }
                 }
@@ -380,7 +380,7 @@ public class Knight extends Entity {
                         pickup_Item_Music.setVolumeMusic(0.5f);
                         pickup_Item_Music.setPlay();
                         med.alive = false;
-                        med.counterTime = 3600 * 3; //3600 * 3; // tru dan ve 0
+                        med.counterTime = 3600 * 2; //3600 * 3; // tru dan ve 0
                         this.counter_MedKit ++;
                     }
                 }
