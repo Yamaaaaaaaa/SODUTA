@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Monster_Movement;
 import com.mygdx.game.model.gamemusic.MusicGame;
@@ -31,24 +32,28 @@ public class Monster extends Entity{
 
     // CHẾT:
     public int deathCountingTime = 0;
-    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static) {
-        this.gameScreen = gameScreen;
 
+    public CheckCollision checkCollision;
+    public Monster(){}
+    public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight, int numberMap, boolean godmod) {
+        this.gameScreen = gameScreen;
         //image
             this.texture_walking = new Texture("Apocalypse Character Pack/Zombie/Walk.png");
             //this.texture_shooting = new Texture("basic/character/Shoot.png");
             //this.texture_stabbing = new Texture("basic/character/Stab.png");
             this.texture_death = new Texture("Apocalypse Character Pack/Zombie/Death.png");
         // position
-            this.setPlaceGen();
+        if (numberMap == 1) this.setPlaceGenMap1(xKnight, yKnight);
+        else  this.setPlaceGenMap2(xKnight, yKnight);
         //speed
         int sp = 80;
+            if(godmod) sp = 240;
             this.setSpeed_Stright(sp);
-            this.setSpeed_Cross((float) Math.sqrt(sp*sp / 2));
+            this.setSpeed_Cross((float) Math.sqrt((double) (sp * sp) / 2));
         // atk, hp
             this.currentHp = 100;
             this.maxHP = 100;
-            this.damage = 30;
+            this.damage = 20;
         // first setting:
         this.direction_Static = direction_Static;
         if(direction_Static.equals("vertical")) {
@@ -83,7 +88,7 @@ public class Monster extends Entity{
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
 
         //health:
-
+        this.checkCollision = new CheckCollision(this);
     }
 
     private void setAnimation(){
@@ -106,7 +111,7 @@ public class Monster extends Entity{
         }
     }
     public void update(){
-        if(this.status == Entity_Status.WALKING) this.moving.move(this,this.gameScreen);
+        if(this.status == Entity_Status.WALKING) this.moving.move(this,this.gameScreen, this.checkCollision);
     }
 
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){
@@ -119,7 +124,7 @@ public class Monster extends Entity{
         //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
         float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
-        rectangle.x = screenX + 8;
+        rectangle.x = screenX +8;
         rectangle.y = screenY;
         //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         check_MonsterAttackKnight();
@@ -165,17 +170,63 @@ public class Monster extends Entity{
             batch.draw((TextureRegion) death[index].getKeyFrame(stateTime, true), screenX, screenY,  this.getWidth() * 2, this.getHeight() * 2);
         }
     }
-    public void setPlaceGen(){
-        int rong = 3200, cao = 3200, kc = 100; // screen
-        int x = MathUtils.random(1, 4); // trái - phải
-        if(x == 1){
-            setPosision(kc, cao-kc);
-        }else if(x == 2){
-            setPosision(rong-kc, cao-kc);
-        } else if(x == 3){
-            setPosision(rong-kc, kc);
-        }else if(x == 4){
-            setPosision(kc, kc);
+    public void setPlaceGenMap2 (float x, float y){ // float xKnight, float yKnight
+        int area = findAreaKnightMap2(x, y);
+        int tileSize = 32;
+        if(area == 1){
+            setPosision(30*tileSize, 45*tileSize);
+        }else if(area == 2){
+            setPosision(50*tileSize, 55*tileSize);
+        }else if(area == 3){
+            setPosision(45*tileSize, 35*tileSize);
+        }else if(area == 4){
+            setPosision(15*tileSize, 65*tileSize);
+        }else if(area == 5){
+            setPosision(65*tileSize, 65*tileSize);
+        }else if(area == 6){
+            setPosision(65*tileSize, 15*tileSize);
+        }else if(area == 7){
+            setPosision(15*tileSize, 15*tileSize);
+        }else setPosision(63*tileSize, 40*tileSize);
+    }
+    public int findAreaKnightMap2(float x, float y){
+        int tileSize = 32;
+        x = x/tileSize; y = y/tileSize;
+        if(x > 20 && x < 40 && y > 40 && y < 60) return 1;
+        else if(x > 40 && x < 60 && y > 40 && y < 60) return 2;
+        else if(x > 20 && x < 60 && y > 20 && y < 40) return 3;
+        else if( x < 40 && y > 40 ) return 4;
+        else if(x > 40  && y > 40 ) return 5;
+        else if(x > 40  &&  y < 40) return 6;
+        else return 7;
+    }
+    public void setPlaceGenMap1 (float x, float y){ // float xKnight, float yKnight
+        int area = findAreaKnightMap1(x, y);
+        int tileSize = 32;
+        if(area == 1){
+            setPosision(15*tileSize, 80*tileSize);
+        }else if(area == 2){
+            setPosision(30*tileSize, 90*tileSize);
+        }else if(area == 3){
+            setPosision(86*tileSize, 70*tileSize);
+        }else if(area == 4){
+            setPosision(90*tileSize, 30*tileSize);
+        }else if(area == 5){
+            setPosision(50*tileSize, 55*tileSize);
+        }else if(area == 6){
+            setPosision(40*tileSize, 20*tileSize);
         }
     }
+    public int findAreaKnightMap1(float x, float y){
+        int tileSize = 32;
+        x = x/tileSize; y = y/tileSize;
+        if(x < 20 && y > 70 ) return 1;
+        else if(x > 20 && x < 60 && y > 70 ) return 2;
+        else if(x > 60 && y > 60) return 3;
+        else if( x > 80 && x < 95 && y > 20 && y < 45 ) return 4;
+        else if(y > 30  && y < 60 ) return 5;
+        else  return 6; // y < 30;
+    }
+
+
 }

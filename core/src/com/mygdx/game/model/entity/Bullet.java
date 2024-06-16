@@ -4,16 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Bullet_Movement;
 import com.mygdx.game.view.GameScreen;
+import com.sun.tools.javac.comp.Check;
 
 public class Bullet extends Entity {
     public GameScreen gameScreen;
     private int width = 30, height = 30;
     private Texture texture;
-
-
+    public CheckCollision checkCollision;
+    public Bullet(){}
     public Bullet(GameScreen gameScreen, float x, float y, float speed, Direction direction, TiledMapTileLayer collisionLayer) {
         this.texture = new Texture("basic/Bullet/Bullet_of.png");
         this.gameScreen = gameScreen;
@@ -26,6 +28,7 @@ public class Bullet extends Entity {
 
         this.moving = Bullet_Movement.getInstance();
         //if(this.texture == null) this.texture = new Texture("basic/Bullet/Bullet_of.png");
+        this.checkCollision = new CheckCollision(this);
     }
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer){
         //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
@@ -37,6 +40,6 @@ public class Bullet extends Entity {
         if(!this.remove) batch.draw(texture,screenX,screenY);
     }
     public void update(){
-        moving.move(this, this.gameScreen);
+        moving.move(this, this.gameScreen,this.checkCollision);
     }
 }

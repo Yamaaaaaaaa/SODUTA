@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -22,11 +23,16 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     public SpaceGame spaceGame;
+
+
     private SpriteBatch batch;
+    private String mapPath;
     private ShapeRenderer shapeRenderer;
     public MusicHandler musicHandler;
     private float stateTime = 0;
     private float tile_Size = 32;
+    private int numberMap;
+    public float timePlayed;
 
 //NHÂN VẬT:
     // DI CHUYEN NHAN VAT
@@ -51,7 +57,22 @@ public class GameScreen implements Screen {
     public boolean newGame = true;
 // MUSIC:
     public MusicGame background_Game_Music, zombie_WaveStart_Music;
-    public GameScreen(SpaceGame spaceGame) {
+// ITEM
+    public ArrayList<Items> itemBullets;
+    public ArrayList<Items> medKits;
+//Mod cuồng loạn
+    public int time_s;
+    public int time_m;
+    public int timeEndGodWave_m = 0, timeEndGodWave_s = 0;
+    public boolean godMod = false;
+
+//
+    public Texture ESC_Text;
+    public GameScreen(){}
+    public GameScreen(SpaceGame spaceGame, String mapPath, int mapType) {
+        timePlayed = 0;
+        this.numberMap = mapType;
+        this.mapPath = mapPath;
         this.spaceGame = spaceGame;
         batch = spaceGame.getBatch();
         shapeRenderer = spaceGame.shapeRenderer;
@@ -62,15 +83,58 @@ public class GameScreen implements Screen {
 
         this.zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
         this.zombie_WaveStart_Music.setVolumeMusic(0.8f);
-       // this.zombie_WaveStart_Music.setPlay();
+        // this.zombie_WaveStart_Music.setPlay();
+        itemBullets = new ArrayList<Items>();
+        medKits = new ArrayList<Items>();
+        if(mapType == 1){
+            setMap1(this.spaceGame, this.mapPath);
+        }
+        else if(mapType == 2){
+            setMap2(this.spaceGame, this.mapPath);
+        }
+        this.ESC_Text = new Texture("button/GameScreen/Text.png");
     }
+    private void setMap1(SpaceGame spaceGame, String mapPath){
+    // set vị trí item xuất hiện
+        // bang dan
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 28 * tile_Size, 94 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 95 * tile_Size, 95 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 34 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 84 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 84 * tile_Size, 39 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 84 * tile_Size, 27 * tile_Size));
 
 
+        //medkit
+        medKits.add(new Items("basic/item/medkit.png",this, 47 * tile_Size, 21 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 40 * tile_Size, 31 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 84 * tile_Size, 33 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 6 * tile_Size, 80 * tile_Size));
+
+    }
+    private void setMap2(SpaceGame spaceGame, String mapPath){
+    // set vị trí item xuất hiện
+        // bang dan
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 10 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 35 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 70 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 73 * tile_Size, 36 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 7 * tile_Size, 7 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 42 * tile_Size, 54 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 42 * tile_Size, 51 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 42 * tile_Size, 48 * tile_Size));
+
+        //medkit
+        medKits.add(new Items("basic/item/medkit.png",this, 35 * tile_Size, 45 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 38 * tile_Size, 30 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 53 * tile_Size, 46 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 68 * tile_Size, 10 * tile_Size));
+    }
     @Override
     public void show() {
         if(this.newGame) {
             loader = new TmxMapLoader();
-            map = loader.load("basic/map/Medium_Map.tmx");
+            map = loader.load(this.mapPath);
             renderer = new OrthogonalTiledMapRenderer(map);
             camera = new OrthographicCamera();
             //     camera.zoom = .8f;
@@ -78,19 +142,20 @@ public class GameScreen implements Screen {
             this.collsionLayer = (TiledMapTileLayer) map.getLayers().get(1);
             // System.out.println(collsionLayer.getName());
             this.speed = 250;
-            this.knight = new Knight(this, tile_Size * 13, tile_Size * 80, this.speed, collsionLayer);
+            this.knight = new Knight(this, tile_Size * 35, tile_Size * 50, this.speed, collsionLayer);
             monsters = new ArrayList<Monster>();
-            Monster monster = new Monster(collsionLayer, this, "vertical");
-            monsters.add(monster);
             timeGenBabyMonster = (Long) TimeUtils.nanoTime();
             this.statusUI = new Status_UI(this);
             this.newGame = false;
         }
     }
-
-    float cnt = 0;
+    boolean endgame = false;
     @Override
     public void render(float delta) {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+        timePlayed += deltaTime;
+
+
         Gdx.gl.glClearColor(0.113f, 0.102f, 0.16f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
@@ -107,9 +172,29 @@ public class GameScreen implements Screen {
 
         //update
             knight.update();
-            //monsters.size() < 3
-            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0) {
-                Monster monster = new Monster(collsionLayer, this, "vertical");
+
+        // Berserk Mode:
+            time_s = (int) this.timePlayed;
+            time_m = (int) time_s / 60;
+            time_s = time_s % 60;
+            if(time_m == timeEndGodWave_m && time_s == timeEndGodWave_s && godMod == true){
+                godMod = false;
+            }
+
+            if(time_s == 0 && time_m != 0){
+            //  if(time_s == 0){
+                timeEndGodWave_m = time_m;
+                timeEndGodWave_s = 20;
+                if(!endgame) {
+                    MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
+                    zombie_WaveStart_Music.setVolumeMusic(0.7f);
+                    zombie_WaveStart_Music.setPlay();
+                }
+                godMod = true;
+            }
+
+            if (TimeUtils.nanoTime() - timeGenBabyMonster >= 2000000000 && knight.currentHp > 0 && monsters.size() < 25) {
+                Monster monster = new Monster(collsionLayer, this, "vertical", knight.getX(), knight.getY(), numberMap, godMod);
                 //   this.zombie_WaveStart_Music.setPlay();
                 monsters.add(monster);
                 timeGenBabyMonster = (Long) TimeUtils.nanoTime();
@@ -121,9 +206,24 @@ public class GameScreen implements Screen {
             }
             stateTime += delta;
 
+
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
+        batch.draw(ESC_Text,-5,750,128*2,32*2);
+        for(Items it: this.itemBullets){
+            it.update();
+            if(it.alive){
+                it.render(batch, shapeRenderer);
+            }
+        }
+        for(Items med : this.medKits){
+            med.update();
+            if(med.alive){
+                med.render(batch, shapeRenderer);
+            }
+        }
+
         if(knight.attackStatus == Attack_Status.SHOOT){
             for(Bullet bullet: knight.bullets){
                 bullet.render(batch, shapeRenderer);
@@ -151,10 +251,14 @@ public class GameScreen implements Screen {
 //        }
         this.spaceGame.setScreen(new PauseGameScreen(this.spaceGame,this));
     }
-    public void setEndGame_Screen(){
+    public void setEndGame_Screen(int point, int rank){
+        time_s = (int) this.timePlayed;
+        time_m = (int) time_s / 60;
+        time_s = time_s % 60;
         this.dispose();
         this.background_Game_Music.setStop();
-        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame));
+        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame, point, rank, this.time_m, this.time_s));
+        endgame = true;
     }
 
     @Override

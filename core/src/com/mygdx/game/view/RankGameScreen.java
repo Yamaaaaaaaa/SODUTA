@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
 
 public class RankGameScreen implements Screen {
-    private final FreeTypeFontGenerator generator;
-    private final FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private FreeTypeFontGenerator generator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     // KÍCH THƯỚC NÚT
     private int SIZE_BUTTON_WIDTH = 88;
     private int SIZE_BUTTON_HEIGHT = 88;
@@ -44,9 +44,12 @@ public class RankGameScreen implements Screen {
     boolean isCheckSoundButtonHomeOn = false;
     static boolean checkSoundOn = true;
     private BitmapFont font;
+
+    public RankGameScreen(){}
     public RankGameScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));
+        this.backgroundMusic.setLooping(true);
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
         background = new Texture("button/Background.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");
@@ -169,24 +172,24 @@ public class RankGameScreen implements Screen {
         this.parameter.color = Color.BLACK;
         this.font = generator.generateFont(parameter);
 
-        if(this.spaceGame.fileHandler.List_Ranking.size() < 5){
+        if(this.spaceGame.fileHandler.List_Ranking.size() < 7){
             for(int i = 0 ; i < this.spaceGame.fileHandler.List_Ranking.size(); i++){
                 int row_y = ranking_Row_Y - (i + 1) * 30 - 20;
                 int col1_y = ranking_Columns1_X;
                 int col2_y = ranking_Columns2_X;
                 int col3_y = ranking_Columns3_X;
-                this.font.draw(spaceGame.getBatch(),i + "", col1_y, row_y);
+                this.font.draw(spaceGame.getBatch(),(i + 1) + "", col1_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getName() + "", col2_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getPoint() + "", col3_y, row_y);
             }
         }
         else{
-            for(int i = 0 ; i < 5; i++){
+            for(int i = 0 ; i < 7; i++){
                 int row_y = ranking_Row_Y - (i + 1) * 30;
                 int col1_y = ranking_Columns1_X;
                 int col2_y = ranking_Columns2_X;
                 int col3_y = ranking_Columns3_X;
-                this.font.draw(spaceGame.getBatch(),i + "", col1_y, row_y);
+                this.font.draw(spaceGame.getBatch(),(i + 1) + "", col1_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getName() + "", col2_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getPoint() + "", col3_y, row_y);
             }

@@ -50,9 +50,11 @@ public class MenuScreen implements Screen {
     static boolean checkSoundOn = true;
     boolean checkSoundButtonExit = false;
 
+    public MenuScreen(){}
     public MenuScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/watery-graves-181198.mp3"));
+        backgroundMusic.setLooping(true);
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
         background = new Texture("button/Background.png");
         buttonNewGameIdle = new Texture("button/Play-Idle.png");
@@ -165,7 +167,11 @@ public class MenuScreen implements Screen {
             if (Gdx.input.justTouched()) {
                 this.dispose();
                 backgroundMusic.pause();
-                spaceGame.setScreen(new GameScreen(spaceGame));
+                clickButtonMusic.pause();
+                spaceGame.setScreen(new MapScreen(spaceGame));
+//                String mapPath1 = "basic/map1/Medium_Map.tmx";
+//                String mapPath2 = "basic/map2/mediumMap.tmx";
+     //           spaceGame.setScreen(new GameScreen(spaceGame, mapPath2,2));
             }
             if(!checkSoundButtonPlayOn && checkSoundOn){
                 checkSoundButtonPlayOn = true;

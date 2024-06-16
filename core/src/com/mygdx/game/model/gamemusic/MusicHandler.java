@@ -22,6 +22,8 @@ public class MusicHandler {
 
     // Zombie:
     public String zombie_Eating = "music/Zombie_Attack/screen_recording_20210708-163854_chrome_1.mp3";
-    public String zombie_WaveStart = "music/Zombie_WaveStart/plants-vs-zombies-wave.mp3";
+    public String zombie_WaveStart = "music/Zombie_WaveStart/Plants vs. Zombies Wave Sound Effect.mp3";
+    //Heal:
+    public String healing = "music/duct-tape-3-183995.mp3";
 }
 

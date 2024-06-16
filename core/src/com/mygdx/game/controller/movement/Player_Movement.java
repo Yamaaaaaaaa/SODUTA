@@ -20,7 +20,6 @@ public class Player_Movement implements Movement {
         return instance;
     }
 
-    private Entity entity;
     public boolean upKey, downKey, leftKey, rightKey;
     public boolean attack;
     private void updateDirection(Entity entity){
@@ -71,9 +70,9 @@ public class Player_Movement implements Movement {
     private CheckCollision checkCollision;
 
     @Override
-    public void move(Entity entity, GameScreen gameScreen) {
+    public void move(Entity entity, GameScreen gameScreen, CheckCollision checkCollision) {
         updateDirection(entity);
-        checkCollision = new CheckCollision(entity);
+        this.checkCollision = checkCollision;
 
         if(entity.status == Entity_Status.WALKING){
             float oldX, oldY, x, y;
