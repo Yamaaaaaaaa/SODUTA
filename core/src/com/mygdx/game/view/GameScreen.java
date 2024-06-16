@@ -65,6 +65,9 @@ public class GameScreen implements Screen {
     public int time_m;
     public int timeEndGodWave_m = 0, timeEndGodWave_s = 0;
     public boolean godMod = false;
+
+//
+    public Texture ESC_Text;
     public GameScreen(){}
     public GameScreen(SpaceGame spaceGame, String mapPath, int mapType) {
         timePlayed = 0;
@@ -89,6 +92,7 @@ public class GameScreen implements Screen {
         else if(mapType == 2){
             setMap2(this.spaceGame, this.mapPath);
         }
+        this.ESC_Text = new Texture("button/GameScreen/Text.png");
     }
     private void setMap1(SpaceGame spaceGame, String mapPath){
     // set vị trí item xuất hiện
@@ -169,19 +173,18 @@ public class GameScreen implements Screen {
         //update
             knight.update();
 
+        // Berserk Mode:
             time_s = (int) this.timePlayed;
             time_m = (int) time_s / 60;
             time_s = time_s % 60;
-
             if(time_m == timeEndGodWave_m && time_s == timeEndGodWave_s && godMod == true){
                 godMod = false;
             }
 
-
-            if(time_m % 2 == 0 && time_s == 0 && time_m != 0){
-          //  if(time_m % 2 == 0 && time_s == 0){
+            if(time_s == 0 && time_m != 0){
+            //  if(time_s == 0){
                 timeEndGodWave_m = time_m;
-                timeEndGodWave_s = 30;
+                timeEndGodWave_s = 20;
                 if(!endgame) {
                     MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
                     zombie_WaveStart_Music.setVolumeMusic(0.7f);
@@ -207,7 +210,7 @@ public class GameScreen implements Screen {
         //draw , shape trc, batch sau.
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
-        batch.draw(new Texture("button/GameScreen/Text.png"),-5,750,128*2,32*2);
+        batch.draw(ESC_Text,-5,750,128*2,32*2);
         for(Items it: this.itemBullets){
             it.update();
             if(it.alive){
@@ -220,6 +223,7 @@ public class GameScreen implements Screen {
                 med.render(batch, shapeRenderer);
             }
         }
+
         if(knight.attackStatus == Attack_Status.SHOOT){
             for(Bullet bullet: knight.bullets){
                 bullet.render(batch, shapeRenderer);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Monster_Movement;
 import com.mygdx.game.model.gamemusic.MusicGame;
@@ -32,6 +33,7 @@ public class Monster extends Entity{
     // CHẾT:
     public int deathCountingTime = 0;
 
+    public CheckCollision checkCollision;
     public Monster(){}
     public Monster(TiledMapTileLayer collsionLayer, GameScreen gameScreen, String direction_Static, float xKnight, float yKnight, int numberMap, boolean godmod) {
         this.gameScreen = gameScreen;
@@ -45,7 +47,7 @@ public class Monster extends Entity{
         else  this.setPlaceGenMap2(xKnight, yKnight);
         //speed
         int sp = 80;
-            if(godmod) sp = 160;
+            if(godmod) sp = 240;
             this.setSpeed_Stright(sp);
             this.setSpeed_Cross((float) Math.sqrt((double) (sp * sp) / 2));
         // atk, hp
@@ -86,7 +88,7 @@ public class Monster extends Entity{
        // this.attackStatus = Attack_Status.STAB; // Mặc định là ban đầu sẽ chém
 
         //health:
-
+        this.checkCollision = new CheckCollision(this);
     }
 
     private void setAnimation(){
@@ -109,7 +111,7 @@ public class Monster extends Entity{
         }
     }
     public void update(){
-        if(this.status == Entity_Status.WALKING) this.moving.move(this,this.gameScreen);
+        if(this.status == Entity_Status.WALKING) this.moving.move(this,this.gameScreen, this.checkCollision);
     }
 
     public void draw(SpriteBatch batch, float stateTime, ShapeRenderer shapeRenderer){

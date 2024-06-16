@@ -18,7 +18,7 @@ public class Bullet_Movement implements Movement {
     }
     private CheckCollision checkCollision_Bullet;
     @Override
-    public void move(Entity entity, GameScreen gameScreen) {
+    public void move(Entity entity, GameScreen gameScreen, CheckCollision checkCollision) {
         // di chuyển đaạn
         if(entity.direction == Direction.DOWN)
             entity.setY(entity.getY() - entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime());
@@ -29,7 +29,7 @@ public class Bullet_Movement implements Movement {
         else
             entity.setX(entity.getX() + entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime());
         // check va cham map
-        checkCollision_Bullet = new CheckCollision(entity);
+        checkCollision_Bullet = checkCollision;
         float oldX = entity.getX(), oldY = entity.getY();
         if(checkCollision_Bullet.check_BulletWithMap(oldX, oldY)){
             entity.remove = true;

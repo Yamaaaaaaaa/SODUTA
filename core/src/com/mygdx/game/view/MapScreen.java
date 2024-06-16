@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
+import com.mygdx.game.model.gamemusic.MusicGame;
 
 public class MapScreen implements Screen {
     // KÍCH THƯỚC MAP
@@ -25,8 +26,8 @@ public class MapScreen implements Screen {
     private OrthographicCamera camera;
 
     // ÂM THANH
-    private Music backgroundMusic;
-    private Music clickButtonMusic;
+    private MusicGame backgroundMusic;
+    private MusicGame clickButtonMusic;
 
     // HÌNH ẢNH
     Texture background;
@@ -51,8 +52,8 @@ public class MapScreen implements Screen {
     public MapScreen(){}
     public MapScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));
-        clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
+        backgroundMusic = new MusicGame("music/Menu_Music/halloween-happy-background-168842.mp3", true);
+        clickButtonMusic = new MusicGame("music/Menu_Music/clickButton.mp3", false);
         background = new Texture("button/MapScreen/BG.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");
         buttonMusicOnHover = new Texture("button/Music-On-Hover.png");
@@ -72,7 +73,7 @@ public class MapScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
-        if(checkSoundOn) backgroundMusic.play();
+        if(checkSoundOn) backgroundMusic.setPlay();
     }
 
     @Override
@@ -96,13 +97,13 @@ public class MapScreen implements Screen {
             spaceGame.getBatch().draw(buttonHomeHover, xHome, yHome, SIZE_BUTTON_WIDTH, SIZE_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()) {
                 this.dispose();
-                backgroundMusic.pause();
-                clickButtonMusic.pause();
+                backgroundMusic.setPause();
+                clickButtonMusic.setPause();
                 spaceGame.setScreen(new MenuScreen(spaceGame));
             }
             if(!isCheckSoundButtonHomeOn && checkSoundOn){
                 isCheckSoundButtonHomeOn = true;
-                clickButtonMusic.play();
+                clickButtonMusic.setPlay();
             }
 
         } else {
@@ -127,14 +128,14 @@ public class MapScreen implements Screen {
             spaceGame.getBatch().draw(buttonMap1Hover, x1, y1, SIZE_MAP_1_WIDTH, SIZE_MAP_1_HEIGHT);
             if (Gdx.input.isTouched()) {
                 this.dispose();
-                backgroundMusic.pause();
-                clickButtonMusic.pause();
+                backgroundMusic.setPause();
+                clickButtonMusic.setPause();
                 String mapPath1 = "basic/map1/Medium_Map.tmx";
                 spaceGame.setScreen(new GameScreen(spaceGame, mapPath1,1));
             }
             if(!isCheckSoundButtonMap1On && checkSoundOn){
                 isCheckSoundButtonMap1On = true;
-                clickButtonMusic.play();
+                clickButtonMusic.setPlay();
             }
 
         } else {
@@ -156,14 +157,14 @@ public class MapScreen implements Screen {
             spaceGame.getBatch().draw(buttonMap2Hover, x2, y2, SIZE_MAP_2_WIDTH, SIZE_MAP_2_HEIGHT);
             if (Gdx.input.isTouched()) {
                 this.dispose();
-                backgroundMusic.pause();
-                clickButtonMusic.pause();
+                backgroundMusic.setPause();
+                clickButtonMusic.setPlay();
                 String mapPath2 = "basic/map2/mediumMap.tmx";
                 spaceGame.setScreen(new GameScreen(spaceGame, mapPath2,2));
             }
             if(!isCheckSoundButtonMap2On && checkSoundOn){
                 isCheckSoundButtonMap2On = true;
-                clickButtonMusic.play();
+                clickButtonMusic.setPlay();
             }
 
         } else {
@@ -188,17 +189,17 @@ public class MapScreen implements Screen {
 
                     //spaceGame.getBatch().draw(buttonMusicOffHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
                     checkSoundOn = false;
-                    backgroundMusic.pause();
+                    backgroundMusic.setPause();
                 }
                 else {
                     //spaceGame.getBatch().draw(buttonMusicOnHover, x, y, SIZE_BUTTON_MUSIC_WIDTH, SIZE_BUTTON_MUSIC_HEIGHT);
-                    backgroundMusic.play();
+                    backgroundMusic.setPlay();
                     checkSoundOn = true;
                 }
             }
             if(checkSoundOn){
                 if(!checkSoundButtonMusicOffOn){
-                    clickButtonMusic.play();
+                    clickButtonMusic.setPlay();
                     checkSoundButtonMusicOffOn = true;
                 }
             }
