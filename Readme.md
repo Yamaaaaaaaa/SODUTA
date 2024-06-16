@@ -40,7 +40,9 @@ Sau mỗi tuần, team sẽ merge `develop` vào `master` để release phiên b
 ## 2. Giới Thiệu Dự Án
 
 **MÔ TẢ:** **[SODUTA]** là 1 tựa game sinh tồn dựa trên ý tưởng thời đại mà đại dịch Zombie càn quét khắp nơi trên thế giới. Nhân vật chính có nhiệm vụ phải tiêu diệt càng nhiều Zombie càng tốt để bảo vệ Trái Đất.
+
 **Video:** [[SODUTA-YTB]([https://github.com/Yamaaaaaaaa/Group5_BTCK_PGC-Endless_Way.git](https://youtu.be/j1kQNntlTBg))](#)
+
 **1 Số ảnh minh họa:**
 
 
