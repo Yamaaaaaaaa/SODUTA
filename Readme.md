@@ -1,5 +1,4 @@
-# Mẫu Báo Cáo Kết Quả Bài Tập Code Game
-
+# DỰ ÁN CHO CUỘC THI [PROGAMECUP]
 ## 1. Thông Tin Nhóm
 
 **Tên Dự Án:** [SODUTA]
@@ -115,7 +114,7 @@ Diễn giải:
 
 ### Hành Động Để Giải Quyết
 
-**Giải pháp:** Tạo 1 Interface Gốc có những phương thức bắt buộc (Movement) và implement với từng vật thể khác nhau
+**Giải pháp:** Dependency Injection: Tạo 1 Interface Gốc có những phương thức bắt buộc (Movement) và implement với từng vật thể khác nhau
 
 ### Kết Quả
 
