@@ -46,9 +46,10 @@ public class InforGameScreen implements Screen {
     boolean isCheckSoundButtonGithubOn = false;
     static boolean checkSoundOn = true;
 
+    public InforGameScreen(){}
     public InforGameScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-comedy-121626.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
         background = new Texture("button/Background.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");

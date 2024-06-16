@@ -65,7 +65,7 @@ public class GameScreen implements Screen {
     public int time_m;
     public int timeEndGodWave_m = 0, timeEndGodWave_s = 0;
     public boolean godMod = false;
-
+    public GameScreen(){}
     public GameScreen(SpaceGame spaceGame, String mapPath, int mapType) {
         timePlayed = 0;
         this.numberMap = mapType;

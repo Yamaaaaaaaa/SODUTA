@@ -50,6 +50,7 @@ public class MenuScreen implements Screen {
     static boolean checkSoundOn = true;
     boolean checkSoundButtonExit = false;
 
+    public MenuScreen(){}
     public MenuScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/watery-graves-181198.mp3"));

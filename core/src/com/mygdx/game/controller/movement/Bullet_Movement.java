@@ -22,13 +22,13 @@ public class Bullet_Movement implements Movement {
         // di chuyển đaạn
         if(entity.direction == Direction.DOWN)
             entity.setY(entity.getY() - entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime());
-        else if(entity.direction == Direction.UP)
+        else if (entity.direction == Direction.UP)
             entity.setY(entity.getY() + entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime());
-        else if(entity.direction == Direction.LEFT || entity.direction == Direction.UPLEFT || entity.direction == Direction.DOWNLEFT)
+        else if (entity.direction == Direction.LEFT || entity.direction == Direction.UPLEFT || entity.direction == Direction.DOWNLEFT)
             entity.setX(entity.getX() - entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime());
         else
             entity.setX(entity.getX() + entity.getSpeed_Cross() * Gdx.graphics.getDeltaTime());
-    // check va cham map
+        // check va cham map
         checkCollision_Bullet = new CheckCollision(entity);
         float oldX = entity.getX(), oldY = entity.getY();
         if(checkCollision_Bullet.check_BulletWithMap(oldX, oldY)){

@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
 
 public class RankGameScreen implements Screen {
-    private final FreeTypeFontGenerator generator;
-    private final FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private FreeTypeFontGenerator generator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     // KÍCH THƯỚC NÚT
     private int SIZE_BUTTON_WIDTH = 88;
     private int SIZE_BUTTON_HEIGHT = 88;
@@ -44,6 +44,8 @@ public class RankGameScreen implements Screen {
     boolean isCheckSoundButtonHomeOn = false;
     static boolean checkSoundOn = true;
     private BitmapFont font;
+
+    public RankGameScreen(){}
     public RankGameScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));

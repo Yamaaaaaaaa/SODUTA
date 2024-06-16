@@ -7,6 +7,7 @@ public class CheckCollision {
     // check collision version ngây thơ
     private Entity entity;
     private String blockedKey = "blocked";
+    public CheckCollision(){}
     public CheckCollision(Entity entity) {
         this.entity = entity;
     }
@@ -59,14 +60,6 @@ public class CheckCollision {
             if(collidesRight()){
                 entity.setX(oldX);
             }
-        }
-    }
-    public void checkX(float olxd){
-
-    }
-    public void checkY(float old){
-        if(collidesBottom() || collidesTop()){
-            entity.setY(old);
         }
     }
     public void check_MonsterWithMap(float oldX, float oldY) {

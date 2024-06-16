@@ -29,6 +29,7 @@ public class EndGameScreen implements Screen {
     int point, rank;
     private Music backgroundMusic;
     int time_m, time_s;
+    public EndGameScreen(){}
     public EndGameScreen(SpaceGame spaceGame, int point, int rank, int time_m, int time_s){
         this.time_m = time_m; this.time_s = time_s;
         this.texture_walking = new Texture("basic/character/Walk.png");

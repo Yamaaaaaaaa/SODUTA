@@ -13,7 +13,7 @@ public class Items extends Entity{
     public int counterTime = 0;
     public boolean collisionKnight = false;
     public Texture FIcon;
-
+    public Items(){}
     public Items(String imgPath, GameScreen gameScreen, float x, float y) {
         this.texture = new Texture(imgPath);
         this.gameScreen = gameScreen;
@@ -23,12 +23,10 @@ public class Items extends Entity{
         FIcon = new Texture("button/letter-f.png");
     }
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer){
-        //  System.out.println(this.gameScreen.knight.getX() + "-" + this.getX() + "-" + this.gameScreen.knight.screenX);
         float screenX = this.getX() - this.gameScreen.knight.getX() + this.gameScreen.knight.screenX;
         float screenY = this.getY() - this.gameScreen.knight.getY() + this.gameScreen.knight.screenY;
         rectangle.x = screenX;
         rectangle.y = screenY;
-        //shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
         if(this.alive) batch.draw(texture,screenX,screenY);
         if(collisionKnight) batch.draw(FIcon, this.gameScreen.knight.screenX + 54,this.gameScreen.knight.screenY + 54);
     }

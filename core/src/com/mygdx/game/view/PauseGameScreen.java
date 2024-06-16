@@ -30,7 +30,8 @@ public class PauseGameScreen implements Screen {
     Texture buttonExitIdle;
     Texture buttonGithubIdle;
     Texture buttonGithubHover;
-    //public PauseGameScreen(){}
+
+    public PauseGameScreen(){}
     public PauseGameScreen(SpaceGame spaceGame,GameScreen gameScreen){
         this.spaceGame = spaceGame;
         this.gameScreen = gameScreen;

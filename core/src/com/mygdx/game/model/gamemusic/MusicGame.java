@@ -7,6 +7,8 @@ public class MusicGame {
     String musicPath;
     Music music;
     boolean looping;
+
+    public MusicGame(){}
     public MusicGame(String musicPath, boolean looping) {
         this.musicPath = musicPath;
         this.music = Gdx.audio.newMusic(Gdx.files.internal(musicPath));
