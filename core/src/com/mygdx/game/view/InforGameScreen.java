@@ -49,8 +49,12 @@ public class InforGameScreen implements Screen {
     public InforGameScreen(){}
     public InforGameScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
+
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));
+        backgroundMusic.setLooping(true);
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
+        clickButtonMusic.setLooping(false);
+
         background = new Texture("button/Background.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");
         buttonMusicOnHover = new Texture("button/Music-On-Hover.png");

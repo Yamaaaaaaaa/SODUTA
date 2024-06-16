@@ -49,6 +49,7 @@ public class RankGameScreen implements Screen {
     public RankGameScreen(SpaceGame spaceGame){
         this.spaceGame = spaceGame;
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-happy-background-168842.mp3"));
+        this.backgroundMusic.setLooping(true);
         clickButtonMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/clickButton.mp3"));
         background = new Texture("button/Background.png");
         buttonMusicOnIdle = new Texture("button/Music-On-Idle.png");

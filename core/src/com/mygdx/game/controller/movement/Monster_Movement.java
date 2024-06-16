@@ -20,8 +20,8 @@ public class Monster_Movement implements Movement {
     private CheckCollision checkCollision;
 
     @Override
-    public void move(Entity entity, GameScreen gameScreen) {
-        checkCollision = new CheckCollision(entity);
+    public void move(Entity entity, GameScreen gameScreen, CheckCollision checkCollision) {
+        this.checkCollision = checkCollision;
         movingMonster(entity, gameScreen.knight.getX(), gameScreen.knight.getY());
     }
     public void movingMonster(Entity entity, float targetX, float targetY){

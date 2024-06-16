@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.controller.CheckCollision;
 import com.mygdx.game.controller.Direction;
 import com.mygdx.game.controller.movement.Player_Movement;
 import com.mygdx.game.model.gamemusic.MusicGame;
@@ -55,6 +56,8 @@ public class Knight extends Entity {
     //Item:
     public int counter_ItemBullet = 0;
     public int counter_MedKit = 0;
+
+    public CheckCollision checkCollision;
     public Knight(){}
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
@@ -99,7 +102,9 @@ public class Knight extends Entity {
         this.stab_Border.height = 44;
 
 
+
         // Gọi cái class qua lý di chuyển ra
+        this.checkCollision = new CheckCollision(this);
         this.moving = Player_Movement.getInstance();
 
         //collsion:
@@ -173,7 +178,7 @@ public class Knight extends Entity {
             this.timeAnimationDeath ++;
             if(this.currentHp < 0) currentHp = 0;
         }else{
-            this.moving.move(this, this.gameScreen);
+            this.moving.move(this, this.gameScreen, this.checkCollision);
             check_PickUpItem();
             updateAttack();
             update_Healing();
