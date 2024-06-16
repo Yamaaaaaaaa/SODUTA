@@ -28,8 +28,9 @@ public class EndGameScreen implements Screen {
     BitmapFont font1, font2, font3, font4;
     int point, rank;
     private Music backgroundMusic;
-
-    public EndGameScreen(SpaceGame spaceGame, int point, int rank){
+    int time_m, time_s;
+    public EndGameScreen(SpaceGame spaceGame, int point, int rank, int time_m, int time_s){
+        this.time_m = time_m; this.time_s = time_s;
         this.texture_walking = new Texture("basic/character/Walk.png");
         walking = new Animation[10];
         TextureRegion[][] region1 = TextureRegion.split(this.texture_walking, 32, 32);
@@ -92,18 +93,20 @@ public class EndGameScreen implements Screen {
         //Thông tin
         if(rank > 0){
             this.font3.draw(spaceGame.getBatch(), "NEW RANKING RECORD", 300, 570);
-            //this.font4.draw(spaceGame.getBatch(), "#" + this.rank, 400, 450);
+            this.font2.draw(spaceGame.getBatch(), "Rank: #" + this.rank, 200, 400);
         }
         else{
-        //    this.font4.draw(spaceGame.getBatch(), "GÀ", 400, 450);
+            this.font2.draw(spaceGame.getBatch(), "Rank: NO-OP", 200, 400);
         }
 
         // VẼ NHÂN VẬT THEO MẪU SAU: VỊ TRÍ THÌ THAY ĐÔI CHO PHÙ HỢP
         //spaceGame.getBatch().draw(background, 0, 0, 800, 800);
         statetime+=var1;
         spaceGame.getBatch().draw((TextureRegion) walking[0].getKeyFrame(statetime, true), 420, 300,  32 * 6, 32 * 6);
+
+
         this.font2.draw(spaceGame.getBatch(), "Your Point: " + this.point, 200, 500);
-        this.font2.draw(spaceGame.getBatch(), "Time: " + "...", 200, 450);
+        this.font2.draw(spaceGame.getBatch(), "Time: " + this.time_m + ":" + this.time_s, 200, 450);
 
         backgroundMusic.play();
         //Bảng Rank

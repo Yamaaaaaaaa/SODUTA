@@ -175,7 +175,7 @@ public class RankGameScreen implements Screen {
                 int col1_y = ranking_Columns1_X;
                 int col2_y = ranking_Columns2_X;
                 int col3_y = ranking_Columns3_X;
-                this.font.draw(spaceGame.getBatch(),i + "", col1_y, row_y);
+                this.font.draw(spaceGame.getBatch(),(i + 1) + "", col1_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getName() + "", col2_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getPoint() + "", col3_y, row_y);
             }
@@ -186,7 +186,7 @@ public class RankGameScreen implements Screen {
                 int col1_y = ranking_Columns1_X;
                 int col2_y = ranking_Columns2_X;
                 int col3_y = ranking_Columns3_X;
-                this.font.draw(spaceGame.getBatch(),i + "", col1_y, row_y);
+                this.font.draw(spaceGame.getBatch(),(i + 1) + "", col1_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getName() + "", col2_y, row_y);
                 this.font.draw(spaceGame.getBatch(),this.spaceGame.fileHandler.List_Ranking.get(i).getPoint() + "", col3_y, row_y);
             }
