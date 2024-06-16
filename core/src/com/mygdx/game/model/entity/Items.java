@@ -3,13 +3,9 @@ package com.mygdx.game.model.entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.controller.Direction;
-import com.mygdx.game.controller.movement.Bullet_Movement;
 import com.mygdx.game.view.GameScreen;
 
-public class Item_Bullet extends Entity{
+public class Items extends Entity{
     public GameScreen gameScreen;
     private int width = 46, height = 46;
     private Texture texture;
@@ -18,7 +14,7 @@ public class Item_Bullet extends Entity{
     public boolean collisionKnight = false;
     public Texture FIcon;
 
-    public Item_Bullet(String imgPath,GameScreen gameScreen, float x, float y) {
+    public Items(String imgPath, GameScreen gameScreen, float x, float y) {
         this.texture = new Texture(imgPath);
         this.gameScreen = gameScreen;
         this.setPosision(x, y);

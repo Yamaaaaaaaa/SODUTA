@@ -28,6 +28,10 @@ public class Knight extends Entity {
     private Texture texture_slash_left;
     private Texture texture_slash_right;
 
+    public Animation[] getWalking() {
+        return walking;
+    }
+
     private Animation[] walking;
     private Animation[] shootting;
     private Animation[] stabbing;
@@ -51,6 +55,7 @@ public class Knight extends Entity {
     //Item:
     public int counter_ItemBullet = 0;
     public int counter_MedKit = 0;
+    public Knight(){}
     public Knight(GameScreen gameScreen, float x, float y, float speed, TiledMapTileLayer collsionLayer) {
         this.gameScreen = gameScreen;
         this.setMusic();
@@ -178,7 +183,7 @@ public class Knight extends Entity {
     public int rank = 0;
     public void updateRanking(){
         rank = this.gameScreen.spaceGame.fileHandler.checkRanking(this.point_Counter);
-        this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA_TMP",this.point_Counter);
+        this.gameScreen.spaceGame.fileHandler.addRanking("SODUTA",this.point_Counter);
         this.gameScreen.spaceGame.fileHandler.coutRanking();
     }
     public void update_Healing(){
@@ -339,7 +344,7 @@ public class Knight extends Entity {
         this.bullets.removeAll(rejBullet);
     }
     public void check_PickUpItem(){
-        for(Item_Bullet it: this.gameScreen.itemBullets){
+        for(Items it: this.gameScreen.itemBullets){
             if(this.getRectangle().overlaps(it.rectangle)){
                 if(it.alive){
                     // hiển thị yêu cầu bấm phím F đêr nhặt
@@ -350,7 +355,7 @@ public class Knight extends Entity {
                         pickup_Item_Music.setVolumeMusic(0.5f);
                         pickup_Item_Music.setPlay();
                         it.alive = false;
-                        it.counterTime = 60 * 5; //3600 * 3; // tru dan ve 0
+                        it.counterTime = 3600 * 2; //3600 * 3; // tru dan ve 0
                         this.counter_ItemBullet ++;
                     }
                 }
@@ -359,7 +364,7 @@ public class Knight extends Entity {
             else it.collisionKnight = false;
         }
 
-        for(Item_Bullet med: this.gameScreen.medKits){
+        for(Items med: this.gameScreen.medKits){
             if(this.getRectangle().overlaps(med.rectangle)){
                 if(med.alive){
                     // hiển thị yêu cầu bấm phím F đêr nhặt

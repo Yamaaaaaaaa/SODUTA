@@ -3,19 +3,21 @@ package com.mygdx.game.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.SpaceGame;
+import com.mygdx.game.model.entity.Knight;
 
 public class EndGameScreen implements Screen {
+    private Animation[] walking;
+    private Texture texture_walking;
     private ShapeRenderer shapeRenderer;
     SpaceGame spaceGame;
     private OrthographicCamera camera;
@@ -25,7 +27,16 @@ public class EndGameScreen implements Screen {
     Texture continueButtonHover;
     BitmapFont font1, font2, font3, font4;
     int point, rank;
-    public EndGameScreen(SpaceGame spaceGame, int point, int rank){
+    private Music backgroundMusic;
+    int time_m, time_s;
+    public EndGameScreen(SpaceGame spaceGame, int point, int rank, int time_m, int time_s){
+        this.time_m = time_m; this.time_s = time_s;
+        this.texture_walking = new Texture("basic/character/Walk.png");
+        walking = new Animation[10];
+        TextureRegion[][] region1 = TextureRegion.split(this.texture_walking, 32, 32);
+        for(int i = 0; i < 4; ++i){
+            walking[i] = new Animation(0.2f, region1[i]);
+        }
         this.spaceGame = spaceGame;
         background = new Texture("button/backgroundEndGame.png");
         continueButtonIdle = new Texture("button/continueImgHover.png");
@@ -55,13 +66,15 @@ public class EndGameScreen implements Screen {
         font4 = generator.generateFont(parameter);
         this.point = point;
         this.rank = rank;
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/Menu_Music/halloween-comedy-121626.mp3"));
     }
     public void show(){
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
     }
-
+    float statetime;
     public void render(float var1){
         Gdx.gl.glClearColor(1, 1, 1, 0);
         ScreenUtils.clear(1, 1, 1, 0);
@@ -80,14 +93,22 @@ public class EndGameScreen implements Screen {
         //Thông tin
         if(rank > 0){
             this.font3.draw(spaceGame.getBatch(), "NEW RANKING RECORD", 300, 570);
-            this.font4.draw(spaceGame.getBatch(), "#" + this.rank, 400, 450);
+            this.font2.draw(spaceGame.getBatch(), "Rank: #" + this.rank, 200, 400);
         }
         else{
-            this.font4.draw(spaceGame.getBatch(), "GÀ", 400, 450);
+            this.font2.draw(spaceGame.getBatch(), "Rank: NO-OP", 200, 400);
         }
 
+        // VẼ NHÂN VẬT THEO MẪU SAU: VỊ TRÍ THÌ THAY ĐÔI CHO PHÙ HỢP
+        //spaceGame.getBatch().draw(background, 0, 0, 800, 800);
+        statetime+=var1;
+        spaceGame.getBatch().draw((TextureRegion) walking[0].getKeyFrame(statetime, true), 420, 300,  32 * 6, 32 * 6);
+
+
         this.font2.draw(spaceGame.getBatch(), "Your Point: " + this.point, 200, 500);
-        this.font2.draw(spaceGame.getBatch(), "Time: " + "...", 200, 450);
+        this.font2.draw(spaceGame.getBatch(), "Time: " + this.time_m + ":" + this.time_s, 200, 450);
+
+        backgroundMusic.play();
         //Bảng Rank
 
       //  shapeRenderer.line(250, 500, 700, 500);
@@ -100,6 +121,7 @@ public class EndGameScreen implements Screen {
             spaceGame.getBatch().draw(continueButtonHover, x, y, w, h);
             if (Gdx.input.isTouched()) {
                 this.dispose();
+                this.backgroundMusic.stop();
                 spaceGame.setScreen(new MenuScreen(spaceGame));
             }
         }else{

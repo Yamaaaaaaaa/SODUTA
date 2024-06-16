@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     public SpaceGame spaceGame;
+
+
     private SpriteBatch batch;
     private String mapPath;
     private ShapeRenderer shapeRenderer;
@@ -56,8 +58,8 @@ public class GameScreen implements Screen {
 // MUSIC:
     public MusicGame background_Game_Music, zombie_WaveStart_Music;
 // ITEM
-    public ArrayList<Item_Bullet> itemBullets;
-    public ArrayList<Item_Bullet> medKits;
+    public ArrayList<Items> itemBullets;
+    public ArrayList<Items> medKits;
 //Mod cuồng loạn
     public int time_s;
     public int time_m;
@@ -79,8 +81,8 @@ public class GameScreen implements Screen {
         this.zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
         this.zombie_WaveStart_Music.setVolumeMusic(0.8f);
         // this.zombie_WaveStart_Music.setPlay();
-        itemBullets = new ArrayList<Item_Bullet>();
-        medKits = new ArrayList<Item_Bullet>();
+        itemBullets = new ArrayList<Items>();
+        medKits = new ArrayList<Items>();
         if(mapType == 1){
             setMap1(this.spaceGame, this.mapPath);
         }
@@ -91,38 +93,38 @@ public class GameScreen implements Screen {
     private void setMap1(SpaceGame spaceGame, String mapPath){
     // set vị trí item xuất hiện
         // bang dan
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 28 * tile_Size, 94 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 95 * tile_Size, 95 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 34 * tile_Size, 6 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 6 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 39 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 84 * tile_Size, 27 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 28 * tile_Size, 94 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 95 * tile_Size, 95 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 34 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 84 * tile_Size, 6 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 84 * tile_Size, 39 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 84 * tile_Size, 27 * tile_Size));
 
 
         //medkit
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 47 * tile_Size, 21 * tile_Size));
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 40 * tile_Size, 31 * tile_Size));
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 84 * tile_Size, 33 * tile_Size));
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 6 * tile_Size, 80 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 47 * tile_Size, 21 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 40 * tile_Size, 31 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 84 * tile_Size, 33 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 6 * tile_Size, 80 * tile_Size));
 
     }
     private void setMap2(SpaceGame spaceGame, String mapPath){
     // set vị trí item xuất hiện
         // bang dan
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 10 * tile_Size, 70 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 35 * tile_Size, 70 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 70 * tile_Size, 70 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 73 * tile_Size, 36 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 7 * tile_Size, 7 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 42 * tile_Size, 54 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 42 * tile_Size, 51 * tile_Size));
-        itemBullets.add(new Item_Bullet("basic/item/rifleAmmo.png",this, 42 * tile_Size, 48 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 10 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 35 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 70 * tile_Size, 70 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 73 * tile_Size, 36 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 7 * tile_Size, 7 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 42 * tile_Size, 54 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 42 * tile_Size, 51 * tile_Size));
+        itemBullets.add(new Items("basic/item/rifleAmmo.png",this, 42 * tile_Size, 48 * tile_Size));
 
         //medkit
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 35 * tile_Size, 45 * tile_Size));
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 38 * tile_Size, 30 * tile_Size));
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 53 * tile_Size, 46 * tile_Size));
-        medKits.add(new Item_Bullet("basic/item/medkit.png",this, 68 * tile_Size, 10 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 35 * tile_Size, 45 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 38 * tile_Size, 30 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 53 * tile_Size, 46 * tile_Size));
+        medKits.add(new Items("basic/item/medkit.png",this, 68 * tile_Size, 10 * tile_Size));
     }
     @Override
     public void show() {
@@ -143,7 +145,7 @@ public class GameScreen implements Screen {
             this.newGame = false;
         }
     }
-
+    boolean endgame = false;
     @Override
     public void render(float delta) {
         float deltaTime = Gdx.graphics.getDeltaTime();
@@ -177,11 +179,14 @@ public class GameScreen implements Screen {
 
 
             if(time_m % 2 == 0 && time_s == 0 && time_m != 0){
+          //  if(time_m % 2 == 0 && time_s == 0){
                 timeEndGodWave_m = time_m;
                 timeEndGodWave_s = 30;
-                MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
-                zombie_WaveStart_Music.setVolumeMusic(0.7f);
-                zombie_WaveStart_Music.setPlay();
+                if(!endgame) {
+                    MusicGame zombie_WaveStart_Music = new MusicGame(this.musicHandler.zombie_WaveStart, false);
+                    zombie_WaveStart_Music.setVolumeMusic(0.7f);
+                    zombie_WaveStart_Music.setPlay();
+                }
                 godMod = true;
             }
 
@@ -203,13 +208,13 @@ public class GameScreen implements Screen {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//Filled
         batch.begin();
         batch.draw(new Texture("button/GameScreen/Text.png"),-5,750,128*2,32*2);
-        for(Item_Bullet it: this.itemBullets){
+        for(Items it: this.itemBullets){
             it.update();
             if(it.alive){
                 it.render(batch, shapeRenderer);
             }
         }
-        for(Item_Bullet med : this.medKits){
+        for(Items med : this.medKits){
             med.update();
             if(med.alive){
                 med.render(batch, shapeRenderer);
@@ -243,9 +248,13 @@ public class GameScreen implements Screen {
         this.spaceGame.setScreen(new PauseGameScreen(this.spaceGame,this));
     }
     public void setEndGame_Screen(int point, int rank){
+        time_s = (int) this.timePlayed;
+        time_m = (int) time_s / 60;
+        time_s = time_s % 60;
         this.dispose();
         this.background_Game_Music.setStop();
-        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame, point, rank));
+        this.spaceGame.setScreen(new EndGameScreen(this.spaceGame, point, rank, this.time_m, this.time_s));
+        endgame = true;
     }
 
     @Override
