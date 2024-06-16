@@ -1,5 +1,4 @@
-# Mẫu Báo Cáo Kết Quả Bài Tập Code Game
-
+# DỰ ÁN CHO CUỘC THI PROGAMECUP
 ## 1. Thông Tin Nhóm
 
 **Tên Dự Án:** [SODUTA]
